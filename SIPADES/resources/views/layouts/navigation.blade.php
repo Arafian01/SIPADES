@@ -16,13 +16,18 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                 </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('rekening.index')" :active="request()->routeIs('rekening.index')">
+                        {{ __('Kode Rekening Aset') }}
+                    </x-nav-link>
+                </div>
                 <div class="hidden sm:flex sm:items-center sm:ms-6">
                     <li class="relative list-none">
                         <x-dropdown>
                             <x-slot name="trigger">
                                 <button
                                     class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
-                                    <div>Master</div>
+                                    <div>Data Entri</div>
 
                                     <div class="ms-1">
                                         <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
@@ -35,24 +40,12 @@
                             </x-slot>
 
                             <x-slot name="content">
-                                <x-dropdown-link :href="route('dashboard')">
-                                    {{ __('Konsumen') }}
+                                <x-dropdown-link :href="route('pengguna.index')" :active="request()->routeIs('pengguna.index')">
+                                    {{ __('Data Umum Desa') }}
                                 </x-dropdown-link>
 
                                 <x-dropdown-link :href="route('dashboard')">
-                                    {{ __('Produk') }}
-                                </x-dropdown-link>
-
-                                <x-dropdown-link :href="route('dashboard')">
-                                    {{ __('Supplier') }}
-                                </x-dropdown-link>
-
-                                <x-dropdown-link :href="route('dashboard')">
-                                    {{ __('Konsinyasi') }}
-                                </x-dropdown-link>
-
-                                <x-dropdown-link :href="route('dashboard')">
-                                    {{ __('Konsinyasi Produk') }}
+                                    {{ __('Data Ruangan') }}
                                 </x-dropdown-link>
                             </x-slot>
                         </x-dropdown>
