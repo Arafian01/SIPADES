@@ -3,6 +3,7 @@
 use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RekeningController;
+use App\Http\Controllers\RuanganController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -19,6 +20,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resource('rekening', RekeningController::class)->middleware('auth');
     Route::resource('pengguna', PenggunaController::class)->middleware('auth');
+    Route::resource('ruangan', RuanganController::class)->middleware('auth');
 });
 
 require __DIR__.'/auth.php';
