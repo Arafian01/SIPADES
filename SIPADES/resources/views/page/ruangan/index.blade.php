@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('PERANGKAT DESA DAN PENGGUNA') }}
+            {{ __('RUANGAN') }}
         </h2>
     </x-slot>
 
@@ -9,7 +9,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-4 flex items-center justify-between">
-                    <div>DATA PERANGKAT DESA DAN PENGGUNA</div>
+                    <div>DATA RUANGAN</div>
                     <div>
                         <a href="#" onclick="return functionAdd()"
                             class="bg-sky-600 p-2 hover:bg-sky-400 text-white rounded-xl">Add</a>
@@ -25,16 +25,13 @@
                                         NO
                                     </th>
                                     <th scope="col" class="px-6 py-3">
-                                        NAMA
+                                        KODE RUANGAN
                                     </th>
                                     <th scope="col" class="px-6 py-3">
-                                        JABATAN
+                                        NAMA RUANGAN
                                     </th>
                                     <th scope="col" class="px-6 py-3">
-                                        NAMA JABATAN
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        JABATAN TIM INVENTARISASI
+                                        NAMA PENANGGUNG JAWAB
                                     </th>
                                     <th scope="col" class="px-6 py-3">
 
@@ -45,7 +42,7 @@
                                 @php
                                     $no = 1;
                                 @endphp
-                                @foreach ($pengguna as $p)
+                                @foreach ($ruangan as $r)
                                     <tr
                                         class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                         <th scope="row"
@@ -53,25 +50,22 @@
                                             {{ $no++ }}
                                         </th>
                                         <td class="px-6 py-4">
-                                            {{ $p->nama_perangkat }}
+                                            {{ $r->kode_ruangan }}
                                         </td>
                                         <td class="px-6 py-4">
-                                            {{ $p->jabatan }}
+                                            {{ $r->nama_ruangan }}
                                         </td>
                                         <td class="px-6 py-4">
-                                            {{ $p->nama_jabatan }}
+                                            {{ $r->pengguna->nama_perangkat ?? 'Tidak Tersedia' }}
                                         </td>
                                         <td class="px-6 py-4">
-                                            {{ $p->jabatan_tim_inventarisasi ?? '-' }}
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            <button type="button" data-id="{{ $p->id }}"
-                                                data-modal-target="sourceModalEdit" data-nama_perangkat="{{ $p->nama_perangkat }}"
-                                                data-jabatan="{{ $p->jabatan }}" data-nama_jabatan="{{ $p->nama_jabatan }}" data-jabatan_tim_inventarisasi="{{ $p->jabatan_tim_inventarisasi }}" onclick="editSourceModal(this)"
+                                            <button type="button" data-id="{{ $r->id }}"
+                                                data-modal-target="sourceModalEdit" data-kode_ruangan="{{ $r->kode_ruangan }}"
+                                                data-nama_ruangan="{{ $r->nama_ruangan }}" data-nama_perangkat="{{ $r->id_pengguna }}" onclick="editSourceModal(this)"
                                                 class="bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-md text-xs text-white">
                                                 Edit
                                             </button>
-                                            <button onclick="return penggunaDelete('{{$p->id}}','{{$p->nama_perangkat}}')" class="bg-red-500 hover:bg-bg-red-300 px-3 py-1 rounded-md text-xs text-white">Delete</button>
+                                            <button onclick="return ruanganDelete('{{$r->id}}','{{$r->nama_ruangan}}')" class="bg-red-500 hover:bg-bg-red-300 px-3 py-1 rounded-md text-xs text-white">Delete</button>
                                             
                                         </td>
                                     </tr>
@@ -89,7 +83,7 @@
             <div class="w-full md:w-1/2 relative bg-white rounded-lg shadow mx-5">
                 <div class="flex items-start justify-between p-4 border-b rounded-t">
                     <h3 class="text-xl font-semibold text-gray-900" id="title_source">
-                        Tambah Pengguna
+                        Tambah Ruangan
                     </h3>
                     <button type="button" onclick="sourceModalClose()"
                         class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center">
@@ -100,42 +94,29 @@
                     @csrf
                     <div class="flex flex-col p-4 space-y-6">
                         <div class="mb-5">
-                            <label for="nama_perangkat"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama Perangkat</label>
-                            <input type="text" id="nama_perangkat" name="nama_perangkat"
+                            <label for="kode_ruangan"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kode Ruangan</label>
+                            <input type="text" id="kode_ruangan" name="kode_ruangan"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 required />
                         </div>
                         <div class="mb-5">
-                            <label for="jabatan"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jabatan</label>
-                            <select id="jabatan" name="jabatan"
+                            <label for="nama_ruangan"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama Ruangan</label>
+                            <input type="text" id="nama_ruangan" name="nama_ruangan"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                required>
-                                <option value="">Pilih Jabatan</option>
-                                <option value="Kepala Desa">Kepala Desa</option>
-                                <option value="Sekretaris Desa">Sekretaris Desa</option>
-                                <option value="Kaur Keuangan">Kaur Keuangan</option>
-                                <option value="Kaur Umum">Kaur Umum</option>
-                                <option value="Kaur Perencanaan">Kaur Perencanaan</option>
-                                <option value="Kepala Dusun">Kepala Dusun</option>
-                                <option value="Staf">Staf</option>
-                                <option value="Lainnya">Lainnya</option>
+                                required />
+                        </div>
+                        <div class="mb-5">
+                            <label for="id_pengguna"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Penanggung Jawab</label>
+                            <select class="js-example-placeholder-single js-states form-control w-full m-6"
+                                id="id_pengguna" name="id_pengguna" data-placeholder="Pilih Supplier">
+                                <option value="">Pilih...</option>
+                                @foreach ($pengguna as $p)
+                                    <option value="{{ $p->id }}">{{ $p->nama_perangkat }}</option>                                        
+                                @endforeach
                             </select>
-                        </div>
-                        <div class="mb-5">
-                            <label for="nama_jabatan"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama Jabatan</label>
-                            <input type="text" id="nama_jabatan" name="nama_jabatan"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                required />
-                        </div>
-                        <div class="mb-5">
-                            <label for="jabatan_tim_inventarisasi"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jabatan Tim Inventarisasi</label>
-                            <input type="text" id="jabatan_tim_inventarisasi" name="jabatan_tim_inventarisasi"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                 />
                         </div>
                     </div>
                     <div class="flex items-center p-4 space-x-2 border-t border-gray-200 rounded-b">
@@ -154,7 +135,7 @@
             <div class="w-full md:w-1/2 relative bg-white rounded-lg shadow mx-5">
                 <div class="flex items-start justify-between p-4 border-b rounded-t">
                     <h3 class="text-xl font-semibold text-gray-900" id="title_source">
-                        Update Pengguna
+                        Update Ruangan
                     </h3>
                     <button type="button" onclick="sourceModalClose()"
                         class="text-black bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center">
@@ -165,42 +146,29 @@
                     @csrf
                     <div class="flex flex-col p-4 space-y-6">
                         <div class="mb-5">
-                            <label for="nama_perangkat"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama Perangkat</label>
-                            <input type="text" id="nama_perangkat_edit" name="nama_perangkat"
+                            <label for="kode_ruangan"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kode Ruangan</label>
+                            <input type="text" id="kode_ruangan_edit" name="kode_ruangan"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 required />
                         </div>
                         <div class="mb-5">
-                            <label for="jabatan"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jabatan</label>
-                            <select id="jabatan_edit" name="jabatan"
+                            <label for="nama_ruangan"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama Ruangan</label>
+                            <input type="text" id="nama_ruangan_edit" name="nama_ruangan"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                required>
-                                <option value="">Pilih Jabatan</option>
-                                <option value="Kepala Desa">Kepala Desa</option>
-                                <option value="Sekretaris Desa">Sekretaris Desa</option>
-                                <option value="Kaur Keuangan">Kaur Keuangan</option>
-                                <option value="Kaur Umum">Kaur Umum</option>
-                                <option value="Kaur Perencanaan">Kaur Perencanaan</option>
-                                <option value="Kepala Dusun">Kepala Dusun</option>
-                                <option value="Staf">Staf</option>
-                                <option value="Lainnya">Lainnya</option>
+                                required />
+                        </div>
+                        <div class="mb-5">
+                            <label for="id_pengguna"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Penanggung Jawab</label>
+                            <select class="js-example-placeholder-single js-states form-control w-full m-6"
+                                id="id_pengguna_edit" name="id_pengguna" data-placeholder="Pilih Supplier">
+                                <option value="">Pilih...</option>
+                                @foreach ($pengguna as $p)
+                                    <option value="{{ $p->id }}">{{ $p->nama_perangkat }}</option>                                        
+                                @endforeach
                             </select>
-                        </div>
-                        <div class="mb-5">
-                            <label for="nama_jabatan"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama Jabatan</label>
-                            <input type="text" id="nama_jabatan_edit" name="nama_jabatan"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                required />
-                        </div>
-                        <div class="mb-5">
-                            <label for="jabatan_tim_inventarisasi"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jabatan Tim Inventarisasi</label>
-                            <input type="text" id="jabatan_tim_inventarisasi_edit" name="jabatan_tim_inventarisasi"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                 />
                         </div>
                     </div>
                     <div class="flex items-center p-4 space-x-2 border-t border-gray-200 rounded-b">
@@ -219,8 +187,8 @@
             const modal = document.getElementById('sourceModal');
 
             // Set form action URL
-            let url = "{{ route('pengguna.store') }}";
-            document.getElementById('title_source').innerText = "Add pengguna";
+            let url = "{{ route('ruangan.store') }}";
+            document.getElementById('title_source').innerText = "Add ruangan";
             formModal.setAttribute('action', url);
 
             // Display the modal
@@ -241,25 +209,24 @@
             const formModal = document.getElementById('formSourceModalEdit');
             const modalTarget = button.dataset.modalTarget;
             const id = button.dataset.id;
+            const kode_ruangan = button.dataset.kode_ruangan;
+            const nama_ruangan = button.dataset.nama_ruangan;
             const nama_perangkat = button.dataset.nama_perangkat;
-            const jabatan = button.dataset.jabatan;
-            const nama_jabatan = button.dataset.nama_jabatan;
-            const jabatan_tim_inventarisasi = button.dataset.jabatan_tim_inventarisasi
+            console.log(nama_perangkat);
 
-            let url = "{{ route('pengguna.update', ':id') }}".replace(':id', id);
+            let url = "{{ route('ruangan.update', ':id') }}".replace(':id', id);
 
             console.log(url);
-            document.getElementById('title_source').innerText = `Update pengguna ${nama_perangkat}`;
+            document.getElementById('title_source').innerText = `Update ruangan ${nama_ruangan}`;
 
-            document.getElementById('nama_perangkat_edit').value = nama_perangkat;
-            document.getElementById('jabatan_edit').value = jabatan;
-            document.getElementById('nama_jabatan_edit').value = nama_jabatan;
-            document.getElementById('jabatan_tim_inventarisasi_edit').value = jabatan_tim_inventarisasi;
+            document.getElementById('id_pengguna_edit').value = nama_perangkat;
+            document.getElementById('kode_ruangan_edit').value = kode_ruangan;
+            document.getElementById('nama_ruangan_edit').value = nama_ruangan;
 
             formModal.setAttribute('action', url);
 
             let event = new Event('change');
-            document.getElementById('jabatan_edit').dispatchEvent(event);
+            document.getElementById('id_pengguna_edit').dispatchEvent(event);
 
             if (!formModal.querySelector('input[name="_token"]')) {
                 let csrfToken = document.createElement('input');
@@ -285,10 +252,10 @@
             document.getElementById('sourceModal').classList.add('hidden');
         }
 
-        const penggunaDelete = async (id, pengguna) => {
-            let tanya = confirm(`Apakah anda yakin untuk menghapus Pengguna ${pengguna} ?`);
+        const ruanganDelete = async (id, ruangan) => {
+            let tanya = confirm(`Apakah anda yakin untuk menghapus ruangan ${ruangan} ?`);
             if (tanya) {
-                await axios.post(`/pengguna/${id}`, {
+                await axios.post(`/ruangan/${id}`, {
                         '_method': 'DELETE',
                         '_token': $('meta[name="csrf-token"]').attr('content')
                     })
