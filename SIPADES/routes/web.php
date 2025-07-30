@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PengadaanController;
 use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RekeningController;
@@ -21,6 +22,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('rekening', RekeningController::class)->middleware('auth');
     Route::resource('pengguna', PenggunaController::class)->middleware('auth');
     Route::resource('ruangan', RuanganController::class)->middleware('auth');
+    Route::resource('pengadaan', PengadaanController::class)->middleware('auth');
 });
 
 require __DIR__.'/auth.php';
