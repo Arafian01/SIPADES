@@ -9,43 +9,45 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-4 bg-white dark:bg-gray-800 rounded-lg shadow-sm">
-    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-        <!-- Info Section -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
-            <!-- Nomor -->
-            <div class="flex justify-between items-center">
-                <label for="no_pengadaan" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 mr-5">
-                    Nomor
-                </label>
-                <input type="text" id="no_pengadaan" name="no_pengadaan"
-                    class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg 
+                    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                        <!-- Info Section -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
+                            <!-- Nomor -->
+                            <div class="flex justify-between items-center">
+                                <label for="no_pengadaan"
+                                    class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 mr-5">
+                                    Nomor
+                                </label>
+                                <input type="text" id="no_pengadaan" name="no_pengadaan"
+                                    class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg 
                         focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 
                         dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-                    value="{{ $pengadaan->no_pengadaan ?? '' }}" readonly />
-            </div>
-            <!-- Tanggal -->
-            <div class="flex justify-between items-center">
-                <label for="tanggal_pengadaan" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 mr-5">
-                    Tanggal
-                </label>
-                <input type="text" id="tanggal_pengadaan" name="tanggal_pengadaan"
-                    class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg 
+                                    value="{{ $pengadaan->no_pengadaan ?? '' }}" readonly />
+                            </div>
+                            <!-- Tanggal -->
+                            <div class="flex justify-between items-center">
+                                <label for="tanggal_pengadaan"
+                                    class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 mr-5">
+                                    Tanggal
+                                </label>
+                                <input type="text" id="tanggal_pengadaan" name="tanggal_pengadaan"
+                                    class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg 
                         focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 
                         dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-                    value="{{ $pengadaan->tanggal_pengadaan ? \Carbon\Carbon::parse($pengadaan->tanggal_pengadaan)->format('d-m-Y') : '' }}"
-                    readonly />
-            </div>
-        </div>
+                                    value="{{ $pengadaan->tanggal_pengadaan ? \Carbon\Carbon::parse($pengadaan->tanggal_pengadaan)->format('d-m-Y') : '' }}"
+                                    readonly />
+                            </div>
+                        </div>
 
-        <!-- Button Section -->
-        <div class="shrink-0 self-start md:self-auto">
-            <button onclick="functionAdd()"
-                class="bg-sky-600 hover:bg-sky-500 text-white font-medium px-4 py-2 rounded-lg transition duration-200">
-                Add
-            </button>
-        </div>
-    </div>
-</div>
+                        <!-- Button Section -->
+                        <div class="shrink-0 self-start md:self-auto">
+                            <button onclick="functionAdd()"
+                                class="bg-sky-600 hover:bg-sky-500 text-white font-medium px-4 py-2 rounded-lg transition duration-200">
+                                Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -92,200 +94,53 @@
     </div>
 
     <!-- Add Modal -->
-    <div class="fixed inset-0 z-50 hidden flex items-center justify-center" id="sourceModal">
+    <div class="fixed inset-0 z-50 hidden items-center justify-center" id="sourceModal">
         <div class="fixed inset-0 bg-black opacity-50" onclick="sourceModalClose()"></div>
         <div class="relative bg-white dark:bg-gray-800 rounded-lg shadow w-full max-w-2xl mx-4">
             <div class="flex items-center justify-between p-6 border-b dark:border-gray-700">
                 <h3 class="text-xl font-semibold text-gray-900 dark:text-white" id="title_source">
-                    Tambah Pengadaan
+                    Pilih Golongan Aset
                 </h3>
                 <button type="button" onclick="sourceModalClose()"
                     class="text-gray-400 hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 flex items-center justify-center">
                     <i class="fa-solid fa-xmark text-lg"></i>
                 </button>
             </div>
-            <form method="POST" id="formSourceModal" class="p-6">
-                @csrf
+            <div class="p-6 space-y-4">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label for="no_pengadaan"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">No Pengadaan</label>
-                        <input type="text" id="no_pengadaan" name="no_pengadaan"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-                            required />
-                    </div>
-                    <div>
-                        <label for="tanggal_pengadaan"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tanggal
-                            Pengadaan</label>
-                        <input type="date" id="tanggal_pengadaan" name="tanggal_pengadaan"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-                            required />
-                    </div>
-                    <div>
-                        <label for="no_spp_definitif"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">No SPP
-                            Definitif</label>
-                        <input type="text" id="no_spp_definitif" name="no_kuitansi"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-                            required />
-                    </div>
-                    <div>
-                        <label for="tanggal_spp_definitif"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tanggal SPP
-                            Definitif</label>
-                        <input type="date" id="tanggal_spp_definitif" name="tanggal_spp"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-                            required />
-                    </div>
-                    <div>
-                        <label for="no_bast" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">No
-                            BAST</label>
-                        <input type="text" id="no_bast" name="no_bast"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-                            required />
-                    </div>
-                    <div>
-                        <label for="tanggal_bast"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tanggal BAST</label>
-                        <input type="date" id="tanggal_bast" name="tanggal_bast"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-                            required />
-                    </div>
-                    <div class="md:col-span-2">
-                        <label for="id_pengguna"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama Rekanan</label>
-                        <select
-                            class="js-example-placeholder-single form-control w-full rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
-                            id="id_pengguna" name="id_pengguna" data-placeholder="Pilih Supplier">
-                            <option value="">Pilih...</option>
-                            @foreach ($pengguna as $p)
-                                <option value="{{ $p->id }}">{{ $p->nama_perangkat }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div>
-                        <label for="nama_rekanan"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama Rekanan</label>
-                        <input type="text" id="nama_rekanan" name="nama_rekanan"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-                            required />
-                    </div>
-                    <div class="md:col-span-2">
-                        <label for="uraian"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Uraian</label>
-                        <textarea id="uraian" name="uraian"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-                            rows="4" required></textarea>
-                    </div>
-                </div>
-                <div class="flex items-center justify-end p-4 border-t dark:border-gray-700 space-x-3">
-                    <button type="submit" id="formSourceButton"
-                        class="bg-green-500 hover:bg-green-600 px-6 py-2 rounded-lg text-white transition duration-200">
-                        Simpan
+                    <button
+                        class="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium px-4 py-2 rounded-lg transition duration-200">
+                        Golongan Tanah
                     </button>
-                    <button type="button" onclick="sourceModalClose()"
-                        class="bg-red-500 hover:bg-red-600 px-6 py-2 rounded-lg text-white transition duration-200">
-                        Batal
+                    <button
+                        class="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium px-4 py-2 rounded-lg transition duration-200">
+                        Golongan Peralatan dan Mesin
+                    </button>
+                    <button
+                        class="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium px-4 py-2 rounded-lg transition duration-200">
+                        Golongan Gedung dan Bangunan
+                    </button>
+                    <button
+                        class="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium px-4 py-2 rounded-lg transition duration-200">
+                        Golongan Jalan, Irigasi, dan Jaringan
+                    </button>
+                    <button
+                        class="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium px-4 py-2 rounded-lg transition duration-200">
+                        Golongan Aset Tetap Lainnya
+                    </button>
+                    <button
+                        class="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium px-4 py-2 rounded-lg transition duration-200">
+                        Golongan Konstruksi Dalam Pengerjaan
                     </button>
                 </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- Edit Modal -->
-    <div class="fixed inset-0 z-50 hidden flex items-center justify-center" id="sourceModalEdit">
-        <div class="fixed inset-0 bg-black opacity-50" onclick="sourceModalClose()"></div>
-        <div class="relative bg-white dark:bg-gray-800 rounded-lg shadow w-full max-w-2xl mx-4">
-            <div class="flex items-center justify-between p-6 border-b dark:border-gray-700">
-                <h3 class="text-xl font-semibold text-gray-900 dark:text-white" id="title_source_edit">
-                    Update Pengadaan
-                </h3>
+            </div>
+            <div class="flex items-center justify-end p-4 border-t dark:border-gray-700 space-x-3">
+               
                 <button type="button" onclick="sourceModalClose()"
-                    class="text-gray-400 hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 flex items-center justify-center">
-                    <i class="fa-solid fa-xmark text-lg"></i>
+                    class="bg-red-500 hover:bg-red-600 px-6 py-2 rounded-lg text-white transition duration-200">
+                    Batal
                 </button>
             </div>
-            <form method="POST" id="formSourceModalEdit" class="p-6">
-                @csrf
-                @method('PATCH')
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label for="no_pengadaan_edit"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">No Pengadaan</label>
-                        <input type="text" id="no_pengadaan_edit" name="no_pengadaan"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-                            required />
-                    </div>
-                    <div>
-                        <label for="tanggal_pengadaan_edit"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tanggal
-                            Pengadaan</label>
-                        <input type="date" id="tanggal_pengadaan_edit" name="tanggal_pengadaan"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-                            required />
-                    </div>
-                    <div>
-                        <label for="no_spp_definitif_edit"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">No SPP
-                            Definitif</label>
-                        <input type="text" id="no_spp_definitif_edit" name="no_spp_definitif"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-                            required />
-                    </div>
-                    <div>
-                        <label for="tanggal_spp_definitif_edit"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tanggal SPP
-                            Definitif</label>
-                        <input type="date" id="tanggal_spp_definitif_edit" name="tanggal_spp_definitif"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-                            required />
-                    </div>
-                    <div>
-                        <label for="no_bast_edit"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">No BAST</label>
-                        <input type="text" id="no_bast_edit" name="no_bast"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-                            required />
-                    </div>
-                    <div>
-                        <label for="tanggal_bast_edit"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tanggal BAST</label>
-                        <input type="date" id="tanggal_bast_edit" name="tanggal_bast"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-                            required />
-                    </div>
-                    <div class="md:col-span-2">
-                        <label for="id_pengguna_edit"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama Rekanan</label>
-                        <select
-                            class="js-example-placeholder-single form-control w-full rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
-                            id="id_pengguna_edit" name="id_pengguna" data-placeholder="Pilih Supplier">
-                            <option value="">Pilih...</option>
-                            @foreach ($pengguna as $p)
-                                <option value="{{ $p->id }}">{{ $p->nama_perangkat }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="md:col-span-2">
-                        <label for="uraian_edit"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Uraian</label>
-                        <textarea id="uraian_edit" name="uraian"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-                            rows="4" required></textarea>
-                    </div>
-                </div>
-                <div class="flex items-center justify-end p-4 border-t dark:border-gray-700 space-x-3">
-                    <button type="submit" id="formSourceButtonEdit"
-                        class="bg-green-500 hover:bg-green-600 px-6 py-2 rounded-lg text-white transition duration-200">
-                        Simpan
-                    </button>
-                    <button type="button" onclick="sourceModalClose()"
-                        class="bg-red-500 hover:bg-red-600 px-6 py-2 rounded-lg text-white transition duration-200">
-                        Batal
-                    </button>
-                </div>
-            </form>
         </div>
     </div>
 
@@ -295,9 +150,9 @@
             const modal = document.getElementById('sourceModal');
 
             // Set form action URL
-            let url = "{{ route('pengadaan.store') }}";
-            document.getElementById('title_source').innerText = "Add pengadaan";
-            formModal.setAttribute('action', url);
+            // let url = "{{ route('pengadaan.store') }}";
+            // document.getElementById('title_source').innerText = "Add pengadaan";
+            // formModal.setAttribute('action', url);
 
             // Display the modal
             modal.classList.remove('hidden');
@@ -365,7 +220,7 @@
         }
 
         const sourceModalClose = () => {
-            document.getElementById('sourceModalEdit').classList.add('hidden');
+            // document.getElementById('sourceModalEdit').classList.add('hidden');
             document.getElementById('sourceModal').classList.add('hidden');
         }
 
