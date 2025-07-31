@@ -14,8 +14,21 @@ return new class extends Migration
         Schema::create('tanah', function (Blueprint $table) {
             $table->id();
             $table->foreignId('id_aset')->constrained('aset')->onDelete('cascade');
-            $table->integer('luas');
-            
+            $table->string('kode_pemilik');
+            $table->date('tanggal_perolehan');
+            $table->string('luas');
+            $table->string('status');
+            $table->string('tanggal_sertifikat');
+            $table->string('nomor_sertifikat');
+            $table->string('perolehan');
+            $table->string('alamat');
+            $table->string('kode_lokasi');
+            $table->string('lokasi_desa');
+            $table->string('batas_utara');
+            $table->string('batas_timur');
+            $table->string('batas_selatan');
+            $table->string('batas_barat');
+            $table->string('keterangan');
             $table->timestamps();
         });
     }
