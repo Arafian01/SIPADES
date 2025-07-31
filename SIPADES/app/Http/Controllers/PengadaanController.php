@@ -26,7 +26,7 @@ class PengadaanController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -35,10 +35,15 @@ class PengadaanController extends Controller
     public function store(Request $request)
     {
         $data = [
-            'nama_pengadaan' => $request->input('nama_pengadaan'),
+            'id_pengguna' => $request->input('id_pengguna'),
+            'no_pengadaan' => $request->input('no_pengadaan'),
             'tanggal_pengadaan' => $request->input('tanggal_pengadaan'),
-            'jumlah' => $request->input('jumlah'),
-            'keterangan' => $request->input('keterangan'),
+            'no_kuitansi' => $request->input('no_kuitansi'),
+            'tanggal_spp' => $request->input('tanggal_spp'),
+            'no_bast' => $request->input('no_bast'),
+            'tanggal_bast' => $request->input('tanggal_bast'),
+            'nama_rekanan' => $request->input('nama_rekanan'),
+            'uraian' => $request->input('uraian'),
         ];
         pengadaan::create($data);
         return back()->with('message_delete', 'Data Pengadaan Berhasil Ditambahkan');
@@ -50,7 +55,12 @@ class PengadaanController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $pengadaan = pengadaan::findOrFail($id);
+        $pengguna = pengguna::all();
+        return view('page.pengadaan.create')->with([
+            'pengadaan' => $pengadaan,
+            'pengguna' => $pengguna,
+        ]);
     }
 
     /**
