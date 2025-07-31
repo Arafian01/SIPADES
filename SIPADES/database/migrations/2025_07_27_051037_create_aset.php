@@ -13,11 +13,17 @@ return new class extends Migration
     {
         Schema::create('aset', function (Blueprint $table) {
             $table->id();
+            $table->string('id_barang');
+            $table->string('nomor_register');
             $table->foreignId('id_rekening')->constrained('rekening')->onDelete('cascade');
-            $table->string('kode_aset');
-            $table->string('nama_aset');
+            $table->string('nama_label');
+            $table->string('kode_belanja_bidang');
+            $table->string('asal');
             $table->string('sumber_dana');
-            $table->string('nilai_perolehan');
+            $table->integer('nilai_perolehan');
+            $table->string('kondisi');
+            $table->date('tanggal_pembukuan');
+            $table->string('keterangan');
             $table->timestamps();
         });
     }
