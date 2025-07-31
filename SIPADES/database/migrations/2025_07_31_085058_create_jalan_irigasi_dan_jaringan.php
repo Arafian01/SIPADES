@@ -16,7 +16,15 @@ return new class extends Migration
             $table->foreignId('id_aset')->constrained('aset')->onDelete('cascade');
             $table->string('kode_pemilik');
             $table->date('tanggal_perolehan');
-            
+            $table->string('kontruksi');
+            $table->string('panjang');
+            $table->string('lebar');
+            $table->string('luas');
+            $table->string('no_dokumen');
+            $table->date('tanggal_dokumen');
+            $table->foreignId('id_tanah')->constrained('tanah')->onDelete('cascade');
+            $table->string('perolehan');
+            $table->string('lokasi');
             $table->timestamps();
         });
     }
