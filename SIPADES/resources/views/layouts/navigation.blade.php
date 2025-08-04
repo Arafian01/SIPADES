@@ -73,7 +73,7 @@
                                 <x-dropdown-link :href="route('pengadaan.index')" :active="request()->routeIs('pengadaan.index')">
                                     {{ __('Pengadaan Aset') }}
                                 </x-dropdown-link>
-                                <x-dropdown-link :href="route('pengadaan.index')" :active="request()->routeIs('pengadaan.index')">
+                                <x-dropdown-link :href="route('tanah.index')" :active="request()->routeIs('pengadaan.index')">
                                     {{ __('Golongan Tanah') }}
                                 </x-dropdown-link>
                                 <x-dropdown-link :href="route('pengadaan.index')" :active="request()->routeIs('pengadaan.index')">
