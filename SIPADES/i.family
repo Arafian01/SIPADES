@@ -1,0 +1,6 @@
+[0] 
+[0] [37;41m                                   [39;49m
+[0] [37;41m  The "-e" option does not exist.  [39;49m
+[0] [37;41m                                   [39;49m
+[0] 
+[0] php artisan serve --host=$(node -e "console.log(require('os').networkInterfaces()['Wi-Fi'].find(i = === 'IPv4' exited with code 1
