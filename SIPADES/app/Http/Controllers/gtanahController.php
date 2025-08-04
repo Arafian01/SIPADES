@@ -64,11 +64,11 @@ class gtanahController extends Controller
             'luas' => $request->input('luas'),
             'status' => $request->input('status'),
             'tanggal_sertifikat' => $request->input('tanggal_sertifikat'),
-            'nomor_sertifikat' => $request->input('nomor_sertifikat'),
+            'nomor_sertifikat' => $request->input('no_sertifikat'),
             'perolehan' => $request->input('perolehan'),
             'alamat' => $request->input('alamat'),
             'kode_lokasi' => $request->input('kode_lokasi'),
-            'lokasi_desa' => $request->input('lokasi_desa'),
+            'lokasi_desa' => $request->input('kode_lokasi'),
             'batas_utara' => $request->input('batas_utara'),
             'batas_timur' => $request->input('batas_timur'),
             'batas_selatan' => $request->input('batas_selatan'),
@@ -92,7 +92,14 @@ class gtanahController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $tanah = tanah::findOrFail($id);
+        $aset = aset::all();
+        $rekening = rekening::all();
+        return view('page.golongan.tanah.edit')->with([
+            'tanah' => $tanah,
+            'aset' => $aset,
+            'rekening' => $rekening,
+        ]);
     }
 
     /**
@@ -100,7 +107,43 @@ class gtanahController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $tanah = tanah::findOrFail($id);
+        $aset = aset::findOrFail($tanah->id_aset);
+
+        $dataAset = [
+            'id_barang' => $request->input('id_barang'),
+            'nomor_register' => $request->input('no_reg'),
+            'id_rekening' => $request->input('id_rekening'),
+            'nama_label' => $request->input('nama_label'),
+            'kode_belanja_bidang' => $request->input('kode_belanja_bidang'),
+            'asal' => $request->input('asal'),
+            'sumber_dana' => $request->input('sumber_dana'),
+            'nilai_perolehan' => $request->input('nilai_perolehan'),
+            'kondisi' => $request->input('kondisi'),
+            'tanggal_pembukuan' => $request->input('tanggal_pembukuan'),
+            'keterangan' => $request->input('keterangan'),
+        ];
+        $aset->update($dataAset);
+
+        $dataTanah = [
+            'kode_pemilik' => $request->input('kode_pemilik'),
+            'tanggal_perolehan' => $request->input('tanggal_perolehan'),
+            'luas' => $request->input('luas'),
+            'status' => $request->input('status'),
+            'tanggal_sertifikat' => $request->input('tanggal_sertifikat'),
+            'nomor_sertifikat' => $request->input('no_sertifikat'),
+            'perolehan' => $request->input('perolehan'),
+            'alamat' => $request->input('alamat'),
+            'kode_lokasi' => $request->input('kode_lokasi'),
+            'lokasi_desa' => $request->input('kode_lokasi'),
+            'batas_utara' => $request->input('batas_utara'),
+            'batas_timur' => $request->input('batas_timur'),
+            'batas_selatan' => $request->input('batas_selatan'),
+            'batas_barat' => $request->input('batas_barat'),
+            'keterangan' => $request->input('keterangan'),
+        ];
+        $tanah->update($dataTanah);
+        return back()->with('message_update', 'Data Tanah Berhasil Diperbarui');
     }
 
     /**
@@ -108,6 +151,10 @@ class gtanahController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $tanah = tanah::findOrFail($id);
+        $aset = aset::findOrFail($tanah->id_aset);
+        $tanah->delete();
+        $aset->delete();
+        return back()->with('message_delete', 'Data Tanah Berhasil Dihapus');
     }
 }
