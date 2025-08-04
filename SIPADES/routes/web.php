@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\gperalatan_dan_mesinController;
+use App\Http\Controllers\gtanahController;
 use App\Http\Controllers\PengadaanController;
 use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\ProfileController;
@@ -23,7 +25,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('pengguna', PenggunaController::class)->middleware('auth');
     Route::resource('ruangan', RuanganController::class)->middleware('auth');
     Route::resource('pengadaan', PengadaanController::class)->middleware('auth');
-    Route::resource('tanah', 'App\Http\Controllers\gtanahController')->middleware('auth');
+    Route::resource('tanah', gtanahController::class)->middleware('auth');
+    Route::resource('peralatan_dan_mesin', gperalatan_dan_mesinController::class)->middleware('auth');
 });
 
 require __DIR__.'/auth.php';
