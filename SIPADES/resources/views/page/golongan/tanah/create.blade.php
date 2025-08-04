@@ -11,17 +11,6 @@
                 <div class="p-6 text-gray-900">
                     <form class="w-full  mx-auto" method="POST" action="{{ route('tanah.store') }}">
                         @csrf
-                        {{-- <div class="mb-5">
-                            <label for="id_supplier"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Supplier</label>
-                                <select class="js-example-placeholder-single js-states form-control w-full m-6"
-                                id="id_supplier" name="id_supplier" data-placeholder="Pilih Supplier">
-                                <option value="">Pilih...</option>
-                                @foreach ($supplier as $s)
-                                    <option value="{{ $s->id }}">{{ $s->supplier }}</option>                                        
-                                @endforeach
-                            </select>
-                        </div> --}}
                         <div class="mb-5">
                             <label for="id_barang"
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Id Barang
@@ -40,7 +29,7 @@
                         </div>
                         <div class="mb-5">
                             <label for="id_rekening"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kode Aset</label>
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">rekening</label>
                             <select class="js-example-placeholder-single js-states form-control w-full m-6"
                                 id="id_rekening" name="id_rekening" data-placeholder="Pilih aset">
                                 <option value="">Pilih...</option>
