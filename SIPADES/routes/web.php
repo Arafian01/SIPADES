@@ -23,6 +23,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('pengguna', PenggunaController::class)->middleware('auth');
     Route::resource('ruangan', RuanganController::class)->middleware('auth');
     Route::resource('pengadaan', PengadaanController::class)->middleware('auth');
+    Route::resource('tanah', 'App\Http\Controllers\gtanahController')->middleware('auth');
 });
 
 require __DIR__.'/auth.php';
