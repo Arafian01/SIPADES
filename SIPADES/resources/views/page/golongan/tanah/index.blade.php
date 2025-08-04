@@ -71,13 +71,13 @@
                                             {{ $t->aset->id_barang }}
                                         </td>
                                         <td class="px-6 py-4">
-                                            {{ $t->aset->no_register }}
+                                            {{ $t->aset->nomor_register }}
                                         </td>
                                         <td class="px-6 py-4">
-                                            {{ $t->rekening->kode_rekening }}
+                                            {{ $t->aset->rekening->kode }}
                                         </td>
                                         <td class="px-6 py-4">
-                                            {{ $t->rekening->nama_rekening }}
+                                            {{ $t->aset->rekening->nama_rekening }}
                                         </td>
                                         <td class="px-6 py-4">
                                             {{ $t->tanggal_perolehan }}
@@ -86,7 +86,7 @@
                                             {{ $t->luas }}
                                         </td>
                                         <td class="px-6 py-4">
-                                            {{ $t->nilai_perolehan }}
+                                            {{ $t->aset->nilai_perolehan }}
                                         </td>
                                         <td class="px-6 py-4">
                                             {{ $t->alamat }}
@@ -110,13 +110,9 @@
                                             
                                         </td> --}}
                                         <td class="px-6 py-4">
-                                            <button type="button" data-id="{{ $t->id }}"
-                                                data-modal-target="sourceModalEdit" data-nama_perangkat="{{ $t->aset->nama_barang }}"
-                                                data-jabatan="{{ $t->aset->jabatan }}" data-nama_jabatan="{{ $t->aset->nama_jabatan }}" data-jabatan_tim_inventarisasi="{{ $t->aset->jabatan_tim_inventarisasi }}" onclick="editSourceModal(this)"
-                                                class="bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-md text-xs text-white">
-                                                Edit
-                                            </button>
-                                            <button onclick="return penggunaDelete('{{ $t->id }}','{{ $t->aset->nama_barang }}')" class="bg-red-500 hover:bg-bg-red-300 px-3 py-1 rounded-md text-xs text-white">Delete</button>
+                                            <a href="{{ route('tanah.edit', $t->id) }}"
+                                                class="bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-md text-xs text-white">Edit</a>
+                                            <button onclick="return tanahDelete('{{ $t->id }}','{{ $t->aset->rekening->nama_rekening }}')" class="bg-red-500 hover:bg-bg-red-300 px-3 py-1 rounded-md text-xs text-white">Delete</button>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -329,10 +325,10 @@
             document.getElementById('sourceModal').classList.add('hidden');
         }
 
-        const penggunaDelete = async (id, pengguna) => {
-            let tanya = confirm(`Apakah anda yakin untuk menghapus Pengguna ${pengguna} ?`);
+        const tanahDelete = async (id, tanah) => {
+            let tanya = confirm(`Apakah anda yakin untuk menghapus ${tanah} ?`);
             if (tanya) {
-                await axios.post(`/pengguna/${id}`, {
+                await axios.post(`/tanah/${id}`, {
                         '_method': 'DELETE',
                         '_token': $('meta[name="csrf-token"]').attr('content')
                     })
