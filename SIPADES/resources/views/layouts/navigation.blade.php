@@ -79,7 +79,7 @@
                                 <x-dropdown-link :href="route('peralatan_dan_mesin.index')" :active="request()->routeIs('pengadaan.index')">
                                     {{ __('Golongan Peralatan dan Mesin') }}
                                 </x-dropdown-link>
-                                <x-dropdown-link :href="route('pengadaan.index')" :active="request()->routeIs('pengadaan.index')">
+                                <x-dropdown-link :href="route('gedung_dan_bangunan.index')" :active="request()->routeIs('pengadaan.index')">
                                     {{ __('Golongan Gedung dan Bangunan') }}
                                 </x-dropdown-link>
                                 <x-dropdown-link :href="route('pengadaan.index')" :active="request()->routeIs('pengadaan.index')">
