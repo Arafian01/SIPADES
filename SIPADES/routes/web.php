@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ggedung_dan_bangunanController;
 use App\Http\Controllers\gperalatan_dan_mesinController;
 use App\Http\Controllers\gtanahController;
 use App\Http\Controllers\PengadaanController;
@@ -27,6 +28,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('pengadaan', PengadaanController::class)->middleware('auth');
     Route::resource('tanah', gtanahController::class)->middleware('auth');
     Route::resource('peralatan_dan_mesin', gperalatan_dan_mesinController::class)->middleware('auth');
+    Route::resource('gedung_dan_bangunan', ggedung_dan_bangunanController::class)->middleware('auth');
 });
 
 require __DIR__.'/auth.php';
