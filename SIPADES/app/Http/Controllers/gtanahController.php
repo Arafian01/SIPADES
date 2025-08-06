@@ -57,6 +57,7 @@ class gtanahController extends Controller
         ];
         aset::create($dataAset);
         $id_aset = aset::latest()->first()->id;
+        
         $dataTanah = [
             'id_aset' => $id_aset,
             'kode_pemilik' => $request->input('kode_pemilik'),
