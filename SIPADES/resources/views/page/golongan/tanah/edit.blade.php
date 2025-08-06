@@ -154,9 +154,9 @@
                             <div class="mb-5">
                                 <label for="asal" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Asal</label>
                                 <select class="js-select2 form-control w-full" id="asal" name="asal" required>
-                                    <option value="Kekayaan Asli Desa" {{ old('asal', $tanah->asal) == 'Kekayaan Asli Desa' ? 'selected' : '' }}>Kekayaan Asli Desa</option>
-                                    <option value="APBDesa" {{ old('asal', $tanah->asal) == 'APBDesa' ? 'selected' : '' }}>APBDesa</option>
-                                    <option value="Perolehan Lain Yang Sah" {{ old('asal', $tanah->asal) == 'Perolehan Lain Yang Sah' ? 'selected' : '' }}>Perolehan Lain Yang Sah</option>
+                                    <option value="Kekayaan Asli Desa" {{ old('asal', $tanah->aset->asal) == 'Kekayaan Asli Desa' ? 'selected' : '' }}>Kekayaan Asli Desa</option>
+                                    <option value="APBDesa" {{ old('asal', $tanah->aset->asal) == 'APBDesa' ? 'selected' : '' }}>APBDesa</option>
+                                    <option value="Perolehan Lain Yang Sah" {{ old('asal', $tanah->aset->asal) == 'Perolehan Lain Yang Sah' ? 'selected' : '' }}>Perolehan Lain Yang Sah</option>
                                 </select>
                                 @error('asal')
                                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
@@ -167,14 +167,14 @@
                             <div class="mb-5">
                                 <label for="sumber_dana" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Sumber Dana</label>
                                 <select class="js-select2 form-control w-full" id="sumber_dana" name="sumber_dana" required>
-                                    <option value="Pendapatan Asli Desa" {{ old('sumber_dana', $tanah->sumber_dana) == 'Pendapatan Asli Desa' ? 'selected' : '' }}>Pendapatan Asli Desa</option>
-                                    <option value="Dana Desa" {{ old('sumber_dana', $tanah->sumber_dana) == 'Dana Desa' ? 'selected' : '' }}>Dana Desa (Dropping APBN)</option>
-                                    <option value="Alokasi Dana Desa" {{ old('sumber_dana', $tanah->sumber_dana) == 'Alokasi Dana Desa' ? 'selected' : '' }}>Alokasi Dana Desa</option>
-                                    <option value="Penerimaan Bagi Hasil Pajak Retribusi Daerah" {{ old('sumber_dana', $tanah->sumber_dana) == 'Penerimaan Bagi Hasil Pajak Retribusi Daerah' ? 'selected' : '' }}>Penerimaan Bagi Hasil Pajak Retribusi Daerah</option>
-                                    <option value="Penerimaan Bantuan Keuangan Kab/Kota" {{ old('sumber_dana', $tanah->sumber_dana) == 'Penerimaan Bantuan Keuangan Kab/Kota' ? 'selected' : '' }}>Penerimaan Bantuan Keuangan Kab/Kota</option>
-                                    <option value="Penerimaan Bantuan Keuangan Provinsi" {{ old('sumber_dana', $tanah->sumber_dana) == 'Penerimaan Bantuan Keuangan Provinsi' ? 'selected' : '' }}>Penerimaan Bantuan Keuangan Provinsi</option>
-                                    <option value="Swadaya Masyarakat" {{ old('sumber_dana', $tanah->sumber_dana) == 'Swadaya Masyarakat' ? 'selected' : '' }}>Swadaya Masyarakat</option>
-                                    <option value="Pendapatan Lain Lain" {{ old('sumber_dana', $tanah->sumber_dana) == 'Pendapatan Lain Lain' ? 'selected' : '' }}>Pendapatan Lain Lain</option>
+                                    <option value="Pendapatan Asli Desa" {{ old('sumber_dana', $tanah->aset->sumber_dana) == 'Pendapatan Asli Desa' ? 'selected' : '' }}>Pendapatan Asli Desa</option>
+                                    <option value="Dana Desa" {{ old('sumber_dana', $tanah->aset->sumber_dana) == 'Dana Desa' ? 'selected' : '' }}>Dana Desa (Dropping APBN)</option>
+                                    <option value="Alokasi Dana Desa" {{ old('sumber_dana', $tanah->aset->sumber_dana) == 'Alokasi Dana Desa' ? 'selected' : '' }}>Alokasi Dana Desa</option>
+                                    <option value="Penerimaan Bagi Hasil Pajak Retribusi Daerah" {{ old('sumber_dana', $tanah->aset->sumber_dana) == 'Penerimaan Bagi Hasil Pajak Retribusi Daerah' ? 'selected' : '' }}>Penerimaan Bagi Hasil Pajak Retribusi Daerah</option>
+                                    <option value="Penerimaan Bantuan Keuangan Kab/Kota" {{ old('sumber_dana', $tanah->aset->sumber_dana) == 'Penerimaan Bantuan Keuangan Kab/Kota' ? 'selected' : '' }}>Penerimaan Bantuan Keuangan Kab/Kota</option>
+                                    <option value="Penerimaan Bantuan Keuangan Provinsi" {{ old('sumber_dana', $tanah->aset->sumber_dana) == 'Penerimaan Bantuan Keuangan Provinsi' ? 'selected' : '' }}>Penerimaan Bantuan Keuangan Provinsi</option>
+                                    <option value="Swadaya Masyarakat" {{ old('sumber_dana', $tanah->aset->sumber_dana) == 'Swadaya Masyarakat' ? 'selected' : '' }}>Swadaya Masyarakat</option>
+                                    <option value="Pendapatan Lain Lain" {{ old('sumber_dana', $tanah->aset->sumber_dana) == 'Pendapatan Lain Lain' ? 'selected' : '' }}>Pendapatan Lain Lain</option>
                                 </select>
                                 @error('sumber_dana')
                                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
@@ -196,10 +196,10 @@
                             <div class="mb-5">
                                 <label for="kondisi" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kondisi</label>
                                 <select class="js-select2 form-control w-full" id="kondisi" name="kondisi" required>
-                                    <option value="Baik" {{ old('kondisi', $tanah->kondisi) == 'Baik' ? 'selected' : '' }}>Baik</option>
-                                    <option value="Kurang Baik" {{ old('kondisi', $tanah->kondisi) == 'Kurang Baik' ? 'selected' : '' }}>Kurang Baik</option>
-                                    <option value="Rusak Ringan" {{ old('kondisi', $tanah->kondisi) == 'Rusak Ringan' ? 'selected' : '' }}>Rusak Ringan</option>
-                                    <option value="Rusak Berat" {{ old('kondisi', $tanah->kondisi) == 'Rusak Berat' ? 'selected' : '' }}>Rusak Berat</option>
+                                    <option value="Baik" {{ old('kondisi', $tanah->aset->kondisi) == 'Baik' ? 'selected' : '' }}>Baik</option>
+                                    <option value="Kurang Baik" {{ old('kondisi', $tanah->aset->kondisi) == 'Kurang Baik' ? 'selected' : '' }}>Kurang Baik</option>
+                                    <option value="Rusak Ringan" {{ old('kondisi', $tanah->aset->kondisi) == 'Rusak Ringan' ? 'selected' : '' }}>Rusak Ringan</option>
+                                    <option value="Rusak Berat" {{ old('kondisi', $tanah->aset->kondisi) == 'Rusak Berat' ? 'selected' : '' }}>Rusak Berat</option>
                                 </select>
                                 @error('kondisi')
                                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
