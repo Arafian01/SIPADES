@@ -29,7 +29,8 @@ class gperalatan_dan_mesinController extends Controller
         $aset = aset::all();
         $rekening = rekening::all();
         $ruangan = ruangan::all();
-        return view('page.golongan.peralatan_dan_mesin.create', compact('aset', 'rekening', 'ruangan'));
+        $peralatan_dan_mesin = peralatan_dan_mesin::all();
+        return view('page.golongan.peralatan_dan_mesin.create', compact('aset', 'rekening', 'ruangan', 'peralatan_dan_mesin'));
     }
 
     /**
@@ -133,7 +134,39 @@ class gperalatan_dan_mesinController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $peralatan_dan_mesin = peralatan_dan_mesin::findOrFail($id);
+        $aset = aset::findOrFail($peralatan_dan_mesin->id_aset);
+        $dataAset = [
+            'id_barang' => $request->input('id_barang'),
+            'nomor_register' => $request->input('no_reg'),
+            'id_rekening' => $request->input('id_rekening'),
+            'nama_label' => $request->input('nama_label'),
+            'kode_belanja_bidang' => $request->input('kode_belanja_bidang'),
+            'asal' => $request->input('asal'),
+            'sumber_dana' => $request->input('sumber_dana'),
+            'nilai_perolehan' => $request->input('nilai_perolehan'),
+            'kondisi' => $request->input('kondisi'),
+            'tanggal_pembukuan' => $request->input('tanggal_pembukuan'),
+            'keterangan' => $request->input('keterangan'),
+        ];
+        $aset->update($dataAset);
+
+        $dataPeralatanDanMesin = [
+            'kode_pemilik' => $request->input('kode_pemilik'),
+            'ruang' => $request->input('ruang'),
+            'merk' => $request->input('merk'),
+            'ukuran' => $request->input('ukuran'),
+            'bahan' => $request->input('bahan'),
+            'tanggal_perolehan' => $request->input('tanggal_perolehan'),
+            'nomor_pabrik' => $request->input('nomor_pabrik'),
+            'nomor_rangka' => $request->input('nomor_rangka'),
+            'nomor_mesin' => $request->input('nomor_mesin'),
+            'nomor_polisi' => $request->input('nomor_polisi'),
+            'nomor_bpkb' => $request->input('nomor_bpkb'),
+            'perolehan' => $request->input('perolehan'),
+        ];
+        $peralatan_dan_mesin->update($dataPeralatanDanMesin);
+        return back()->with('message_delete', 'Data Peralatan dan Mesin Berhasil Diupdate');
     }
 
     /**
@@ -141,6 +174,15 @@ class gperalatan_dan_mesinController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $peralatan_dan_mesin = peralatan_dan_mesin::findOrFail($id);
+        $aset = aset::findOrFail($peralatan_dan_mesin->id_aset);
+        
+        // Delete the peralatan dan mesin record
+        $peralatan_dan_mesin->delete();
+        
+        // Delete the associated aset record
+        $aset->delete();
+
+        return back()->with('message_delete', 'Data Peralatan dan Mesin Berhasil Dihapus');
     }
 }
