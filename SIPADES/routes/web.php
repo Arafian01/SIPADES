@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\gaset_tetap_lainnyaController;
 use App\Http\Controllers\ggedung_dan_bangunanController;
+use App\Http\Controllers\gjalan_irigasi_dan_jaringanController;
+use App\Http\Controllers\gkontruksi_dalam_pengerjaanController;
 use App\Http\Controllers\gperalatan_dan_mesinController;
 use App\Http\Controllers\gtanahController;
 use App\Http\Controllers\PengadaanController;
@@ -29,6 +32,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('tanah', gtanahController::class)->middleware('auth');
     Route::resource('peralatan_dan_mesin', gperalatan_dan_mesinController::class)->middleware('auth');
     Route::resource('gedung_dan_bangunan', ggedung_dan_bangunanController::class)->middleware('auth');
+    Route::resource('jalan_irigasi_dan_jaringan', gjalan_irigasi_dan_jaringanController::class)->middleware('auth');
+    Route::resource('aset_tetap_lainnya', gaset_tetap_lainnyaController::class)->middleware('auth');
+    Route::resource('kontruksi_dalam_pengerjaan', gkontruksi_dalam_pengerjaanController::class)->middleware('auth');
 });
 
 require __DIR__.'/auth.php';
