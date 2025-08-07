@@ -82,10 +82,10 @@
                                 <x-dropdown-link :href="route('gedung_dan_bangunan.index')" :active="request()->routeIs('pengadaan.index')">
                                     {{ __('Golongan Gedung dan Bangunan') }}
                                 </x-dropdown-link>
-                                <x-dropdown-link :href="route('pengadaan.index')" :active="request()->routeIs('pengadaan.index')">
+                                <x-dropdown-link :href="route('jalan_irigasi_dan_jaringan.index')" :active="request()->routeIs('pengadaan.index')">
                                     {{ __('Golongan Jalan, Irigasi dan Jaringan') }}
                                 </x-dropdown-link>
-                                <x-dropdown-link :href="route('pengadaan.index')" :active="request()->routeIs('pengadaan.index')">
+                                <x-dropdown-link :href="route('aset_tetap_lainnya.index')" :active="request()->routeIs('pengadaan.index')">
                                     {{ __('Golongan Aset Tetap Lainnya') }}
                                 </x-dropdown-link>
                                 <x-dropdown-link :href="route('pengadaan.index')" :active="request()->routeIs('pengadaan.index')">
