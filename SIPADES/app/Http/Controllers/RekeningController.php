@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\rekening;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class RekeningController extends Controller
 {
@@ -12,7 +13,7 @@ class RekeningController extends Controller
      */
     public function index()
     {
-        $rekening = rekening::all();
+        $rekening = rekening::paginate(10);
         return view('page.rekening.index')->with([
             'rekening' => $rekening
         ]);
@@ -31,14 +32,13 @@ class RekeningController extends Controller
      */
     public function store(Request $request)
     {
-        $data = [
-            'kode' => $request->input('kode'),
-            'nama_rekening' => $request->input('nama_rekening'),
-        ];
 
-        rekening::create($data);
+        rekening::create([
+            'kode' => $request->kode,
+            'nama_rekening' => $request->nama_rekening,
+        ]);
 
-        return back()->with('message_delete', 'Data Rekening Berhasil Ditambahkan');
+        return back()->with('success_message', 'Data Rekening Berhasil Ditambahkan!');
     }
 
     /**
@@ -60,17 +60,17 @@ class RekeningController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
-        $data = [
-            'kode' => $request->input('kode'),
-            'nama_rekening' => $request->input('nama_rekening'),
-        ];
+    public function update(Request $request, $id)
+{
+   
+    $rekening = rekening::findOrFail($id);
+    $rekening->update([
+        'kode' => $request->kode,
+        'nama_rekening' => $request->nama_rekening,
+    ]);
 
-        $datas = rekening::findOrFail($id);
-        $datas->update($data);
-        return back()->with('message_delete', 'Data rekening berhasil diupdate');
-    }
+    return back()->with('success_message', 'Data Rekening Berhasil Diupdate!');
+}
 
     /**
      * Remove the specified resource from storage.
@@ -79,6 +79,6 @@ class RekeningController extends Controller
     {
         $data = rekening::findOrFail($id);
         $data->delete();
-        return back()->with('message_delete','Data rekening Sudah dihapus');
+        return back()->with('message_delete', 'Data rekening Sudah dihapus');
     }
 }
