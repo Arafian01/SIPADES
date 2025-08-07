@@ -1,166 +1,275 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('REKENING') }}
-        </h2>
+        <div class="flex items-center justify-between">
+            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+                {{ __('Manajemen Kode Rekening Aset Desa') }}
+            </h2>
+        </div>
     </x-slot>
 
-    <div class="py-12">
+    <div class="py-8">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-4 flex items-center justify-between">
-                    <div>DATA REKENING</div>
-                    <div>
-                        <a href="#" onclick="return functionAdd()"
-                            class="bg-sky-600 p-2 hover:bg-sky-400 text-white rounded-xl">Add</a>
+                <div class="p-6 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
+                    <div class="flex items-center">
+                        <i class="fas fa-list-alt text-blue-500 mr-3"></i>
+                        <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200">Daftar Kode Rekening Aset</h3>
+                    </div>
+                    <div class="flex space-x-2">
+                        <!-- Search Input -->
+                        <div class="relative">
+                            <input type="text" id="searchInput" placeholder="Cari rekening..."
+                                class="pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                                onkeyup="searchTable()">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-search text-gray-400"></i>
+                            </div>
+                        </div>
+                        <!-- Add Button -->
+                        <button onclick="return functionAdd()"
+                            class="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center">
+                            <i class="fas fa-plus mr-2"></i> Tambah Rekening
+                        </button>
                     </div>
                 </div>
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-                        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                            <thead
-                                class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                                <tr>
-                                    <th scope="col" class="px-6 py-3">
-                                        NO
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        KODE REKENING
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        NAMA REKENING
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
 
+                <div class="p-6 text-gray-900 dark:text-gray-100">
+                    <div class="relative overflow-x-auto rounded-lg">
+                        <table id="rekeningTable" class="w-full text-sm text-left rtl:text-right">
+                            <thead
+                                class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-300">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3 w-12">
+                                        No
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        <div class="flex items-center">
+                                            Kode Rekening
+                                            <button><i class="fas fa-sort ml-1 text-gray-400"></i></button>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        <div class="flex items-center">
+                                            Nama Rekening
+                                            <button><i class="fas fa-sort ml-1 text-gray-400"></i></button>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 w-40 text-center">
+                                        Aksi
                                     </th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @php
-                                    $no = 1;
-                                @endphp
+                                @php $no = 1; @endphp
                                 @foreach ($rekening as $r)
                                     <tr
-                                        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                        <th scope="row"
-                                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                        class="rekening-row bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors">
+                                        <td class="px-6 py-4 font-medium text-gray-900 dark:text-white">
                                             {{ $no++ }}
-                                        </th>
-                                        <td class="px-6 py-4">
+                                        </td>
+                                        <td class="kode-rekening px-6 py-4 font-mono text-blue-600 dark:text-blue-400">
                                             {{ $r->kode }}
                                         </td>
-                                        <td class="px-6 py-4">
-                                            {{ $r->nama_rekening }}
+                                        <td class="nama-rekening px-6 py-4">
+                                            <div class="flex items-center">
+                                                <div
+                                                    class="p-2 rounded-full bg-blue-100 text-blue-600 dark:bg-blue-900 dark:text-blue-200 mr-3">
+                                                    <i class="fas fa-wallet text-sm"></i>
+                                                </div>
+                                                {{ $r->nama_rekening }}
+                                            </div>
                                         </td>
-                                        <td class="px-6 py-4">
+                                        <td class="px-6 py-4 flex justify-center space-x-2">
                                             <button type="button" data-id="{{ $r->id }}"
                                                 data-modal-target="sourceModalEdit" data-kode="{{ $r->kode }}"
-                                                data-nama_rekening="{{ $r->nama_rekening }}" onclick="editSourceModal(this)"
-                                                class="bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-md text-xs text-white">
-                                                Edit
+                                                data-nama_rekening="{{ $r->nama_rekening }}"
+                                                onclick="editSourceModal(this)"
+                                                class="bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-md text-xs text-white flex items-center">
+                                                <i class="fas fa-edit mr-1"></i> Edit
                                             </button>
-                                            <button onclick="return konsumenDelete('{{$r->id}}','{{$r->nama_rekening}}')" class="bg-red-500 hover:bg-bg-red-300 px-3 py-1 rounded-md text-xs text-white">Delete</button>
+                                            <button
+                                                onclick="return rekeningDelete('{{ $r->id }}','{{ $r->nama_rekening }}')"
+                                                class="bg-red-500 hover:bg-red-600 px-3 py-1 rounded-md text-xs text-white flex items-center">
+                                                <i class="fas fa-trash-alt mr-1"></i> Hapus
+                                            </button>
                                         </td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
                     </div>
+                    <div class="mt-4">
+                        {{ $rekening->links() }}
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Add Modal -->
     <div class="fixed inset-0 flex items-center justify-center z-50 hidden" id="sourceModal">
-        <div class="fixed inset-0 bg-black opacity-50" onclick="sourceModalClose()"></div>
-        <div class="fixed inset-0 flex items-center justify-center">
-            <div class="w-full md:w-1/2 relative bg-white rounded-lg shadow mx-5">
-                <div class="flex items-start justify-between p-4 border-b rounded-t">
-                    <h3 class="text-xl font-semibold text-gray-900" id="title_source">
-                        Tambah Rekening
+        <div class="fixed inset-0 bg-black/50 backdrop-blur-sm" onclick="sourceModalClose()"></div>
+        <div class="fixed inset-0 flex items-center justify-center p-4">
+            <div class="w-full max-w-md relative bg-white rounded-lg shadow-xl dark:bg-gray-800">
+                <div
+                    class="flex items-start justify-between p-5 border-b rounded-t dark:border-gray-700 bg-gradient-to-r from-blue-500 to-blue-600">
+                    <h3 class="text-xl font-semibold text-white" id="title_source">
+                        <i class="fas fa-plus-circle mr-2"></i> Tambah Rekening Baru
                     </h3>
                     <button type="button" onclick="sourceModalClose()"
-                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center">
-                        <i class="fa-solid fa-xmark"></i>
+                        class="text-white hover:text-gray-200 text-sm w-8 h-8 ml-auto inline-flex justify-center items-center">
+                        <i class="fa-solid fa-xmark text-xl"></i>
                     </button>
                 </div>
                 <form method="POST" id="formSourceModal">
                     @csrf
-                    <div class="flex flex-col p-4 space-y-6">
-                        <div class="mb-5">
-                            <label for="kode"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">kode</label>
-                            <input type="text" id="kode" name="kode"
+                    <div class="p-6 space-y-4">
+                        <div>
+                            <label for="kode" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                <i class="fas fa-hashtag mr-2 text-blue-500"></i>Kode Rekening
+                            </label>
+                            <input type="text" id="kode" name="kode" placeholder="Masukkan kode rekening"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 required />
+                            <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Contoh: 1.1.01.01</p>
                         </div>
-                        <div class="mb-5">
+                        <div>
                             <label for="nama_rekening"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama Rekening"</label>
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                <i class="fas fa-signature mr-2 text-blue-500"></i>Nama Rekening
+                            </label>
                             <input type="text" id="nama_rekening" name="nama_rekening"
+                                placeholder="Masukkan nama rekening"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 required />
                         </div>
                     </div>
-                    <div class="flex items-center p-4 space-x-2 border-t border-gray-200 rounded-b">
+                    <div
+                        class="flex items-center p-6 space-x-3 border-t border-gray-200 rounded-b dark:border-gray-700">
                         <button type="submit" id="formSourceButton"
-                            class="bg-green-400 m-2 w-40 h-10 rounded-xl hover:bg-green-500">Simpan</button>
+                            class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 flex items-center">
+                            <i class="fas fa-save mr-2"></i> Simpan
+                        </button>
                         <button type="button" onclick="sourceModalClose()"
-                            class="bg-red-500 m-2 w-40 h-10 rounded-xl text-white hover:shadow-lg hover:bg-red-600">Batal</button>
+                            class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">
+                            Batal
+                        </button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+
+    <!-- Edit Modal -->
     <div class="fixed inset-0 flex items-center justify-center z-50 hidden" id="sourceModalEdit">
-        <div class="fixed inset-0 bg-black opacity-50" onclick="sourceModalClose()"></div>
-        <div class="fixed inset-0 flex items-center justify-center">
-            <div class="w-full md:w-1/2 relative bg-white rounded-lg shadow mx-5">
-                <div class="flex items-start justify-between p-4 border-b rounded-t">
-                    <h3 class="text-xl font-semibold text-gray-900" id="title_source">
-                        Update Rekening
+        <div class="fixed inset-0 bg-black/50 backdrop-blur-sm" onclick="sourceModalClose()"></div>
+        <div class="fixed inset-0 flex items-center justify-center p-4">
+            <div class="w-full max-w-md relative bg-white rounded-lg shadow-xl dark:bg-gray-800">
+                <div
+                    class="flex items-start justify-between p-5 border-b rounded-t dark:border-gray-700 bg-gradient-to-r from-amber-500 to-amber-600">
+                    <h3 class="text-xl font-semibold text-white" id="title_source">
+                        <i class="fas fa-edit mr-2"></i> Edit Rekening
                     </h3>
                     <button type="button" onclick="sourceModalClose()"
-                        class="text-black bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center">
-                        <i class="fa-solid fa-xmark"></i>
+                        class="text-white hover:text-gray-200 text-sm w-8 h-8 ml-auto inline-flex justify-center items-center">
+                        <i class="fa-solid fa-xmark text-xl"></i>
                     </button>
                 </div>
                 <form method="POST" id="formSourceModalEdit">
                     @csrf
-                    <div class="flex flex-col p-4 space-y-6">
-                        <div class="mb-5">
-                            <label for="kode"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kode</label>
-                            <input type="text" id="kode_edit" name="kode"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    <div class="p-6 space-y-4">
+                        <div>
+                            <label for="kode_edit"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                <i class="fas fa-hashtag mr-2 text-amber-500"></i>Kode Rekening
+                            </label>
+                            <input type="text" id="kode_edit" name="kode" placeholder="Masukkan kode rekening"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-amber-500 focus:border-amber-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-amber-500 dark:focus:border-amber-500"
                                 required />
                         </div>
-                        <div class="mb-5">
-                            <label for="nama_rekening"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama Rekening</label>
+                        <div>
+                            <label for="nama_rekening_edit"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                <i class="fas fa-signature mr-2 text-amber-500"></i>Nama Rekening
+                            </label>
                             <input type="text" id="nama_rekening_edit" name="nama_rekening"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                placeholder="Masukkan nama rekening"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-amber-500 focus:border-amber-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-amber-500 dark:focus:border-amber-500"
                                 required />
                         </div>
                     </div>
-                    <div class="flex items-center p-4 space-x-2 border-t border-gray-200 rounded-b">
+                    <div
+                        class="flex items-center p-6 space-x-3 border-t border-gray-200 rounded-b dark:border-gray-700">
                         <button type="submit" id="formSourceButtonEdit"
-                            class="bg-green-400 m-2 w-40 h-10 rounded-xl hover:bg-green-500">Simpan</button>
+                            class="text-white bg-amber-600 hover:bg-amber-700 focus:ring-4 focus:outline-none focus:ring-amber-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-amber-600 dark:hover:bg-amber-700 dark:focus:ring-amber-800 flex items-center">
+                            <i class="fas fa-save mr-2"></i> Simpan Perubahan
+                        </button>
                         <button type="button" onclick="sourceModalClose()"
-                            class="bg-red-500 m-2 w-40 h-10 rounded-xl text-white hover:shadow-lg hover:bg-red-600">Batal</button>
+                            class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">
+                            Batal
+                        </button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+
     <script>
+        @if (session('success_message'))
+            Swal.fire({
+                title: 'Berhasil!',
+                text: "{{ session('success_message') }}",
+                icon: 'success'
+            });
+        @endif
+
+        @if (session('validation_error'))
+            @foreach ($errors->all() as $error)
+                Swal.fire({
+                    title: 'Validasi Gagal!',
+                    text: "{{ $error }}",
+                    icon: 'error'
+                });
+                @break
+            @endforeach
+        @endif
+
+        // Search Functionality
+        function searchTable() {
+            const input = document.getElementById('searchInput');
+            const filter = input.value.toUpperCase();
+            const table = document.getElementById('rekeningTable');
+            const rows = table.getElementsByClassName('rekening-row');
+
+            for (let i = 0; i < rows.length; i++) {
+                const kodeCell = rows[i].getElementsByClassName('kode-rekening')[0];
+                const namaCell = rows[i].getElementsByClassName('nama-rekening')[0];
+
+                if (kodeCell && namaCell) {
+                    const kodeText = kodeCell.textContent || kodeCell.innerText;
+                    const namaText = namaCell.textContent || namaCell.innerText;
+
+                    if (kodeText.toUpperCase().indexOf(filter) > -1 || namaText.toUpperCase().indexOf(filter) > -1) {
+                        rows[i].style.display = "";
+                    } else {
+                        rows[i].style.display = "none";
+                    }
+                }
+            }
+        }
+
         const functionAdd = () => {
             const formModal = document.getElementById('formSourceModal');
             const modal = document.getElementById('sourceModal');
 
             // Set form action URL
             let url = "{{ route('rekening.store') }}";
-            document.getElementById('title_source').innerText = "Add Rekening";
+            document.getElementById('title_source').innerHTML =
+                '<i class="fas fa-plus-circle mr-2"></i> Tambah Rekening Baru';
             formModal.setAttribute('action', url);
+
+            // Reset form
+            formModal.reset();
 
             // Display the modal
             modal.classList.remove('hidden');
@@ -185,8 +294,8 @@
 
             let url = "{{ route('rekening.update', ':id') }}".replace(':id', id);
 
-            console.log(url);
-            document.getElementById('title_source').innerText = `Update rekening ${nama_rekening}`;
+            document.getElementById('title_source').innerHTML =
+                `<i class="fas fa-edit mr-2"></i> Edit Rekening ${nama_rekening}`;
 
             document.getElementById('kode_edit').value = kode;
             document.getElementById('nama_rekening_edit').value = nama_rekening;
@@ -210,30 +319,61 @@
             }
 
             document.getElementById(modalTarget).classList.remove('hidden');
+            document.getElementById(modalTarget).classList.add('flex');
         }
 
         const sourceModalClose = () => {
             document.getElementById('sourceModalEdit').classList.add('hidden');
             document.getElementById('sourceModal').classList.add('hidden');
+            document.getElementById('sourceModalEdit').classList.remove('flex');
+            document.getElementById('sourceModal').classList.remove('flex');
         }
 
-        const konsumenDelete = async (id, konsumen) => {
-            let tanya = confirm(`Apakah anda yakin untuk menghapus Konsumen ${konsumen} ?`);
-            if (tanya) {
-                await axios.post(`/konsumen/${id}`, {
-                        '_method': 'DELETE',
-                        '_token': $('meta[name="csrf-token"]').attr('content')
-                    })
-                    .then(function(response) {
-                        // Handle success
-                        location.reload();
-                    })
-                    .catch(function(error) {
-                        // Handle error
-                        alert('Error deleting record');
-                        console.log(error);
-                    });
-            }
+        const rekeningDelete = async (id, rekening) => {
+            Swal.fire({
+                title: `Hapus Rekening ${rekening}?`,
+                text: "Data yang dihapus tidak dapat dikembalikan!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Ya, Hapus!',
+                cancelButtonText: 'Batal'
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    try {
+                        await axios.post(`/rekening/${id}`, {
+                            '_method': 'DELETE',
+                            '_token': '{{ csrf_token() }}'
+                        });
+
+                        Swal.fire(
+                            'Terhapus!',
+                            'Data rekening telah dihapus.',
+                            'success'
+                        ).then(() => {
+                            location.reload();
+                        });
+                    } catch (error) {
+                        Swal.fire(
+                            'Gagal!',
+                            'Terjadi kesalahan saat menghapus data.',
+                            'error'
+                        );
+                        console.error(error);
+                    }
+                }
+            });
         }
+
+        // Initialize tooltips
+        document.addEventListener('DOMContentLoaded', function() {
+            const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            tooltipTriggerList.map(function(tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl);
+            });
+        });
     </script>
+
+    <!-- Include SweetAlert2 -->
 </x-app-layout>
