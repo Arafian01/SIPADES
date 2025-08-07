@@ -120,7 +120,7 @@
                             <div class="mb-5">
                                 <label for="tanggal_perolehan"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tanggal Perolehan</label>
-                                <input type="text" id="tanggal_perolehan" name="tanggal_perolehan"
+                                <input type="date" id="tanggal_perolehan" name="tanggal_perolehan"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     value="{{ old('tanggal_perolehan', $gedung_dan_bangunan->tanggal_perolehan) }}" required />
                                 @error('tanggal_perolehan')
@@ -142,12 +142,15 @@
                             <div class="mb-5">
                                 <label for="bertingkat"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Bertingkat</label>
-                                <input type="text" id="bertingkat" name="bertingkat"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    value="{{ old('bertingkat', $gedung_dan_bangunan->bertingkat) }}" required />
-                                @error('bertingkat')
-                                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                                @enderror
+                                <select class="js-select2 form-control w-full" id="bertingkat" name="bertingkat"
+                                    required>
+                                    <option value="Bertingkat"
+                                        {{ old('bertingkat', $gedung_dan_bangunan->bertingkat) == 'Bertingkat"' ? 'selected' : '' }}>
+                                        Bertingkat</option>
+                                    <option value="Tidak Bertingkat"
+                                        {{ old('bertingkat', $gedung_dan_bangunan->bertingkat) == 'Tidak Bertingkat' ? 'selected' : '' }}>
+                                        Tidak Bertingkat</option>
+                                </select>
                             </div>
 
                             {{-- <div class="mb-5">
@@ -181,7 +184,7 @@
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">No Dokumen</label>
                                 <input type="text" id="no_dokumen" name="no_dokumen"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-                                    value="{{ old('no_dokumen', $gedung_dan_bangunan->aset->no_dokumen) }}" required />
+                                    value="{{ old('no_dokumen', $gedung_dan_bangunan->no_dokumen) }}" required />
                                 @error('no_dokumen')
                                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                                 @enderror
@@ -194,7 +197,7 @@
                                     Dokumen</label>
                                 <input type="date" id="tanggal_dokumen" name="tanggal_dokumen"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-                                    value="{{ old('tanggal_dokumen', $gedung_dan_bangunan->aset->tanggal_dokumen) }}" required />
+                                    value="{{ old('tanggal_dokumen', $gedung_dan_bangunan->tanggal_dokumen) }}" required />
                                 @error('tanggal_dokumen')
                                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                                 @enderror
@@ -346,7 +349,7 @@
                                 <label for="alamat"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">alamat</label>
                                 <textarea id="alamat" name="alamat" rows="4"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white">{{ old('alamat', $gedung_dan_bangunan->aset->alamat) }}</textarea>
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white">{{ old('alamat', $gedung_dan_bangunan->alamat) }}</textarea>
                                 @error('alamat')
                                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                                 @enderror
