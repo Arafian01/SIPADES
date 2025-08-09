@@ -88,7 +88,7 @@
                                 <x-dropdown-link :href="route('aset_tetap_lainnya.index')" :active="request()->routeIs('pengadaan.index')">
                                     {{ __('Golongan Aset Tetap Lainnya') }}
                                 </x-dropdown-link>
-                                <x-dropdown-link :href="route('pengadaan.index')" :active="request()->routeIs('pengadaan.index')">
+                                <x-dropdown-link :href="route('kontruksi_dalam_pengerjaan.index')" :active="request()->routeIs('pengadaan.index')">
                                     {{ __('Golongan Kontruksi Dalam Pengerjaan') }}
                                 </x-dropdown-link>
                             </x-slot>
