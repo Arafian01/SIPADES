@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\aset;
+use App\Models\detail_pengadaan;
 use App\Models\kontruksi_dalam_pengerjaan;
 use App\Models\rekening;
 use Illuminate\Http\Request;
@@ -26,12 +27,12 @@ class gkontruksi_dalam_pengerjaanController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(String $id)
     {
         // Return the view for creating a new resource
         $aset = aset::all();
         $rekening = rekening::all();
-        return view('page.golongan.kontruksi_dalam_pengerjaan.create', compact('aset', 'rekening'));
+        return view('page.golongan.kontruksi_dalam_pengerjaan.create', compact('aset', 'rekening', 'id'));
     }
 
     /**
@@ -39,6 +40,7 @@ class gkontruksi_dalam_pengerjaanController extends Controller
      */
     public function store(Request $request)
     {
+        $idPengadaan = $request->input('id_pengadaan');
         $dataAset = [
             'id_barang' => $request->input('id_barang'),
             'nomor_register' => $request->input('no_reg'),
@@ -57,12 +59,21 @@ class gkontruksi_dalam_pengerjaanController extends Controller
 
         $dataKontruksi = [
             'id_aset' => $id_aset,
-            'nomor_dokumen' => $request->input('nomor_dokumen'),
+            'nomor_dokumen' => $request->input('no_dokumen'),
             'tanggal_dokumen' => $request->input('tanggal_dokumen'),
         ];
         kontruksi_dalam_pengerjaan::create($dataKontruksi);
 
-        return redirect()->route('kontruksi_dalam_pengerjaan.index')->with('success', 'Data berhasil disimpan.');
+        if ($idPengadaan != '0') {
+            $details = [
+                'id_pengadaan' => $idPengadaan,
+                'id_aset' => $id_aset,
+            ];
+            detail_pengadaan::create($details);
+            return redirect()->route('pengadaan.show', $idPengadaan)->with('success', 'Data berhasil ditambahkan.');
+        } else {
+            return redirect()->route('kontruksi_dalam_pengerjaan.index')->with('success', 'Data berhasil ditambahkan.');
+        }
     }
 
     /**
@@ -79,12 +90,12 @@ class gkontruksi_dalam_pengerjaanController extends Controller
     public function edit(string $id)
     {
         // Fetch the specific kontruksi_dalam_pengerjaan by ID
-        $kontruksi = kontruksi_dalam_pengerjaan::findOrFail($id);
+        $kontruksi_dalam_pengerjaan = kontruksi_dalam_pengerjaan::findOrFail($id);
         $aset = aset::all();
         $rekening = rekening::all();
 
         // Return the view for editing the resource
-        return view('page.golongan.kontruksi_dalam_pengerjaan.edit', compact('kontruksi', 'aset', 'rekening'));
+        return view('page.golongan.kontruksi_dalam_pengerjaan.edit', compact('kontruksi_dalam_pengerjaan', 'aset', 'rekening'));
     }
 
     /**
@@ -109,10 +120,12 @@ class gkontruksi_dalam_pengerjaanController extends Controller
         $aset = aset::findOrFail($kontruksi->id_aset);
         $aset->update($dataAset);
         $dataKontruksi = [
-            'nomor_dokumen' => $request->input('nomor_dokumen'),
+            'nomor_dokumen' => $request->input('no_dokumen'),
             'tanggal_dokumen' => $request->input('tanggal_dokumen'),
         ];
         $kontruksi->update($dataKontruksi);
+
+        return redirect()->route('kontruksi_dalam_pengerjaan.index')->with('success', 'Data berhasil diperbarui.');
     }
 
     /**
