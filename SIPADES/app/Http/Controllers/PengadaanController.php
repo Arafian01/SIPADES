@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\aset;
+use App\Models\golongan;
 use App\Models\pengadaan;
 use App\Models\pengguna;
 use Illuminate\Http\Request;
@@ -25,11 +26,41 @@ class PengadaanController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(String $id)
+    public function create(String $id, String $id_golongan, String $id_aset)
     {
         $pengadaan = pengadaan::findOrFail($id);
-        
+        $golongan = golongan::findOrFail($id_golongan);
+
+        switch ($golongan->id) {
+            case 1:
+                $nama_golongan = 'tanah';
+                break;
+            case 2:
+                $nama_golongan = 'peralatan_dan_mesin';
+                break;
+            case 3:
+                $nama_golongan = 'gedung_dan_bangunan';
+                break;
+            case 4:
+                $nama_golongan = 'jalan_irigasi_dan_jaringan';
+                break;
+            case 5:
+                $nama_golongan = 'aset_tetap_lainnya';
+                break;
+            case 6:
+                $nama_golongan = 'kontruksi_dalam_pengerjaan';
+                break;
+            default:
+                $nama_golongan = 'unknown';
+                break;
+        }
+
+        return redirect()->route($nama_golongan . '.edit', [$id_aset, $pengadaan])->with([
+            'pengadaan' => $pengadaan,
+            'golongan' => $golongan,
+        ]);
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -49,7 +80,6 @@ class PengadaanController extends Controller
         ];
         pengadaan::create($data);
         return back()->with('message_delete', 'Data Pengadaan Berhasil Ditambahkan');
-
     }
 
     /**
@@ -60,10 +90,11 @@ class PengadaanController extends Controller
         $pengadaan = pengadaan::findOrFail($id);
         $pengguna = pengguna::all();
         $pengadaan = Pengadaan::with('detailPengadaan.aset.rekening')->findOrFail($id);
-
+        $golongan = golongan::all();
         return view('page.pengadaan.create')->with([
             'pengadaan' => $pengadaan,
             'pengguna' => $pengguna,
+            'golongan' => $golongan,
         ]);
     }
 
