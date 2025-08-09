@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\aset;
+use App\Models\detail_pengadaan;
 use App\Models\rekening;
 use App\Models\tanah;
 use Illuminate\Http\Request;
@@ -27,13 +28,14 @@ class gtanahController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(String $id)
     {
         $aset = aset::all();
         $rekening = rekening::all();
         return view('page.golongan.tanah.create')->with([
             'aset' => $aset,
             'rekening' => $rekening,
+            'id' => $id, // id_pengadaan
         ]);
     }
 
@@ -42,6 +44,7 @@ class gtanahController extends Controller
      */
     public function store(Request $request)
     {
+        $idPengadaan = $request->input('id_pengadaan');
         $dataAset = [
             'id_barang' => $request->input('id_barang'),
             'nomor_register' => $request->input('no_reg'),
@@ -55,11 +58,10 @@ class gtanahController extends Controller
             'tanggal_pembukuan' => $request->input('tanggal_pembukuan'),
             'keterangan' => $request->input('keterangan'),
         ];
-        aset::create($dataAset);
-        $id_aset = aset::latest()->first()->id;
-        
+        $aset = aset::create($dataAset);
+
         $dataTanah = [
-            'id_aset' => $id_aset,
+            'id_aset' => $aset->id,
             'kode_pemilik' => $request->input('kode_pemilik'),
             'tanggal_perolehan' => $request->input('tanggal_perolehan'),
             'luas' => $request->input('luas'),
@@ -77,7 +79,17 @@ class gtanahController extends Controller
             'keterangan' => $request->input('keterangan'),
         ];
         tanah::create($dataTanah);
-        return back()->with('message_delete', 'Data Tanah Berhasil Ditambahkan');
+
+        if ($idPengadaan > 0) {
+            $details = [
+                'id_pengadaan' => $idPengadaan,
+                'id_aset' => $aset->id,
+            ];
+            detail_pengadaan::create($details);
+            return redirect()->route('pengadaan.show', $idPengadaan)->with('message_create', 'Data Tanah Berhasil Ditambahkan');
+        } else {
+            return redirect()->route('tanah.index')->with('message_create', 'Data Tanah Berhasil Ditambahkan');
+        }
     }
 
     /**
