@@ -369,6 +369,8 @@
                                 @enderror
                             </div>
                         </div>
+                        <!-- Hidden Input for Pengadaan ID -->
+                        <input type="hidden" name="id_pengadaan" value="{{ $id_pengadaan }}">
 
                         <!-- Form Actions -->
                         <div class="flex justify-end gap-4 mt-6">
