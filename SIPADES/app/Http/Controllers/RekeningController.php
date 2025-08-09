@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\golongan;
 use App\Models\rekening;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -14,8 +15,10 @@ class RekeningController extends Controller
     public function index()
     {
         $rekening = rekening::paginate(10);
+        $golongan = golongan::all(); // Assuming you have a Golongan model
         return view('page.rekening.index')->with([
-            'rekening' => $rekening
+            'rekening' => $rekening,
+            'golongan' => $golongan
         ]);
     }
 
@@ -36,6 +39,7 @@ class RekeningController extends Controller
         rekening::create([
             'kode' => $request->kode,
             'nama_rekening' => $request->nama_rekening,
+            'id_golongan' => $request->golongan_id,
         ]);
 
         return back()->with('success_message', 'Data Rekening Berhasil Ditambahkan!');
@@ -67,6 +71,7 @@ class RekeningController extends Controller
     $rekening->update([
         'kode' => $request->kode,
         'nama_rekening' => $request->nama_rekening,
+        'id_golongan' => $request->golongan_id,
     ]);
 
     return back()->with('success_message', 'Data Rekening Berhasil Diupdate!');
