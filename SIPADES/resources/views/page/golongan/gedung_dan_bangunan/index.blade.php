@@ -11,7 +11,7 @@
                 <div class="p-4 flex items-center justify-between">
                     <div>DATA GOLONGAN GEDUNG DAN BANGUNAN</div>
                     <div>
-                        <a href="{{ route('gedung_dan_bangunan.create') }}" 
+                        <a href="{{ route('gedung_dan_bangunan.create', '0') }}" 
                             class="bg-sky-600 p-2 hover:bg-sky-400 text-white rounded-xl">Add</a>
                     </div>
                 </div>
