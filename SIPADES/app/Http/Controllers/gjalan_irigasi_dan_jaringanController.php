@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\aset;
+use App\Models\detail_pengadaan;
 use App\Models\jalan_irigasi_dan_jaringan;
 use App\Models\rekening;
 use App\Models\tanah;
@@ -27,14 +28,14 @@ class gjalan_irigasi_dan_jaringanController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(String $id)
     {
         // Return the view for creating a new resource
         $rekening = rekening::all();
         $aset = aset::all();
         $jalan_irigasi_dan_jaringan = jalan_irigasi_dan_jaringan::all();
         $tanah = tanah::all();
-        return view('page.golongan.jalan_irigasi_dan_jaringan.create', compact('rekening', 'aset', 'jalan_irigasi_dan_jaringan', 'tanah'));
+        return view('page.golongan.jalan_irigasi_dan_jaringan.create', compact('rekening', 'aset', 'jalan_irigasi_dan_jaringan', 'tanah', 'id'));
     }
 
     /**
@@ -42,6 +43,7 @@ class gjalan_irigasi_dan_jaringanController extends Controller
      */
     public function store(Request $request)
     {
+        $idPengadaan = $request->input('id_pengadaan');
         $dataAset = [
             'id_barang' => $request->input('id_barang'),
             'nomor_register' => $request->input('no_reg'),
@@ -73,7 +75,17 @@ class gjalan_irigasi_dan_jaringanController extends Controller
             'lokasi' => $request->input('lokasi'),
         ];
         jalan_irigasi_dan_jaringan::create($dataJalanIrigasiDanJaringan);
-        return back()->with('message_', 'Data Jalan, Irigasi dan Jaringan Berhasil Ditambahkan');
+
+        if ($idPengadaan != 0) {
+            $details = [
+                'id_pengadaan' => $idPengadaan,
+                'id_aset' => $id_aset,
+            ];
+            detail_pengadaan::create($details);
+            return redirect()->route('pengadaan.show', $idPengadaan)->with('message', 'Data Jalan, Irigasi dan Jaringan Berhasil Ditambahkan');
+        } else {
+            return redirect()->route('jalan_irigasi_dan_jaringan.index')->with('message', 'Data Jalan, Irigasi dan Jaringan Berhasil Ditambahkan');
+        }
     }
 
     /**
