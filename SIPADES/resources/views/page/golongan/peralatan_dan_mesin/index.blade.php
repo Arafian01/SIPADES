@@ -11,7 +11,7 @@
                 <div class="p-4 flex items-center justify-between">
                     <div>DATA GOLONGAN PERALATAN DAN MESIN</div>
                     <div>
-                        <a href="{{ route('peralatan_dan_mesin.create') }}" 
+                        <a href="{{ route('peralatan_dan_mesin.create', '0') }}" 
                             class="bg-sky-600 p-2 hover:bg-sky-400 text-white rounded-xl">Add</a>
                     </div>
                 </div>
@@ -92,7 +92,7 @@
                                             
                                         </td> --}}
                                         <td class="px-6 py-4">
-                                            <a href="{{ route('peralatan_dan_mesin.edit', $t->id) }}"
+                                            <a href="{{ route('peralatan_dan_mesin.edit', [$t->id, '0']) }}"
                                                 class="bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-md text-xs text-white">Edit</a>
                                             <button onclick="return peralatanDelete('{{ $t->id }}','{{ $t->aset->rekening->nama_rekening }}')" class="bg-red-500 hover:bg-bg-red-300 px-3 py-1 rounded-md text-xs text-white">Delete</button>
                                         </td>
