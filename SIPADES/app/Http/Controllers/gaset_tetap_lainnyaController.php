@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\aset;
 use App\Models\aset_tetap_lainnya;
+use App\Models\detail_pengadaan;
 use App\Models\rekening;
 use Illuminate\Http\Request;
 
@@ -26,12 +27,12 @@ class gaset_tetap_lainnyaController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(String $id)
     {
         // Return the view for creating a new resource
         $rekening = rekening::all();
         $aset = aset::all();
-        return view('page.golongan.aset_tetap_lainnya.create', compact('rekening', 'aset'));
+        return view('page.golongan.aset_tetap_lainnya.create', compact('rekening', 'aset', 'id'));
     }
 
     /**
@@ -39,6 +40,7 @@ class gaset_tetap_lainnyaController extends Controller
      */
     public function store(Request $request)
     {
+        $idPengadaan = $request->input('id_pengadaan');
         $dataAset = [
             'id_barang' => $request->input('id_barang'),
             'nomor_register' => $request->input('no_reg'),
@@ -68,7 +70,16 @@ class gaset_tetap_lainnyaController extends Controller
         ];
         aset_tetap_lainnya::create($dataAsetTetapLainnya);
 
-        return redirect()->route('aset_tetap_lainnya.index')->with('message', 'Data Aset Tetap Lainnya Berhasil Ditambahkan');
+        if ($idPengadaan != 0) {
+            $details = [
+                'id_pengadaan' => $idPengadaan,
+                'id_aset' => $id_aset,
+            ];
+            detail_pengadaan::create($details);
+            return redirect()->route('pengadaan.show', $idPengadaan)->with('message', 'Data Aset Tetap Lainnya Berhasil Ditambahkan');
+        } else {
+            return redirect()->route('aset_tetap_lainnya.index')->with('message', 'Data Aset Tetap Lainnya Berhasil Ditambahkan');
+        }
     }
 
     /**
