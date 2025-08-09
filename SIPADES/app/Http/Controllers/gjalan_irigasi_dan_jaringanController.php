@@ -31,7 +31,7 @@ class gjalan_irigasi_dan_jaringanController extends Controller
     public function create(String $id)
     {
         // Return the view for creating a new resource
-        $rekening = rekening::all();
+        $rekening = rekening::where('id_golongan', 'like', '4')->get();
         $aset = aset::all();
         $jalan_irigasi_dan_jaringan = jalan_irigasi_dan_jaringan::all();
         $tanah = tanah::all();
@@ -104,7 +104,7 @@ class gjalan_irigasi_dan_jaringanController extends Controller
         // Fetch the specific resource by ID
         $jalan_irigasi_dan_jaringan = jalan_irigasi_dan_jaringan::findOrFail($id);
         $aset = aset::all();
-        $rekening = rekening::all();
+        $rekening = rekening::where('id_golongan', 'like', '4')->get();
         $tanah = tanah::all();
 
         // Return the view for editing the resource

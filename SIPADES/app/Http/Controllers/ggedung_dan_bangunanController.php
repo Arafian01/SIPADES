@@ -28,7 +28,7 @@ class ggedung_dan_bangunanController extends Controller
     public function create(String $id)
     {
         $aset = aset::all();
-        $rekening = rekening::all();
+        $rekening = rekening::where('id_golongan', 'like', '3')->get();
         $tanah = tanah::all(); 
         return view('page.golongan.gedung_dan_bangunan.create', compact('aset', 'rekening', 'tanah', 'id'));
     }
@@ -99,7 +99,7 @@ class ggedung_dan_bangunanController extends Controller
     {
         $gedung_dan_bangunan = gedung_dan_bangunan::findOrFail($id);
         $aset = aset::all();
-        $rekening = rekening::all();
+        $rekening = rekening::where('id_golongan', 'like', '3')->get();
         $tanah = tanah::all();
         return view('page.golongan.gedung_dan_bangunan.edit', compact('gedung_dan_bangunan', 'aset', 'rekening', 'tanah'));
     }

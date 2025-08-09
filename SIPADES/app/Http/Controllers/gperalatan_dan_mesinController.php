@@ -28,7 +28,7 @@ class gperalatan_dan_mesinController extends Controller
     public function create(String $id)
     {
         $aset = aset::all();
-        $rekening = rekening::all();
+        $rekening = rekening::where('id_golongan', 'like', '2')->get();
         $ruangan = ruangan::all();
         $peralatan_dan_mesin = peralatan_dan_mesin::all();
 
@@ -100,13 +100,13 @@ class gperalatan_dan_mesinController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $id, String $id_pengadaan)
     {
         $peralatan_dan_mesin = peralatan_dan_mesin::findOrFail($id);
         $aset = aset::all();
-        $rekening = rekening::all();
+        $rekening = rekening::where('id_golongan', 'like', '2')->get();
         $ruangan = ruangan::all();
-        return view('page.golongan.peralatan_dan_mesin.edit', compact('peralatan_dan_mesin', 'aset', 'rekening', 'ruangan'));
+        return view('page.golongan.peralatan_dan_mesin.edit', compact('peralatan_dan_mesin', 'aset', 'rekening', 'ruangan', 'id_pengadaan'));
     }
 
     /**
@@ -114,6 +114,7 @@ class gperalatan_dan_mesinController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $idPengadaan = $request->input('id_pengadaan');
         $peralatan_dan_mesin = peralatan_dan_mesin::findOrFail($id);
         $aset = aset::findOrFail($peralatan_dan_mesin->id_aset);
         $dataAset = [
@@ -146,7 +147,12 @@ class gperalatan_dan_mesinController extends Controller
             'perolehan' => $request->input('perolehan'),
         ];
         $peralatan_dan_mesin->update($dataPeralatanDanMesin);
-        return back()->with('message_delete', 'Data Peralatan dan Mesin Berhasil Diupdate');
+
+        if ($idPengadaan > 0) {
+            return redirect()->route('pengadaan.show', $idPengadaan)->with('message_update', 'Data Peralatan dan Mesin Berhasil Diupdate');
+        } else {
+            return redirect()->route('peralatan_dan_mesin.index')->with('message_update', 'Data Peralatan dan Mesin Berhasil Diupdate');
+        }
     }
 
     /**

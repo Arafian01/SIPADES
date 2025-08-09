@@ -31,7 +31,7 @@ class gtanahController extends Controller
     public function create(String $id)
     {
         $aset = aset::all();
-        $rekening = rekening::all();
+        $rekening = rekening::where('id_golongan', 'like', '1')->get(); // Assuming tanah uses rekening with kode_rekening starting with '5'
         return view('page.golongan.tanah.create')->with([
             'aset' => $aset,
             'rekening' => $rekening,
@@ -103,15 +103,16 @@ class gtanahController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $id, String $id_pengadaan)
     {
         $tanah = tanah::findOrFail($id);
         $aset = aset::all();
-        $rekening = rekening::all();
+        $rekening = rekening::where('id_golongan', 'like', '1')->get();
         return view('page.golongan.tanah.edit')->with([
             'tanah' => $tanah,
             'aset' => $aset,
             'rekening' => $rekening,
+            'id_pengadaan' => $id_pengadaan,
         ]);
     }
 
@@ -120,6 +121,7 @@ class gtanahController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $idPengadaan = $request->input('id_pengadaan');
         $tanah = tanah::findOrFail($id);
         $aset = aset::findOrFail($tanah->id_aset);
 
@@ -156,7 +158,12 @@ class gtanahController extends Controller
             'keterangan' => $request->input('keterangan'),
         ];
         $tanah->update($dataTanah);
-        return back()->with('message_update', 'Data Tanah Berhasil Diperbarui');
+
+        if ($idPengadaan > 0) {
+            return redirect()->route('pengadaan.show', $idPengadaan)->with('message_update', 'Data Tanah Berhasil Diupdate');
+        } else {
+            return redirect()->route('tanah.index')->with('message_update', 'Data Tanah Berhasil Diupdate');
+        }
     }
 
     /**

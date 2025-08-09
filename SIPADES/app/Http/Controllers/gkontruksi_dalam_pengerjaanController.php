@@ -31,7 +31,7 @@ class gkontruksi_dalam_pengerjaanController extends Controller
     {
         // Return the view for creating a new resource
         $aset = aset::all();
-        $rekening = rekening::all();
+        $rekening = rekening::where('id_golongan', 'like', '6')->get();
         return view('page.golongan.kontruksi_dalam_pengerjaan.create', compact('aset', 'rekening', 'id'));
     }
 
@@ -92,7 +92,7 @@ class gkontruksi_dalam_pengerjaanController extends Controller
         // Fetch the specific kontruksi_dalam_pengerjaan by ID
         $kontruksi_dalam_pengerjaan = kontruksi_dalam_pengerjaan::findOrFail($id);
         $aset = aset::all();
-        $rekening = rekening::all();
+        $rekening = rekening::where('id_golongan', 'like', '6')->get();
 
         // Return the view for editing the resource
         return view('page.golongan.kontruksi_dalam_pengerjaan.edit', compact('kontruksi_dalam_pengerjaan', 'aset', 'rekening'));
