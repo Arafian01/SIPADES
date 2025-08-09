@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('rekening', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('id_golongan')->constrained('golongan')->onDelete('cascade');
             $table->string('kode');
             $table->string('nama_rekening');
             $table->timestamps();
