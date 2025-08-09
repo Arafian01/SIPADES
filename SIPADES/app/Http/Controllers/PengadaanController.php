@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\aset;
 use App\Models\pengadaan;
 use App\Models\pengguna;
 use Illuminate\Http\Request;
@@ -24,9 +25,10 @@ class PengadaanController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(String $id)
     {
-
+        $pengadaan = pengadaan::findOrFail($id);
+        
     }
 
     /**
@@ -57,6 +59,8 @@ class PengadaanController extends Controller
     {
         $pengadaan = pengadaan::findOrFail($id);
         $pengguna = pengguna::all();
+        $pengadaan = Pengadaan::with('detailPengadaan.aset.rekening')->findOrFail($id);
+
         return view('page.pengadaan.create')->with([
             'pengadaan' => $pengadaan,
             'pengguna' => $pengguna,
