@@ -11,10 +11,16 @@ class rekening extends Model
     protected $fillable = [
         'kode',
         'nama_rekening',
+        'id_golongan',
     ];
 
     public function aset()
     {
         return $this->hasMany('App\Models\aset', 'id_rekening');
+    }
+
+    public function golongan()
+    {
+        return $this->belongsTo('App\Models\golongan', 'id_golongan');
     }
 }
