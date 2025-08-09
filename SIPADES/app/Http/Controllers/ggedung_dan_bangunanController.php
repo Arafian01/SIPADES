@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\aset;
+use App\Models\detail_pengadaan;
 use App\Models\gedung_dan_bangunan;
 use App\Models\rekening;
 use App\Models\tanah;
@@ -24,12 +25,12 @@ class ggedung_dan_bangunanController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(String $id)
     {
         $aset = aset::all();
         $rekening = rekening::all();
         $tanah = tanah::all(); 
-        return view('page.golongan.gedung_dan_bangunan.create', compact('aset', 'rekening', 'tanah'));
+        return view('page.golongan.gedung_dan_bangunan.create', compact('aset', 'rekening', 'tanah', 'id'));
     }
 
     /**
@@ -37,6 +38,7 @@ class ggedung_dan_bangunanController extends Controller
      */
     public function store(Request $request)
     {
+        $idPengadaan = $request->input('id_pengadaan');
         $dataAset = [
             'id_barang' => $request->input('id_barang'),
             'nomor_register' => $request->input('no_reg'),
@@ -68,7 +70,18 @@ class ggedung_dan_bangunanController extends Controller
         ];
         gedung_dan_bangunan::create($dataGedungDanBangunan);
 
-        return redirect()->route('gedung_dan_bangunan.index')->with('message', 'Data Gedung dan Bangunan Berhasil Ditambahkan');
+        if ($idPengadaan != 0) {
+            $details = [
+                'id_pengadaan' => $idPengadaan,
+                'id_aset' => $id_aset,
+            ];
+            detail_pengadaan::create($details);
+            return redirect()->route('pengadaan.show', $idPengadaan)
+                ->with('message_delete', 'Data Gedung dan Bangunan Berhasil Ditambahkan');
+        } else {
+            return redirect()->route('gedung_dan_bangunan.index')
+                ->with('message_delete', 'Data Gedung dan Bangunan Berhasil Ditambahkan');
+        }
     }
 
     /**
