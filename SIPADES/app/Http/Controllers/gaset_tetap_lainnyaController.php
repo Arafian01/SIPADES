@@ -30,7 +30,7 @@ class gaset_tetap_lainnyaController extends Controller
     public function create(String $id)
     {
         // Return the view for creating a new resource
-        $rekening = rekening::all();
+        $rekening = rekening::where('id_golongan', 'like', '5')->get();
         $aset = aset::all();
         return view('page.golongan.aset_tetap_lainnya.create', compact('rekening', 'aset', 'id'));
     }
@@ -98,7 +98,7 @@ class gaset_tetap_lainnyaController extends Controller
         // Fetch the specific resource by ID
         $aset_tetap_lainnya = aset_tetap_lainnya::findOrFail($id);
         $aset = aset::all();
-        $rekening = rekening::all();
+        $rekening = rekening::where('id_golongan', 'like', '5')->get();
 
         // Return the view for editing the resource
         return view('page.golongan.aset_tetap_lainnya.edit', compact('aset_tetap_lainnya', 'aset', 'rekening'));
