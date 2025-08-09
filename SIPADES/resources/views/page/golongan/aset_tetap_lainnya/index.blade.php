@@ -11,7 +11,7 @@
                 <div class="p-4 flex items-center justify-between">
                     <div>DATA GOLONGAN ASET TETAP LAINNYA</div>
                     <div>
-                        <a href="{{ route('aset_tetap_lainnya.create') }}" 
+                        <a href="{{ route('aset_tetap_lainnya.create', '0') }}" 
                             class="bg-sky-600 p-2 hover:bg-sky-400 text-white rounded-xl">Add</a>
                     </div>
                 </div>
