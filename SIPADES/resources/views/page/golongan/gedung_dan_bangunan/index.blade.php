@@ -98,7 +98,7 @@
                                             
                                         </td> --}}
                                         <td class="px-6 py-4">
-                                            <a href="{{ route('gedung_dan_bangunan.edit', $t->id) }}"
+                                            <a href="{{ route('gedung_dan_bangunan.edit', [$t->id, '0']) }}"
                                                 class="bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-md text-xs text-white">Edit</a>
                                             <button onclick="return peralatanDelete('{{ $t->id }}','{{ $t->aset->rekening->nama_rekening }}')" class="bg-red-500 hover:bg-bg-red-300 px-3 py-1 rounded-md text-xs text-white">Delete</button>
                                         </td>
