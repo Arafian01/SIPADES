@@ -93,7 +93,7 @@ class gaset_tetap_lainnyaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $id, String $id_pengadaan)
     {
         // Fetch the specific resource by ID
         $aset_tetap_lainnya = aset_tetap_lainnya::findOrFail($id);
@@ -101,7 +101,7 @@ class gaset_tetap_lainnyaController extends Controller
         $rekening = rekening::where('id_golongan', 'like', '5')->get();
 
         // Return the view for editing the resource
-        return view('page.golongan.aset_tetap_lainnya.edit', compact('aset_tetap_lainnya', 'aset', 'rekening'));
+        return view('page.golongan.aset_tetap_lainnya.edit', compact('aset_tetap_lainnya', 'aset', 'rekening', 'id_pengadaan'));
     }
 
     /**
@@ -109,6 +109,7 @@ class gaset_tetap_lainnyaController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $idPengadaan = $request->input('id_pengadaan');
         $aset_tetap_lainnya = aset_tetap_lainnya::findOrFail($id);
         $aset = aset::findOrFail($aset_tetap_lainnya->id_aset);
 
@@ -137,7 +138,11 @@ class gaset_tetap_lainnyaController extends Controller
             'perolehan' => $request->input('perolehan'),
         ];
         $aset_tetap_lainnya->update($dataAsetTetapLainnya);
-        return redirect()->route('aset_tetap_lainnya.index')->with('message', 'Data Aset Tetap Lainnya Berhasil Diperbarui');
+        if ($idPengadaan != '0') {
+            return redirect()->route('pengadaan.show', $idPengadaan)->with('success', 'Data berhasil diperbarui.');
+        } else {
+            return redirect()->route('aset_tetap_lainnya.index')->with('success', 'Data berhasil diperbarui.');
+        }
     }
 
     /**
