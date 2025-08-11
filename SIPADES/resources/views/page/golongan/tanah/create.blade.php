@@ -373,16 +373,14 @@
                         </div>
 
                         <!-- Hidden Field -->
-                        <input type="hidden" name="id_pengadaan" value="{{ $id }}">
+                        <input type="" name="id_pengadaan" value="{{ $id }}">
 
                         <!-- Form Actions -->
                         <div class="mt-8 flex justify-end space-x-4">
-                            <button
+                            <a href="{{ url()->previous() }}"
                                 class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200">
-                                <a href="{{ route('tanah.index') }}">
                                     <i class="fas fa-arrow-left mr-1"></i> Batal
-                                </a>
-                            </button>
+                            </a>
                             <button type="submit"
                                 class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none"
