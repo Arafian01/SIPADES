@@ -3,9 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\aset;
+use App\Models\aset_tetap_lainnya;
+use App\Models\gedung_dan_bangunan;
 use App\Models\golongan;
+use App\Models\jalan_irigasi_dan_jaringan;
+use App\Models\kontruksi_dalam_pengerjaan;
 use App\Models\pengadaan;
 use App\Models\pengguna;
+use App\Models\peralatan_dan_mesin;
+use App\Models\tanah;
 use Illuminate\Http\Request;
 
 class PengadaanController extends Controller
@@ -26,40 +32,37 @@ class PengadaanController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(String $id, String $id_golongan, String $id_aset)
-    {
-        $pengadaan = pengadaan::findOrFail($id);
-        $golongan = golongan::findOrFail($id_golongan);
+public function create(String $id, String $id_golongan, String $id_aset)
+{
+    $pengadaan = pengadaan::findOrFail($id);
+    $golongan  = golongan::findOrFail($id_golongan);
 
-        switch ($golongan->id) {
-            case 1:
-                $nama_golongan = 'tanah';
-                break;
-            case 2:
-                $nama_golongan = 'peralatan_dan_mesin';
-                break;
-            case 3:
-                $nama_golongan = 'gedung_dan_bangunan';
-                break;
-            case 4:
-                $nama_golongan = 'jalan_irigasi_dan_jaringan';
-                break;
-            case 5:
-                $nama_golongan = 'aset_tetap_lainnya';
-                break;
-            case 6:
-                $nama_golongan = 'kontruksi_dalam_pengerjaan';
-                break;
-            default:
-                $nama_golongan = 'unknown';
-                break;
-        }
+    // Mapping ID Golongan ke Model
+    $modelMap = [
+        1 => tanah::class,
+        2 => peralatan_dan_mesin::class,
+        3 => gedung_dan_bangunan::class,
+        4 => jalan_irigasi_dan_jaringan::class,
+        5 => aset_tetap_lainnya::class,
+        6 => kontruksi_dalam_pengerjaan::class,
+    ];
 
-        return redirect()->route($nama_golongan . '.edit', [$id_aset, $pengadaan])->with([
-            'pengadaan' => $pengadaan,
-            'golongan' => $golongan,
-        ]);
+    if (!isset($modelMap[$golongan->id])) {
+        abort(404, 'Golongan tidak dikenal');
     }
+
+    $modelClass = $modelMap[$golongan->id];
+
+    // Cari data berdasarkan id_aset
+    $idgolongan = $modelClass::where('id_aset', $id_aset)->firstOrFail();
+
+    return redirect()->route($golongan->nama_golongan . '.edit', [$idgolongan->id, $pengadaan->id])
+        ->with([
+            'pengadaan' => $pengadaan,
+            'golongan'  => $golongan,
+        ]);
+}
+
 
 
     /**
@@ -124,10 +127,33 @@ class PengadaanController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $idPengadaan, string $idDetail)
     {
-        $pengadaan = pengadaan::findOrFail($id);
-        $pengadaan->delete();
-        return back()->with('message_delete', 'Data Pengadaan Berhasil Dihapus');
+        $pengadaan = pengadaan::findOrFail($idPengadaan);
+        $detail = $pengadaan->detailPengadaan()->findOrFail($idDetail);
+        $aset = $detail->aset;
+
+        if ($detail == null) {
+            return back()->with('message_delete', 'Detail Pengadaan atau Aset tidak ditemukan');
+        } else if ($aset) {
+            // Hapus detail pengadaan
+            $detail->delete();
+
+            // Hapus aset terkait jika tidak ada detail lain yang menggunakannya
+            if ($aset->detailPengadaan()->count() == 0) {
+                $aset->delete();
+            }
+        } else {
+            return back()->with('message_delete', 'Aset tidak ditemukan');
+
+        }
+
+
+        return back()->with('message_delete', 'Detail Pengadaan Berhasil Dihapus');
     }
+    
+        // $pengadaan = pengadaan::findOrFail($id);
+        // $pengadaan->delete();
+        // return back()->with('message_delete', 'Data Pengadaan Berhasil Dihapus');
+    
 }
