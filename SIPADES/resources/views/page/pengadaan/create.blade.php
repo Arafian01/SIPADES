@@ -64,27 +64,39 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {{-- @php $no = 1; @endphp
-                                @foreach ($pengadaan as $r)
-                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                @php $no = 1; @endphp
+                                @foreach ($pengadaan->detailPengadaan as $detail)
+                                    @php $a = $detail->aset; @endphp
+                                    <tr
+                                        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                        <th scope="row"
+                                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                             {{ $no++ }}
                                         </th>
-                                        <td class="px-6 py-4">{{ $r->no_pengadaan }}</td>
-                                        <td class="px-6 py-4">{{ $r->tanggal_pengadaan }}</td>
-                                        <td class="px-6 py-4">{{ $r->no_kuitansi }}</td>
-                                        <td class="px-6 py-4">{{ $r->tanggal_spp }}</td>
-                                        <td class="px-6 py-4">{{ $r->no_bast }}</td>
-                                        <td class="px-6 py-4">{{ $r->tanggal_bast }}</td>
-                                        <td class="px-6 py-4">{{ $r->nama_rekanan }}</td>
-                                        <td class="px-6 py-4">{{ $r->uraian }}</td>
-                                        <td class="px-6 py-4 flex space-x-2">
-                                            <a class="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-lg text-white text-sm transition duration-200" href="{{ route('pengadaan.create', $r->id) }}">
+                                        <td class="px-6 py-4">{{ $a->rekening->kode ?? '-' }}</td>
+                                        <td class="px-6 py-4">{{ $a->rekening->nama_rekening ?? '-' }}</td>
+                                        <td class="px-6 py-4">{{ $a->sumber_dana ?? '-' }}</td>
+                                        <td class="px-6 py-4">{{ $a->nilai_perolehan ?? '-' }}</td>
+                                        {{-- <td class="px-6 py-4 flex space-x-2">
+                                            <a class="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-lg text-white text-sm transition duration-200"
+                                                href="{{ route('pengadaan.create', [$detail->pengadaan->id, $a->rekening->golongan->id, $a->id]) }}">
                                                 Detail
                                             </a>
+                                        </td> --}}
+
+                                        <td class="px-6 py-4 flex space-x-2">
+                                            <a class="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-lg text-white text-sm transition duration-200"
+                                                href="{{ route('pengadaan.create', [$detail->pengadaan->id, $a->rekening->golongan->id, $a->id]) }}">
+                                                Detail
+                                            </a>
+                                            <button onclick="ruanganDelete({{ $pengadaan->id }}, {{ $detail->id }}, '{{ $a->rekening->nama_rekening }}')"
+                                                class="bg-red-500 hover:bg-red-600 px-4 py-2 rounded-lg text-white text-sm transition duration-200">
+                                                Delete
+                                            </button>
                                         </td>
                                     </tr>
-                                @endforeach --}}
+                                @endforeach
+
                             </tbody>
                         </table>
                     </div>
@@ -108,34 +120,34 @@
             </div>
             <div class="p-6 space-y-4">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <button
+                    <a href="{{ route('tanah.create', ['id' => $pengadaan->id]) }}"
                         class="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium px-4 py-2 rounded-lg transition duration-200">
                         Golongan Tanah
-                    </button>
-                    <button
+                    </a>
+                    <a href="{{ route('peralatan_dan_mesin.create', ['id' => $pengadaan->id]) }}"
                         class="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium px-4 py-2 rounded-lg transition duration-200">
                         Golongan Peralatan dan Mesin
-                    </button>
-                    <button
+                    </a>
+                    <a href="{{ route('gedung_dan_bangunan.create', ['id' => $pengadaan->id]) }}"
                         class="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium px-4 py-2 rounded-lg transition duration-200">
                         Golongan Gedung dan Bangunan
-                    </button>
-                    <button
+                    </a>
+                    <a href="{{ route('jalan_irigasi_dan_jaringan.create', ['id' => $pengadaan->id]) }}"
                         class="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium px-4 py-2 rounded-lg transition duration-200">
                         Golongan Jalan, Irigasi, dan Jaringan
-                    </button>
-                    <button
+                    </a>
+                    <a href="{{ route('aset_tetap_lainnya.create', ['id' => $pengadaan->id]) }}"
                         class="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium px-4 py-2 rounded-lg transition duration-200">
                         Golongan Aset Tetap Lainnya
-                    </button>
-                    <button
+                    </a>
+                    <a href="{{ route('kontruksi_dalam_pengerjaan.create', ['id' => $pengadaan->id]) }}"
                         class="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium px-4 py-2 rounded-lg transition duration-200">
                         Golongan Konstruksi Dalam Pengerjaan
-                    </button>
+                    </a>
                 </div>
             </div>
             <div class="flex items-center justify-end p-4 border-t dark:border-gray-700 space-x-3">
-               
+
                 <button type="button" onclick="sourceModalClose()"
                     class="bg-red-500 hover:bg-red-600 px-6 py-2 rounded-lg text-white transition duration-200">
                     Batal
@@ -224,10 +236,10 @@
             document.getElementById('sourceModal').classList.add('hidden');
         }
 
-        const ruanganDelete = async (id, ruangan) => {
-            let tanya = confirm(`Apakah anda yakin untuk menghapus pengadaan ${ruangan} ?`);
+        const ruanganDelete = async (idPengadaan, idDetail, nama) => {
+            let tanya = confirm(`Apakah anda yakin untuk menghapus pengadaan ${idPengadaan}, ${idDetail}, ${nama} ?`);
             if (tanya) {
-                await axios.post(`/pengadaan/${id}`, {
+                await axios.post(`/pengadaan/${idPengadaan}/${idDetail}`, {
                         '_method': 'DELETE',
                         '_token': $('meta[name="csrf-token"]').attr('content')
                     })
