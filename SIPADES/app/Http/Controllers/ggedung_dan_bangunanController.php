@@ -95,13 +95,13 @@ class ggedung_dan_bangunanController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $id, string $id_pengadaan)
     {
         $gedung_dan_bangunan = gedung_dan_bangunan::findOrFail($id);
         $aset = aset::all();
         $rekening = rekening::where('id_golongan', 'like', '3')->get();
         $tanah = tanah::all();
-        return view('page.golongan.gedung_dan_bangunan.edit', compact('gedung_dan_bangunan', 'aset', 'rekening', 'tanah'));
+        return view('page.golongan.gedung_dan_bangunan.edit', compact('gedung_dan_bangunan', 'aset', 'rekening', 'tanah', 'id_pengadaan'));
     }
 
     /**
@@ -109,6 +109,7 @@ class ggedung_dan_bangunanController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $idPengadaan = $request->input('id_pengadaan');
         $gedung_dan_bangunan = gedung_dan_bangunan::findOrFail($id);
         $aset = aset::findOrFail($gedung_dan_bangunan->id_aset);
 
@@ -141,7 +142,13 @@ class ggedung_dan_bangunanController extends Controller
         ];
         $gedung_dan_bangunan->update($dataGedungDanBangunan);
 
-        return redirect()->route('gedung_dan_bangunan.index')->with('message', 'Data Gedung dan Bangunan Berhasil Diperbarui');
+        if ($idPengadaan != 0) {
+            return redirect()->route('pengadaan.show', $idPengadaan)
+                ->with('message_delete', 'Data Gedung dan Bangunan Berhasil Diupdate');
+        } else {
+            return redirect()->route('gedung_dan_bangunan.index')
+                ->with('message_delete', 'Data Gedung dan Bangunan Berhasil Diupdate');
+        }
     }
 
     /**
