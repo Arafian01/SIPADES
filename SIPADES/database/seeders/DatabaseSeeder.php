@@ -23,22 +23,22 @@ class DatabaseSeeder extends Seeder
 
         // buat 5 data golongan
         golongan::create([
-            'nama_golongan' => 'Tanah',
+            'nama_golongan' => 'tanah',
         ]);
         golongan::create([
-            'nama_golongan' => 'Peralatan dan Mesin',
+            'nama_golongan' => 'peralatan_dan_mesin',
         ]);
         golongan::create([
-            'nama_golongan' => 'Gedung dan Bangunan',
+            'nama_golongan' => 'gedung_dan_bangunan',
         ]);
         golongan::create([
-            'nama_golongan' => 'Jalan, Irigasi, dan Jaringan',
+            'nama_golongan' => 'jalan_irigasi_dan_jaringan',
         ]);
         golongan::create([
-            'nama_golongan' => 'Aset Tetap Lainnya',
+            'nama_golongan' => 'aset_tetap_lainnya',
         ]);
         golongan::create([
-            'nama_golongan' => 'Konstruksi Dalam Pengerjaan',
+            'nama_golongan' => 'kontruksi_dalam_pengerjaan',
         ]);
     }
 }
