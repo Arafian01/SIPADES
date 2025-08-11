@@ -99,7 +99,7 @@ class gjalan_irigasi_dan_jaringanController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $id, string $id_pengadaan)
     {
         // Fetch the specific resource by ID
         $jalan_irigasi_dan_jaringan = jalan_irigasi_dan_jaringan::findOrFail($id);
@@ -108,7 +108,7 @@ class gjalan_irigasi_dan_jaringanController extends Controller
         $tanah = tanah::all();
 
         // Return the view for editing the resource
-        return view('page.golongan.jalan_irigasi_dan_jaringan.edit', compact('jalan_irigasi_dan_jaringan', 'aset', 'rekening', 'tanah'));
+        return view('page.golongan.jalan_irigasi_dan_jaringan.edit', compact('jalan_irigasi_dan_jaringan', 'aset', 'rekening', 'tanah', 'id_pengadaan'));
     }
 
     /**
@@ -116,6 +116,7 @@ class gjalan_irigasi_dan_jaringanController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $idPengadaan = $request->input('id_pengadaan');
         $jalan_irigasi_dan_jaringan = jalan_irigasi_dan_jaringan::findOrFail($id);
         $aset = aset::findOrFail($jalan_irigasi_dan_jaringan->id_aset);
 
@@ -149,7 +150,13 @@ class gjalan_irigasi_dan_jaringanController extends Controller
         ];
         $jalan_irigasi_dan_jaringan->update($dataJalanIrigasiDanJaringan);
 
-        return redirect()->route('jalan_irigasi_dan_jaringan.index')->with('message', 'Data Jalan, Irigasi dan Jaringan Berhasil Diperbarui');
+        if ($idPengadaan != 0) {
+            return redirect()->route('pengadaan.show', $idPengadaan)
+                ->with('message', 'Data Jalan, Irigasi dan Jaringan Berhasil Diperbarui');
+        } else {
+            return redirect()->route('jalan_irigasi_dan_jaringan.index')
+                ->with('message', 'Data Jalan, Irigasi dan Jaringan Berhasil Diperbarui');
+        }
     }
 
     /**
