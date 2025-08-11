@@ -1,16 +1,16 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <h2 class="font-semibold text-lg text-gray-800 dark:text-gray-200 leading-tight">
             {{ __('PERANGKAT DESA DAN PENGGUNA') }}
         </h2>
     </x-slot>
 
-    <div class="py-8">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+    <div class="py-6">
+        <div class="mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <!-- Header with Search and Add Button -->
-                <div class="p-6 flex flex-col md:flex-row items-center justify-between gap-4 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-gray-700 dark:to-gray-800 border-b border-gray-200 dark:border-gray-700">
-                    <div class="text-2xl font-bold text-gray-800 dark:text-white">
+                <div class="p-6 flex flex-col md:flex-row items-center justify-between gap-4 bg-gradient-to-r dark:from-gray-700 dark:to-gray-800 border-b border-gray-200 dark:border-gray-700">
+                    <div class="text-lg font-semibold text-gray-800 dark:text-white">
                         DATA PERANGKAT DESA DAN PENGGUNA
                     </div>
                     <div class="flex items-center gap-3 w-full md:w-auto">
@@ -22,11 +22,11 @@
                             </div>
                             <input type="text" id="searchInput" class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-white focus:ring-blue-500 focus:border-blue-500" placeholder="Cari pengguna...">
                         </div>
-                        <button onclick="return functionAdd()" class="flex items-center bg-sky-600 hover:bg-sky-500 text-white px-4 py-2 rounded-lg transition-all duration-200 shadow hover:shadow-md">
+                        <button onclick="return functionAdd()" class="flex items-center bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-all duration-200 shadow hover:shadow-md">
                             <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                             </svg>
-                            Tambah
+                            Tambah Pengguna
                         </button>
                     </div>
                 </div>
@@ -71,7 +71,7 @@
                                         </td>
                                         <td class="px-6 py-4">
                                             <span class="px-2 py-1 text-xs font-semibold rounded-full 
-                                                @if($p->jabatan === 'Kepala Desa') bg-purple-100 text-purple-800 
+                                                @if($p->jabatan === 'Kepala Desa') bg-amber-100 text-amber-800 
                                                 @elseif($p->jabatan === 'Sekretaris Desa') bg-blue-100 text-blue-800 
                                                 @elseif($p->jabatan === 'Kaur Keuangan') bg-green-100 text-green-800 
                                                 @elseif($p->jabatan === 'Kaur Umum') bg-yellow-100 text-yellow-800 
@@ -86,7 +86,7 @@
                                         </td>
                                         <td class="px-6 py-4">
                                             @if($p->jabatan_tim_inventarisasi)
-                                                <span class="bg-teal-100 text-teal-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-teal-900 dark:text-teal-300">
+                                                <span class="bg-teal-100 text-teal-800 text-xs font-medium px-2. py-0.5 rounded dark:bg-teal-900 dark:text-teal-300">
                                                     {{ $p->jabatan_tim_inventarisasi }}
                                                 </span>
                                             @else
@@ -151,10 +151,6 @@
                     <h3 class="text-xl font-semibold text-white" id="title_source">
                         Tambah Pengguna
                     </h3>
-                    <button type="button" onclick="sourceModalClose()"
-                        class="text-white hover:text-gray-200 transition-colors duration-200">
-                        <i class="fa-solid fa-xmark text-xl"></i>
-                    </button>
                 </div>
                 <form method="POST" id="formSourceModal">
                     @csrf
@@ -229,10 +225,6 @@
                     <h3 class="text-xl font-semibold text-white" id="title_source">
                         Update Pengguna
                     </h3>
-                    <button type="button" onclick="sourceModalClose()"
-                        class="text-white hover:text-gray-200 transition-colors duration-200">
-                        <i class="fa-solid fa-xmark text-xl"></i>
-                    </button>
                 </div>
                 <form method="POST" id="formSourceModalEdit">
                     @csrf
@@ -289,7 +281,7 @@
                             <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                             </svg>
-                            Update
+                            Simpan Perubahan
                         </button>
                     </div>
                 </form>
