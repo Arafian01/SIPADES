@@ -1,23 +1,29 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex items-center justify-between">
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                {{ __('Manajemen Kode Rekening Aset Desa') }}
+            <h2 class="font-semibold text-lg text-gray-800 dark:text-gray-200 leading-tight">
+                {{ __('MANAJEMEN KODE REKENING ASET DESA') }}
             </h2>
         </div>
     </x-slot>
 
-    <div class="py-8">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+    <div class="py-6">
+        <div class="mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
-                    <div class="flex items-center">
-                        <i class="fas fa-list-alt text-blue-500 mr-3"></i>
-                        <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200">Daftar Kode Rekening Aset</h3>
+                     <div class="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                        DAFTAR KODE REKENING ASET
                     </div>
                     <div class="flex space-x-2">
                         <!-- Search Input -->
                         <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none"
+                                    stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                </svg>
+                            </div>
                             <input type="text" id="searchInput" placeholder="Cari rekening..."
                                 class="pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                                 onkeyup="searchTable()">
@@ -28,6 +34,10 @@
                         <!-- Add Button -->
                         <button onclick="return functionAdd()"
                             class="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center">
+                            <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width=""
+                                    d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                            </svg>
                             <i class="fas fa-plus mr-2"></i> Tambah Rekening
                         </button>
                     </div>
@@ -51,6 +61,12 @@
                                     <th scope="col" class="px-6 py-3">
                                         <div class="flex items-center">
                                             Nama Rekening
+                                            <button><i class="fas fa-sort ml-1 text-gray-400"></i></button>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        <div class="flex items-center">
+                                            Golongan
                                             <button><i class="fas fa-sort ml-1 text-gray-400"></i></button>
                                         </div>
                                     </th>
@@ -79,18 +95,40 @@
                                                 {{ $r->nama_rekening }}
                                             </div>
                                         </td>
+                                        <td class="px-6 py-4">
+                                            <span
+                                                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
+                                                {{ $r->golongan->nama_golongan }}
+                                            </span>
+                                        </td>
                                         <td class="px-6 py-4 flex justify-center space-x-2">
                                             <button type="button" data-id="{{ $r->id }}"
                                                 data-modal-target="sourceModalEdit" data-kode="{{ $r->kode }}"
-                                                data-nama_rekening="{{ $r->nama_rekening }}"
+                                                data-nama_rekening="{{ $r->nama_rekening }}" data-golongan="{{ $r->golongan->id }}"
                                                 onclick="editSourceModal(this)"
                                                 class="bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-md text-xs text-white flex items-center">
-                                                <i class="fas fa-edit mr-1"></i> Edit
+                                                <i class="fas fa-edit mr-1"></i>
+                                                <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor"
+                                                    viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">
+                                                    </path>
+                                                </svg>
+                                                Edit
                                             </button>
                                             <button
                                                 onclick="return rekeningDelete('{{ $r->id }}','{{ $r->nama_rekening }}')"
                                                 class="bg-red-500 hover:bg-red-600 px-3 py-1 rounded-md text-xs text-white flex items-center">
-                                                <i class="fas fa-trash-alt mr-1"></i> Hapus
+                                                <i class="fas fa-trash-alt mr-1"></i>
+                                                <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor"
+                                                    viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                                                    </path>
+                                                </svg>
+                                                Hapus
                                             </button>
                                         </td>
                                     </tr>
@@ -116,16 +154,13 @@
                     <h3 class="text-xl font-semibold text-white" id="title_source">
                         <i class="fas fa-plus-circle mr-2"></i> Tambah Rekening Baru
                     </h3>
-                    <button type="button" onclick="sourceModalClose()"
-                        class="text-white hover:text-gray-200 text-sm w-8 h-8 ml-auto inline-flex justify-center items-center">
-                        <i class="fa-solid fa-xmark text-xl"></i>
-                    </button>
                 </div>
                 <form method="POST" id="formSourceModal">
                     @csrf
                     <div class="p-6 space-y-4">
                         <div>
-                            <label for="kode" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            <label for="kode"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                 <i class="fas fa-hashtag mr-2 text-blue-500"></i>Kode Rekening
                             </label>
                             <input type="text" id="kode" name="kode" placeholder="Masukkan kode rekening"
@@ -143,16 +178,36 @@
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 required />
                         </div>
+                        <div>
+                            <label for="golongan_id"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                <i class="fas fa-list mr-2 text-blue-500"></i>Pilih Golongan
+                            </label>
+                            <select id="golongan_id" name="golongan_id"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                required>
+                                <option value="">-- Pilih Golongan --</option>
+                                @foreach ($golongan as $g)
+                                    <option value="{{ $g->id }}">{{ $g->nama_golongan }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
                     <div
-                        class="flex items-center p-6 space-x-3 border-t border-gray-200 rounded-b dark:border-gray-700">
-                        <button type="submit" id="formSourceButton"
-                            class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 flex items-center">
-                            <i class="fas fa-save mr-2"></i> Simpan
-                        </button>
+                        class="flex items-center justify-end p-6 space-x-3 border-t border-gray-200 rounded-b dark:border-gray-700">
                         <button type="button" onclick="sourceModalClose()"
                             class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">
                             Batal
+                        </button>
+                        <button type="submit" id="formSourceButton"
+                            class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 flex items-center">
+                            <i class="fas fa-save mr-2"></i>
+                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4">
+                                </path>
+                            </svg>
+                            Simpan
                         </button>
                     </div>
                 </form>
@@ -170,10 +225,6 @@
                     <h3 class="text-xl font-semibold text-white" id="title_source">
                         <i class="fas fa-edit mr-2"></i> Edit Rekening
                     </h3>
-                    <button type="button" onclick="sourceModalClose()"
-                        class="text-white hover:text-gray-200 text-sm w-8 h-8 ml-auto inline-flex justify-center items-center">
-                        <i class="fa-solid fa-xmark text-xl"></i>
-                    </button>
                 </div>
                 <form method="POST" id="formSourceModalEdit">
                     @csrf
@@ -197,16 +248,35 @@
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-amber-500 focus:border-amber-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-amber-500 dark:focus:border-amber-500"
                                 required />
                         </div>
+                        <div>
+                            <label for="golongan_id_edit"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                <i class="fas fa-list mr-2 text-amber-500"></i>Pilih Golongan
+                            </label>
+                            <select id="golongan_id_edit" name="golongan_id"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-amber-500 focus:border-amber-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-amber-500 dark:focus:border-amber-500"
+                                required>
+                                <option value="">-- Pilih Golongan --</option>
+                                @foreach ($golongan as $g)
+                                    <option value="{{ $g->id }}">{{ $g->nama_golongan }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
                     <div
-                        class="flex items-center p-6 space-x-3 border-t border-gray-200 rounded-b dark:border-gray-700">
-                        <button type="submit" id="formSourceButtonEdit"
-                            class="text-white bg-amber-600 hover:bg-amber-700 focus:ring-4 focus:outline-none focus:ring-amber-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-amber-600 dark:hover:bg-amber-700 dark:focus:ring-amber-800 flex items-center">
-                            <i class="fas fa-save mr-2"></i> Simpan Perubahan
-                        </button>
+                        class="flex items-center justify-end p-6 space-x-3 border-t border-gray-200 rounded-b dark:border-gray-700">
                         <button type="button" onclick="sourceModalClose()"
-                            class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">
+                            class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600 transition-colors duration-200">
                             Batal
+                        </button>
+                        <button type="submit" id="formSourceButtonEdit"
+                            class="text-white bg-amber-600 hover:bg-amber-700 focus:ring-4 focus:outline-none focus:ring-amber-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-amber-500 dark:hover:bg-amber-600 dark:focus:ring-amber-800 transition-colors duration-200 flex items-center">
+                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">
+                                </path>
+                            </svg>
+                            Simpan Perubahan
                         </button>
                     </div>
                 </form>
@@ -291,6 +361,7 @@
             const id = button.dataset.id;
             const kode = button.dataset.kode;
             const nama_rekening = button.dataset.nama_rekening;
+            const golongan = button.dataset.golongan;
 
             let url = "{{ route('rekening.update', ':id') }}".replace(':id', id);
 
@@ -298,9 +369,13 @@
                 `<i class="fas fa-edit mr-2"></i> Edit Rekening ${nama_rekening}`;
 
             document.getElementById('kode_edit').value = kode;
+            document.getElementById('golongan_id_edit').value = golongan;
             document.getElementById('nama_rekening_edit').value = nama_rekening;
 
             formModal.setAttribute('action', url);
+
+            let event = new Event('change');
+            document.getElementById('golongan_id_edit').dispatchEvent(event);
 
             if (!formModal.querySelector('input[name="_token"]')) {
                 let csrfToken = document.createElement('input');
