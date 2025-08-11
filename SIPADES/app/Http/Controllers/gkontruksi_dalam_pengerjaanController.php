@@ -87,7 +87,7 @@ class gkontruksi_dalam_pengerjaanController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $id, String $id_pengadaan)
     {
         // Fetch the specific kontruksi_dalam_pengerjaan by ID
         $kontruksi_dalam_pengerjaan = kontruksi_dalam_pengerjaan::findOrFail($id);
@@ -95,7 +95,7 @@ class gkontruksi_dalam_pengerjaanController extends Controller
         $rekening = rekening::where('id_golongan', 'like', '6')->get();
 
         // Return the view for editing the resource
-        return view('page.golongan.kontruksi_dalam_pengerjaan.edit', compact('kontruksi_dalam_pengerjaan', 'aset', 'rekening'));
+        return view('page.golongan.kontruksi_dalam_pengerjaan.edit', compact('kontruksi_dalam_pengerjaan', 'aset', 'rekening', 'id_pengadaan'));
     }
 
     /**
@@ -103,6 +103,7 @@ class gkontruksi_dalam_pengerjaanController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $idPengadaan = $request->input('id_pengadaan');
         $kontruksi = kontruksi_dalam_pengerjaan::findOrFail($id);
         $dataAset = [
             'id_barang' => $request->input('id_barang'),
@@ -125,7 +126,12 @@ class gkontruksi_dalam_pengerjaanController extends Controller
         ];
         $kontruksi->update($dataKontruksi);
 
-        return redirect()->route('kontruksi_dalam_pengerjaan.index')->with('success', 'Data berhasil diperbarui.');
+        // Redirect based on whether idPengadaan is set
+        if ($idPengadaan > 0) {
+            return redirect()->route('pengadaan.show', $idPengadaan)->with('message_update', 'Data Konstruksi Dalam Pengerjaan Berhasil Diperbarui');
+        } else {
+            return redirect()->route('kontruksi_dalam_pengerjaan.index')->with('message_update', 'Data Konstruksi Dalam Pengerjaan Berhasil Diperbarui');
+        }
     }
 
     /**
