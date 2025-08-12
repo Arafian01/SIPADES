@@ -6,7 +6,7 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
+                        <img src="/images/sipades.png" alt="SIPADES Logo" class="h-9 w-auto">
                     </a>
                 </div>
 
@@ -114,8 +114,26 @@
                             </x-slot>
 
                             <x-slot name="content">
-                                <x-dropdown-link :href="route('pengadaan.index')" :active="request()->routeIs('pengadaan.index')">
-                                    {{ __('Pengadaan Aset') }}
+                                <x-dropdown-link :href="route('buku.index')" :active="request()->routeIs('pengadaan.index')">
+                                    {{ __('Buku') }}
+                                </x-dropdown-link>
+                                <x-dropdown-link :href="route('tanah.index')" :active="request()->routeIs('pengadaan.index')">
+                                    {{ __('Kartu Golongan Tanah') }}
+                                </x-dropdown-link>
+                                <x-dropdown-link :href="route('peralatan_dan_mesin.index')" :active="request()->routeIs('pengadaan.index')">
+                                    {{ __('Kartu Golongan Peralatan dan Mesin') }}
+                                </x-dropdown-link>
+                                <x-dropdown-link :href="route('gedung_dan_bangunan.index')" :active="request()->routeIs('pengadaan.index')">
+                                    {{ __('Kartu Golongan Gedung dan Bangunan') }}
+                                </x-dropdown-link>
+                                <x-dropdown-link :href="route('jalan_irigasi_dan_jaringan.index')" :active="request()->routeIs('pengadaan.index')">
+                                    {{ __('Kartu Golongan Jalan, Irigasi dan Jaringan') }}
+                                </x-dropdown-link>
+                                <x-dropdown-link :href="route('aset_tetap_lainnya.index')" :active="request()->routeIs('pengadaan.index')">
+                                    {{ __('Kartu Golongan Aset Tetap Lainnya') }}
+                                </x-dropdown-link>
+                                <x-dropdown-link :href="route('kontruksi_dalam_pengerjaan.index')" :active="request()->routeIs('pengadaan.index')">
+                                    {{ __('Kartu Golongan Kontruksi Dalam Pengerjaan') }}
                                 </x-dropdown-link>
                             </x-slot>
                         </x-dropdown>
