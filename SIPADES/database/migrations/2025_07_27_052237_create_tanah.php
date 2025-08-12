@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('id_aset')->constrained('aset')->onDelete('cascade');
             $table->string('kode_pemilik');
-            $table->date('tanggal_perolehan');
             $table->string('luas');
             $table->string('status');
             $table->string('tanggal_sertifikat');
