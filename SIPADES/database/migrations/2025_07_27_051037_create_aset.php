@@ -23,6 +23,7 @@ return new class extends Migration
             $table->integer('nilai_perolehan');
             $table->string('kondisi');
             $table->date('tanggal_pembukuan');
+            $table->date('tanggal_perolehan');
             $table->string('keterangan');
             $table->timestamps();
         });
