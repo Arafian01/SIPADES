@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('merk');
             $table->string('ukuran');
             $table->string('bahan');
-            $table->date('tanggal_perolehan');
             $table->string('nomor_pabrik');
             $table->string('nomor_rangka');
             $table->string('nomor_mesin');

@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string('pencipta');
             $table->string('ukuran');
             $table->string('bahan');
-            $table->date('tanggal_perolehan');
             $table->string('perolehan');
             $table->timestamps();
         });
