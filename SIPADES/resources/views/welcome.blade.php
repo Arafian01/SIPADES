@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,7 +12,7 @@
 
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
+
     <style>
         .bg-image {
             background-image: url('/images/bg.jpg');
@@ -23,31 +24,50 @@
         }
     </style>
 </head>
-<body class="font-[Poppins] min-h-screen flex flex-col bg-image bg-blue-50 bg-opacity-50">
+
+<body class="font-[Poppins] min-h-screen flex flex-col bg-image bg-opacity-50">
 
     <!-- Header -->
     <header class="bg-transparent text-white py-4">
-        <div class="max-w-6xl mx-4 flex items-center justify-between">
-            <div class="flex items-start space-x-3">
-                <h1 class="text-5xl font-bold">SIPADES</h1>
+        <div class="max-w-xl mx-4 flex items-center justify-between bg-white bg-opacity-80 rounded-r-full">
+            <div class="flex items-center">
+            <!-- Logos with capsule background -->
+            <div class="ml-5 flex items-center space-x-4 px-6 py-2">
+                <!-- First Logo -->
+                <div class="flex items-center">
+                    <img src="/images/logo-kkn.png" alt="Logo Desa" class="h-16 w-aut700">
+                </div>
+                
+                <!-- Second Logo -->
+                <div class="flex items-center">
+                    <img src="/images/logo-kabupaten.png" alt="Logo Kabupaten" class="h-16 w-auto">
+                </div>
             </div>
+
+            <!-- Text Title -->
+            <div class="flex flex-col text-black">
+                <h1 class="text-5xl font-bold">SIPADES</h1>
+                <p class="text-xl">Sistem Pengelolaan Aset Desa</p>
+            </div>
+        </div>
         </div>
     </header>
 
     <!-- Hero Section -->
     <main class="flex-1 flex flex-col items-center justify-center text-center px-6">
         <div class="max-w-3xl bg-white bg-opacity-80 rounded-xl p-8 backdrop-blur-sm shadow-lg">
-            <h2 class="text-4xl md:text-5xl font-extrabold text-amber-700 mb-4 mt-4">
-                Selamat Datang di 
+            <h2 class="text-5xl md:text-6xl font-extrabold text-amber-700 mb-4 mt-4">
+                Selamat Datang di
                 <P>SIPADES</P>
             </h2>
-            <p class="text-lg text-gray-600 mb-6">
+            <p class="text-lg text-black mb-6">
                 Kelola dokumen dan arsip desa Anda dengan mudah, cepat, dan aman.
                 Sistem ini membantu memastikan setiap informasi tersimpan rapi dan mudah diakses.
             </p>
 
             <div class="flex flex-wrap justify-center gap-4">
-                <a href="{{ url('/login') }}" class="px-6 py-3 bg-amber-700 text-white font-semibold rounded-lg shadow hover:bg-amber-800 transition">
+                <a href="{{ url('/login') }}"
+                    class="px-6 py-3 bg-amber-700 text-white text-lg font-semibold rounded-lg shadow hover:bg-amber-800 transition">
                     Login
                 </a>
             </div>
@@ -60,4 +80,5 @@
     </footer>
 
 </body>
+
 </html>
