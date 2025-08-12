@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\bukuController;
 use App\Http\Controllers\gaset_tetap_lainnyaController;
 use App\Http\Controllers\ggedung_dan_bangunanController;
 use App\Http\Controllers\gjalan_irigasi_dan_jaringanController;
@@ -54,6 +55,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/kontruksi_dalam_pengerjaan/edit/{id}/{id_pengadaan}', [gkontruksi_dalam_pengerjaanController::class, 'edit'])->name('kontruksi_dalam_pengerjaan.edit');
     
     Route::delete('/pengadaan/{id}/{id_detail}', [PengadaanController::class, 'destroy'])->name('pengadaan.destroy');
+
+    Route::resource('buku', bukuController::class)->middleware('auth');
 });
 
 require __DIR__ . '/auth.php';
