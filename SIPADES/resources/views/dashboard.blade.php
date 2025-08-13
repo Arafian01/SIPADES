@@ -1,10 +1,10 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex justify-between items-center">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('Dashboard Aset Desa') }}
+            <h2 class="font-semibold text-sm text-gray-800 leading-tight">
+                {{ __('Dashboard SIPADES') }}
             </h2>
-            <div class="text-sm bg-blue-100 text-blue-800 px-3 py-1 rounded-full">
+            <div class="text-sm bg-amber-500 text-white px-3 py-1 rounded-full">
                 {{ now()->format('l, d F Y') }}
             </div>
         </div>
