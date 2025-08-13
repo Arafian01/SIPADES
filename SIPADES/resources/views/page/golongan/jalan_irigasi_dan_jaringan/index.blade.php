@@ -80,24 +80,6 @@
                                             {{ $j->aset->nilai_perolehan }}
                                         </td>
                                         <td class="px-6 py-4">
-                                            {{-- @if ($j->status == '1')
-                                                <span class="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">Aktif</span>
-                                            @else
-                                                <span class="bg-red-100 text-red-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">Tidak Aktif</span>
-                                            @endif --}}
-                                        </td>
-
-                                        {{-- <td class="px-6 py-4">
-                                            <button type="button" data-id="{{ $j->id }}"
-                                                data-modal-target="sourceModalEdit" data-nama_perangkat="{{ $j->nama_perangkat }}"
-                                                data-jabatan="{{ $j->jabatan }}" data-nama_jabatan="{{ $j->nama_jabatan }}" data-jabatan_tim_inventarisasi="{{ $j->jabatan_tim_inventarisasi }}" onclick="editSourceModal(this)"
-                                                class="bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-md text-xs text-white">
-                                                Edit
-                                            </button>
-                                            <button onclick="return penggunaDelete('{{$j->id}}','{{$j->nama_perangkat}}')" class="bg-red-500 hover:bg-bg-red-300 px-3 py-1 rounded-md text-xs text-white">Delete</button>
-                                            
-                                        </td> --}}
-                                        <td class="px-6 py-4">
                                             <a href="{{ route('jalan_irigasi_dan_jaringan.edit', [$j->id, '0']) }}"
                                                 class="bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-md text-xs text-white">Edit</a>
                                             <button onclick="return peralatanDelete('{{ $j->id }}','{{ $j->aset->rekening->nama_rekening }}')" class="bg-red-500 hover:bg-bg-red-300 px-3 py-1 rounded-md text-xs text-white">Delete</button>
