@@ -193,9 +193,15 @@
                             <label for="jabatan_tim_inventarisasi" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                 Jabatan Tim Inventarisasi
                             </label>
-                            <input type="text" id="jabatan_tim_inventarisasi" name="jabatan_tim_inventarisasi"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder="Opsional (jika ada)" />
+                            <select id="jabatan_tim_inventarisasi" name="jabatan_tim_inventarisasi" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            required>
+                                <option value="" disabled selected>Pilih Jabatan</option>
+                                <option value="Ketua">Ketua</option>
+                                <option value="Sekretaris">Sekretaris</option>
+                                <option value="Anggota 1">Anggota 1</option>
+                                <option value="Anggota 2">Anggota 2</option>
+                                <option value="Anggota 3">Anggota 3</option>
+                            </select>
                         </div>
                     </div>
                     <div class="flex items-center justify-end p-6 space-x-3 border-t border-gray-200 rounded-b dark:border-gray-700">
@@ -267,8 +273,16 @@
                             <label for="jabatan_tim_inventarisasi_edit" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                 Jabatan Tim Inventarisasi
                             </label>
-                            <input type="text" id="jabatan_tim_inventarisasi_edit" name="jabatan_tim_inventarisasi"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                            <select id="jabatan_tim_inventarisasi_edit" name="jabatan_tim_inventarisasi" 
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                required>
+                                <option value="" disabled selected>Pilih Jabatan</option>
+                                <option value="Ketua">Ketua</option>
+                                <option value="Sekretaris">Sekretaris</option>
+                                <option value="Anggota 1">Anggota 1</option>
+                                <option value="Anggota 2">Anggota 2</option>
+                                <option value="Anggota 3">Anggota 3</option>
+                            </select>
                         </div>
                     </div>
                     <div class="flex items-center justify-end p-6 space-x-3 border-t border-gray-200 rounded-b dark:border-gray-700">

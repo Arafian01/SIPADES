@@ -34,7 +34,7 @@
                                         d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
                                         clip-rule="evenodd" />
                                 </svg>
-                                Tambah Data
+                                Tambah Tanah
                             </a>
                         </div>
                     </div>
@@ -72,9 +72,6 @@
                                         </th>
                                         <th scope="col" class="px-6 py-3 whitespace-nowrap">
                                             ALAMAT
-                                        </th>
-                                        <th scope="col" class="px-6 py-3 whitespace-nowrap">
-                                            STATUS
                                         </th>
                                         <th scope="col" class="px-6 py-3 whitespace-nowrap text-center">
                                             AKSI
@@ -117,18 +114,18 @@
                                             <td class="px-6 py-4">
                                                 {{ Str::limit($t->alamat, 20) }}
                                             </td>
-                                            <td class="px-6 py-4 whitespace-nowrap">
-                                                @if ($t->status == '1')
-                                                    <span
-                                                        class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">Aktif</span>
-                                                @else
-                                                    <span
-                                                        class="bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">Non-Aktif</span>
-                                                @endif
-                                            </td>
                                             <td class="px-6 py-4 whitespace-nowrap flex justify-center gap-2">
                                                 <a href="{{ route('tanah.edit', [$t->id, '0']) }}"
-                                                    class="flex items-center gap-1 bg-blue-600 hover:bg-blue-800 px-3 py-2 rounded-md text-l text-white transition-colors duration-200">
+                                                    class="flex items-center gap-1 bg-blue-600 hover:bg-blue-800 px-2 py-1 rounded-md text-l text-white transition-colors duration-200">
+                                                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor"
+                                                    viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+                                                    </path>
+                                                </svg>
                                                     Detail
                                                 </a>
                                             </td>

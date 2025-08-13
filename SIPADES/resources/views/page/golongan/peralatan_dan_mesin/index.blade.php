@@ -33,7 +33,7 @@
                                     d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
                                     clip-rule="evenodd" />
                             </svg>
-                            Tambah Data
+                            Tambah Peralatan
                         </a>
                     </div>
                 </div>
@@ -60,9 +60,6 @@
                                     </th>
                                     <th scope="col" class="px-6 py-3 whitespace-nowrap">
                                         NILAI (Rp)
-                                    </th>
-                                    <th scope="col" class="px-6 py-3 whitespace-nowrap">
-                                        STATUS
                                     </th>
                                     <th scope="col" class="px-6 py-3 whitespace-nowrap text-center">
                                         AKSI
@@ -96,11 +93,7 @@
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             Rp {{ number_format($t->aset->nilai_perolehan, 2) }}
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <span
-                                                class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">Aktif</span>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap flex justify-center gap-2">
+                                        <td class=" px-6 py-4 flex items-center justify-center gap-2">
                                             <a href="{{ route('peralatan_dan_mesin.edit', [$t->id, '0']) }}"
                                                 class="flex items-center gap-1 bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-md text-xs text-white transition-colors duration-200">
                                                 <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor"

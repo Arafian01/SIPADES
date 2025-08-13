@@ -34,7 +34,7 @@
                                         <span class="text-red-500">*</span> ID Barang (Auto)
                                     </label>
                                     <div class="relative">
-                                        <input type="text" id="id_barang" name="id_barang" readonly
+                                        <input type="text" id="id_barang" name="id_barang" 
                                             class="block w-full px-4 py-2 text-gray-700 bg-gray-100 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                                             required />
                                         <div

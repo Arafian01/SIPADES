@@ -40,9 +40,6 @@
                                         NILAI PEROLEHAN
                                     </th>
                                     <th scope="col" class="px-6 py-3">
-                                        STATUS
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
                                         ACTION
                                     </th>
                                 </tr>
@@ -74,14 +71,6 @@
                                         <td class="px-6 py-4">
                                             {{ $a->aset->nilai_perolehan }}
                                         </td>
-                                        <td class="px-6 py-4">
-                                            {{-- @if ($a->status == '1')
-                                                <span class="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">Aktif</span>
-                                            @else
-                                                <span class="bg-red-100 text-red-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">Tidak Aktif</span>
-                                            @endif --}}
-                                        </td>
-
                                         {{-- <td class="px-6 py-4">
                                             <button type="button" data-id="{{ $a->id }}"
                                                 data-modal-target="sourceModalEdit" data-nama_perangkat="{{ $a->nama_perangkat }}"
