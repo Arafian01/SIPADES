@@ -52,6 +52,7 @@ class gaset_tetap_lainnyaController extends Controller
             'nilai_perolehan' => $request->input('nilai_perolehan'),
             'kondisi' => $request->input('kondisi'),
             'tanggal_pembukuan' => $request->input('tanggal_pembukuan'),
+            'tanggal_perolehan' => $request->input('tanggal_perolehan'),
             'keterangan' => $request->input('keterangan'),
         ];
         aset::create($dataAset);
@@ -65,7 +66,6 @@ class gaset_tetap_lainnyaController extends Controller
             'pencipta' => $request->input('pencipta'),
             'ukuran' => $request->input('ukuran'),
             'bahan' => $request->input('bahan'),
-            'tanggal_perolehan' => $request->input('tanggal_perolehan'),
             'perolehan' => $request->input('perolehan'),
         ];
         aset_tetap_lainnya::create($dataAsetTetapLainnya);
@@ -124,6 +124,7 @@ class gaset_tetap_lainnyaController extends Controller
             'nilai_perolehan' => $request->input('nilai_perolehan'),
             'kondisi' => $request->input('kondisi'),
             'tanggal_pembukuan' => $request->input('tanggal_pembukuan'),
+            'tanggal_perolehan' => $request->input('tanggal_perolehan'),
             'keterangan' => $request->input('keterangan'),
         ];
         $aset->update($dataAset);
@@ -134,7 +135,6 @@ class gaset_tetap_lainnyaController extends Controller
             'pencipta' => $request->input('pencipta'),
             'ukuran' => $request->input('ukuran'),
             'bahan' => $request->input('bahan'),
-            'tanggal_perolehan' => $request->input('tanggal_perolehan'),
             'perolehan' => $request->input('perolehan'),
         ];
         $aset_tetap_lainnya->update($dataAsetTetapLainnya);

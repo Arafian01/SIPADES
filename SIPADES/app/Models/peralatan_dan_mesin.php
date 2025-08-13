@@ -15,7 +15,6 @@ class peralatan_dan_mesin extends Model
         'merk',
         'ukuran',
         'bahan',
-        'tanggal_perolehan',
         'nomor_pabrik',
         'nomor_rangka',
         'nomor_mesin',

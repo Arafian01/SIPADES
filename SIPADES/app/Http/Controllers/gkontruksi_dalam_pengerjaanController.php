@@ -52,6 +52,7 @@ class gkontruksi_dalam_pengerjaanController extends Controller
             'nilai_perolehan' => $request->input('nilai_perolehan'),
             'kondisi' => $request->input('kondisi'),
             'tanggal_pembukuan' => $request->input('tanggal_pembukuan'),
+            'tanggal_perolehan' => $request->input('tanggal_perolehan'),
             'keterangan' => $request->input('keterangan'),
         ];
         aset::create($dataAset);
@@ -116,6 +117,7 @@ class gkontruksi_dalam_pengerjaanController extends Controller
             'nilai_perolehan' => $request->input('nilai_perolehan'),
             'kondisi' => $request->input('kondisi'),
             'tanggal_pembukuan' => $request->input('tanggal_pembukuan'),
+            'tanggal_perolehan' => $request->input('tanggal_perolehan'),
             'keterangan' => $request->input('keterangan'),
         ];
         $aset = aset::findOrFail($kontruksi->id_aset);

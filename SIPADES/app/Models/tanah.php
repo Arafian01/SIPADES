@@ -11,7 +11,6 @@ class tanah extends Model
     protected $fillable = [
         'id_aset',
         'kode_pemilik',
-        'tanggal_perolehan',
         'luas',
         'status',
         'tanggal_sertifikat',

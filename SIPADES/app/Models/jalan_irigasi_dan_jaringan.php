@@ -11,7 +11,6 @@ class jalan_irigasi_dan_jaringan extends Model
     protected $fillable = [
         'id_aset',
         'kode_pemilik',
-        'tanggal_perolehan',
         'kontruksi',
         'panjang',
         'lebar',

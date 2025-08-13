@@ -75,9 +75,7 @@ class PenggunaController extends Controller
         return back()->with('message_delete', 'Data Pengguna Berhasil Diupdate');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    
     public function destroy(string $id)
     {
         $pengguna = pengguna::findOrFail($id);

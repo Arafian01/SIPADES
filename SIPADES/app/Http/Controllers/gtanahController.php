@@ -56,6 +56,7 @@ class gtanahController extends Controller
             'nilai_perolehan' => $request->input('nilai_perolehan'),
             'kondisi' => $request->input('kondisi'),
             'tanggal_pembukuan' => $request->input('tanggal_pembukuan'),
+            'tanggal_perolehan' => $request->input('tanggal_perolehan'),
             'keterangan' => $request->input('keterangan'),
         ];
         $aset = aset::create($dataAset);
@@ -63,7 +64,6 @@ class gtanahController extends Controller
         $dataTanah = [
             'id_aset' => $aset->id,
             'kode_pemilik' => $request->input('kode_pemilik'),
-            'tanggal_perolehan' => $request->input('tanggal_perolehan'),
             'luas' => $request->input('luas'),
             'status' => $request->input('status'),
             'tanggal_sertifikat' => $request->input('tanggal_sertifikat'),
@@ -136,13 +136,13 @@ class gtanahController extends Controller
             'nilai_perolehan' => $request->input('nilai_perolehan'),
             'kondisi' => $request->input('kondisi'),
             'tanggal_pembukuan' => $request->input('tanggal_pembukuan'),
+            'tanggal_perolehan' => $request->input('tanggal_perolehan'),
             'keterangan' => $request->input('keterangan'),
         ];
         $aset->update($dataAset);
 
         $dataTanah = [
             'kode_pemilik' => $request->input('kode_pemilik'),
-            'tanggal_perolehan' => $request->input('tanggal_perolehan'),
             'luas' => $request->input('luas'),
             'status' => $request->input('status'),
             'tanggal_sertifikat' => $request->input('tanggal_sertifikat'),

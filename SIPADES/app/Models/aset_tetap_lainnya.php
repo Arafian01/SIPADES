@@ -16,7 +16,6 @@ class aset_tetap_lainnya extends Model
         'pencipta',
         'ukuran',
         'bahan',
-        'tanggal_perolehan',
         'perolehan',
     ];
 

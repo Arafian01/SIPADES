@@ -53,6 +53,7 @@ class gperalatan_dan_mesinController extends Controller
             'nilai_perolehan' => $request->input('nilai_perolehan'),
             'kondisi' => $request->input('kondisi'),
             'tanggal_pembukuan' => $request->input('tanggal_pembukuan'),
+            'tanggal_perolehan' => $request->input('tanggal_perolehan'),
             'keterangan' => $request->input('keterangan'),
         ];
         aset::create($dataAset);
@@ -65,7 +66,6 @@ class gperalatan_dan_mesinController extends Controller
             'merk' => $request->input('merk'),
             'ukuran' => $request->input('ukuran'),
             'bahan' => $request->input('bahan'),
-            'tanggal_perolehan' => $request->input('tanggal_perolehan'),
             'nomor_pabrik' => $request->input('nomor_pabrik'),
             'nomor_rangka' => $request->input('nomor_rangka'),
             'nomor_mesin' => $request->input('nomor_mesin'),
@@ -128,6 +128,7 @@ class gperalatan_dan_mesinController extends Controller
             'nilai_perolehan' => $request->input('nilai_perolehan'),
             'kondisi' => $request->input('kondisi'),
             'tanggal_pembukuan' => $request->input('tanggal_pembukuan'),
+            'tanggal_perolehan' => $request->input('tanggal_perolehan'),
             'keterangan' => $request->input('keterangan'),
         ];
         $aset->update($dataAset);
@@ -138,7 +139,6 @@ class gperalatan_dan_mesinController extends Controller
             'merk' => $request->input('merk'),
             'ukuran' => $request->input('ukuran'),
             'bahan' => $request->input('bahan'),
-            'tanggal_perolehan' => $request->input('tanggal_perolehan'),
             'nomor_pabrik' => $request->input('nomor_pabrik'),
             'nomor_rangka' => $request->input('nomor_rangka'),
             'nomor_mesin' => $request->input('nomor_mesin'),

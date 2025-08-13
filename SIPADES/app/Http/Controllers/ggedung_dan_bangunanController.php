@@ -50,6 +50,7 @@ class ggedung_dan_bangunanController extends Controller
             'nilai_perolehan' => $request->input('nilai_perolehan'),
             'kondisi' => $request->input('kondisi'),
             'tanggal_pembukuan' => $request->input('tanggal_pembukuan'),
+            'tanggal_perolehan' => $request->input('tanggal_perolehan'),
             'keterangan' => $request->input('keterangan'),
         ];
         aset::create($dataAset);
@@ -58,7 +59,6 @@ class ggedung_dan_bangunanController extends Controller
         $dataGedungDanBangunan = [
             'id_aset' => $id_aset,
             'kode_pemilik' => $request->input('kode_pemilik'),
-            'tanggal_perolehan' => $request->input('tanggal_perolehan'),
             'luas_lantai' => $request->input('luas_lantai'),
             'bertingkat' => $request->input('bertingkat'),
             'beton' => $request->input('beton'),
@@ -124,13 +124,13 @@ class ggedung_dan_bangunanController extends Controller
             'nilai_perolehan' => $request->input('nilai_perolehan'),
             'kondisi' => $request->input('kondisi'),
             'tanggal_pembukuan' => $request->input('tanggal_pembukuan'),
+            'tanggal_perolehan' => $request->input('tanggal_perolehan'),
             'keterangan' => $request->input('keterangan'),
         ];
         $aset->update($dataAset);
 
         $dataGedungDanBangunan = [
             'kode_pemilik' => $request->input('kode_pemilik'),
-            'tanggal_perolehan' => $request->input('tanggal_perolehan'),
             'luas_lantai' => $request->input('luas_lantai'),
             'bertingkat' => $request->input('bertingkat'),
             'beton' => $request->input('beton'),

@@ -19,6 +19,7 @@ class aset extends Model
         'nilai_perolehan',
         'kondisi',
         'tanggal_pembukuan',
+        'tanggal_perolehan',
         'keterangan',
     ];
 

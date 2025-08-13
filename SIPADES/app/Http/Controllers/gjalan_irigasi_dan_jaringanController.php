@@ -55,6 +55,7 @@ class gjalan_irigasi_dan_jaringanController extends Controller
             'nilai_perolehan' => $request->input('nilai_perolehan'),
             'kondisi' => $request->input('kondisi'),
             'tanggal_pembukuan' => $request->input('tanggal_pembukuan'),
+            'tanggal_perolehan' => $request->input('tanggal_perolehan'),
             'keterangan' => $request->input('keterangan'),
         ];
         aset::create($dataAset);
@@ -63,7 +64,6 @@ class gjalan_irigasi_dan_jaringanController extends Controller
         $dataJalanIrigasiDanJaringan = [
             'id_aset' => $id_aset,
             'kode_pemilik' => $request->input('kode_pemilik'),
-            'tanggal_perolehan' => $request->input('tanggal_perolehan'),
             'kontruksi' => $request->input('kontruksi'),
             'panjang' => $request->input('panjang'),
             'lebar' => $request->input('lebar'),
@@ -131,13 +131,13 @@ class gjalan_irigasi_dan_jaringanController extends Controller
             'nilai_perolehan' => $request->input('nilai_perolehan'),
             'kondisi' => $request->input('kondisi'),
             'tanggal_pembukuan' => $request->input('tanggal_pembukuan'),
+            'tanggal_perolehan' => $request->input('tanggal_perolehan'),
             'keterangan' => $request->input('keterangan'),
         ];
         $aset->update($dataAset);
 
         $dataJalanIrigasiDanJaringan = [
             'kode_pemilik' => $request->input('kode_pemilik'),
-            'tanggal_perolehan' => $request->input('tanggal_perolehan'),
             'kontruksi' => $request->input('kontruksi'),
             'panjang' => $request->input('panjang'),
             'lebar' => $request->input('lebar'),

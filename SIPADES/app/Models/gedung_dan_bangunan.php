@@ -11,7 +11,6 @@ class gedung_dan_bangunan extends Model
     protected $fillable = [
         'id_aset',
         'kode_pemilik',
-        'tanggal_perolehan',
         'luas_lantai',
         'bertingkat',
         'beton',
