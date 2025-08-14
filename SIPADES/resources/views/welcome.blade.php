@@ -29,10 +29,10 @@
 
     <!-- Header -->
     <header class="bg-transparent text-white py-4">
-        <div class="max-w-xl mx-4 flex items-center justify-between bg-white bg-opacity-80 rounded-r-full">
+        <div class="max-w-xl flex items-center justify-between bg-white bg-opacity-80 rounded-r-full">
             <div class="flex items-center">
             <!-- Logos with capsule background -->
-            <div class="ml-5 flex items-center space-x-4 px-6 py-2">
+            <div class="ml-5 mt-3 mb-3 flex items-center space-x-4 px-6 py-2">
                 <!-- First Logo -->
                 <div class="flex items-center">
                     <img src="/images/logo-kkn.png" alt="Logo Desa" class="h-16 w-aut700">
@@ -54,7 +54,7 @@
     </header>
 
     <!-- Hero Section -->
-    <main class="flex-1 flex flex-col items-center justify-center text-center px-6">
+    <main class="flex-1 flex flex-col items-end justify-center mr-4 text-center px-6">
         <div class="max-w-3xl bg-white bg-opacity-80 rounded-xl p-8 backdrop-blur-sm shadow-lg">
             <h2 class="text-5xl md:text-6xl font-extrabold text-amber-700 mb-4 mt-4">
                 Selamat Datang di
