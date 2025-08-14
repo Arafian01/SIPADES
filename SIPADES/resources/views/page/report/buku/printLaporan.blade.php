@@ -13,7 +13,7 @@
             margin: 0;
             padding: 0;
             background-color: #FAFAFA;
-            font: 12pt "Tahoma";
+            font: 10pt "Tahoma";
             background-size: cover;
             background-repeat: no-repeat;
             background-position: center center;
@@ -72,7 +72,8 @@
             margin-left: 40px;
             margin-right: 40px;
             margin-top: 40px;
-            width: 100%; /* Ensure table takes full width */
+            width: 100%;
+            /* Ensure table takes full width */
         }
 
         .ini {
@@ -122,9 +123,17 @@
             text-align: center;
         }
 
+        .judul {
+            text-align: center;
+            font: bolder;
+            margin-top: 80px;
+        }
+
         .page {
-            width: 297mm; /* Adjusted for A4 landscape width */
-            min-height: 210mm; /* Adjusted for A4 landscape height */
+            width: 297mm;
+            /* Adjusted for A4 landscape width */
+            min-height: 210mm;
+            /* Adjusted for A4 landscape height */
             padding: 0mm;
             margin: 0mm auto;
             border: 1px #D3D3D3 solid;
@@ -155,15 +164,19 @@
         }
 
         @page {
-            size: A4 landscape; /* Change to landscape */
+            size: A4 landscape;
+            /* Change to landscape */
             margin: 0;
         }
 
         @media print {
+
             html,
             body {
-                width: 297mm; /* Adjusted for A4 landscape width */
-                height: 210mm; /* Adjusted for A4 landscape height */
+                width: 297mm;
+                /* Adjusted for A4 landscape width */
+                height: 210mm;
+                /* Adjusted for A4 landscape height */
             }
 
             .page {
@@ -195,6 +208,13 @@
                 background-size: cover;
                 background-repeat: no-repeat;
             }
+
+            @media print {
+                .title {
+                    font-weight: bold;
+                }
+            }
+
         }
     </style>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -205,6 +225,8 @@
     <div class="book">
         <div class="page" id="result">
             <div class="ml-[6px] mr-[90px]">
+                <h2 class="judul">BUKU INVENTARIS ASET DESA<br>PEMERINTAH DESA SIRNAGALIH<br>2025</h2>
+                <h6>Kode Lokasi Desa : 32.06.27.2.2014</h6>
                 <table class="border border-1 border-black w-full">
                     <thead>
                         <tr>
@@ -213,23 +235,23 @@
                             <th class="border border-1 border-black">Kode Barang</th>
                             <th class="border border-1 border-black">Identitas Barang</th>
                             <th class="border border-1 border-black" colspan="3">Asal Usul Barang</th>
-                            <th class="border border-1 border-black">Tanggal Perolehan</th>
+                            <th class="border border-1 border-black">Tanggal<br>Perolehan/<br>Pembelian</th>
                             <th class="border border-1 border-black">Ket.</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        <tr class="kp">
                             <td class="border border-1 border-black"></td>
                             <td class="border border-1 border-black"></td>
                             <td class="border border-1 border-black"></td>
                             <td class="border border-1 border-black"></td>
                             <td class="border border-1 border-black">APD Desa</td>
-                            <td class="border border-1 border-black">Perolehan Lain Yg Sah</td>
-                            <td class="border border-1 border-black">Aset/Kekayaan Asli Desa</td>
+                            <td class="border border-1 border-black">Perolehan <br>Lain Yg Sah</td>
+                            <td class="border border-1 border-black">Aset/Kekayaan <br>Asli Desa</td>
                             <td class="border border-1 border-black"></td>
                             <td class="border border-1 border-black"></td>
                         </tr>
-                        <tr>
+                        <tr class="kp">
                             <td class="border border-1 border-black">1</td>
                             <td class="border border-1 border-black">2</td>
                             <td class="border border-1 border-black">3</td>
@@ -245,16 +267,36 @@
                         @endphp
                         @foreach ($data as $d)
                             <tr>
-                                <td class="border border-1 border-black tengah">{{ $no++ }}</td>
-                                <td class="border border-1 border-black text-left pl-2">{{ $d->rekening->nama_rekening }}</td>
+                                <td class="border border-1 border-black tengah">{{ $no++ }}.</td>
+                                <td class="border border-1 border-black text-left pl-2">
+                                    {{ $d->rekening->nama_rekening }}</td>
                                 <td class="border border-1 border-black pl-2 tengah">{{ $d->rekening->kode }}</td>
                                 <td class="border border-1 border-black text-left pl-2">{{ $d->nama_label }}</td>
-                                <td class="border border-1 border-black pl-2">{{ $d->asal }}</td>
-                                <td class="border border-1 border-black pl-2">{{ $d->kode_belanja_bidang }}</td>
-                                <td class="border border-1 border-black pl-2">{{ $d->kode_belanja_bidang}}</td>
-                                <td class="border border-1 border-black pl-2">{{ $d->tanggal_pembukuan }}</td>
+                                {{-- buatkan if jika isi datanya apddesa maka isi dengan ceklis --}}
+                                <td class="border border-1 border-black pl-2 kp ">
+                                    @if ($d->asal == 'APBDesa')
+                                        ✓
+                                    @else
+                                        -
+                                    @endif
+                                </td>
+                                <td class="border border-1 border-black pl-2 kp">
+                                    @if ($d->asal == 'Perolehan Lain Yang Sah')
+                                        ✓
+                                    @else
+                                        -
+                                    @endif
+                                </td>
+                                <td class="border border-1 border-black pl-2 kp">
+                                    @if ($d->asal == 'Kekayaan Asli Desa')
+                                        ✓
+                                    @else
+                                        -
+                                    @endif
+                                </td>
+                                <td class="border border-1 border-black pl-2">{{ $d->tanggal_perolehan }}</td>
                                 <td class="border border-1 border-black pl-2">{{ $d->keterangan }}</td>
-                            </tr> 
+                            </tr>
                         @endforeach
                     </tbody>
                 </table>
