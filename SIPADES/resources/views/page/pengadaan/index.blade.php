@@ -24,7 +24,7 @@
             </div>
         @endif
 
-        @if ($errors->any()))
+        @if ($errors->any())
             <div id="errorMessage" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4"
                 role="alert">
                 <strong class="font-bold">Error!</strong>
@@ -130,7 +130,7 @@
                                         <td class="px-6 py-4">
                                             <span
                                                 class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">
-                                                {{ $r->nama_rekanan }}
+                                                {{ ucwords(str_replace('_', ' ', $r->nama_rekanan)) }}
                                             </span>
                                         </td>
                                         <td class="px-6 py-4 flex items-center justify-center gap-2">
@@ -277,16 +277,16 @@
                                     placeholder="Opsional" />
                             </div>
                             <div class="mb-5">
-                            <label for="id_pengguna"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama Rekanan</label>
-                            <select class="js-example-placeholder-single js-states form-control w-full m-6"
-                                id="id_pengguna" name="id_pengguna" data-placeholder="Pilih Supplier">
-                                <option value="">Pilih...</option>
-                                @foreach ($pengguna as $p)
-                                    <option value="{{ $p->id }}">{{ $p->nama_perangkat }}</option>                                        
-                                @endforeach
-                            </select>
-                        </div>
+                                <label for="id_pengguna"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama Rekanan</label>
+                                <select class="js-example-placeholder-single js-states form-control w-full m-6"
+                                    id="id_pengguna" name="id_pengguna" data-placeholder="Pilih Supplier">
+                                    <option value="">Pilih...</option>
+                                    @foreach ($pengguna as $p)
+                                        <option value="{{ $p->id }}">{{ ucwords(str_replace('_', ' ', $p->nama_perangkat)) }}</option>                                        
+                                    @endforeach
+                                </select>
+                            </div>
                             <div class="md:col-span-2">
                                 <label for="nama_rekanan"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -408,16 +408,16 @@
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
                             </div>
                             <div class="mb-5">
-                            <label for="id_pengguna"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama Rekanan</label>
-                            <select class="js-example-placeholder-single js-states form-control w-full m-6"
-                                id="id_pengguna_edit" name="id_pengguna" data-placeholder="Pilih Supplier">
-                                <option value="">Pilih...</option>
-                                @foreach ($pengguna as $p)
-                                    <option value="{{ $p->id }}">{{ $p->nama_perangkat }}</option>                                        
-                                @endforeach
-                            </select>
-                        </div>
+                                <label for="id_pengguna"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama Rekanan</label>
+                                <select class="js-example-placeholder-single js-states form-control w-full m-6"
+                                    id="id_pengguna_edit" name="id_pengguna" data-placeholder="Pilih Supplier">
+                                    <option value="">Pilih...</option>
+                                    @foreach ($pengguna as $p)
+                                        <option value="{{ $p->id }}">{{ ucwords(str_replace('_', ' ', $p->nama_perangkat)) }}</option>                                        
+                                    @endforeach
+                                </select>
+                            </div>
                             <div class="md:col-span-2">
                                 <label for="nama_rekanan_edit"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -551,8 +551,6 @@
         // Form validation for add
         function validateForm() {
             let isValid = true;
-
-            
 
             // Validate dates
             const tanggalPengadaan = document.getElementById('tanggal_pengadaan');
