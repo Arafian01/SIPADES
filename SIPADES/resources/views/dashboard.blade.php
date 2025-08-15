@@ -1,30 +1,32 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex justify-between items-center">
-            <h2 class="font-semibold text-sm text-gray-800 leading-tight">
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 {{ __('Dashboard SIPADES') }}
             </h2>
-            <div class="text-sm bg-amber-500 text-white px-3 py-1 rounded-full">
-                {{ now()->format('l, d F Y') }}
+            <div class="text-sm bg-amber-500 text-white px-4 py-2 rounded-full shadow-sm">
+                @php
+                    \Carbon\Carbon::setLocale('id');
+                    echo now()->translatedFormat('l, j F Y');
+                @endphp
             </div>
         </div>
     </x-slot>
 
-    <!-- Tambahkan padding pada container utama -->
     <div class="py-6 px-4 sm:px-6 lg:px-8">
-        <!-- Container untuk grid cards dengan margin x-auto untuk posisi tengah -->
-        <div class="max-w-7xl mx-auto">
-            <!-- Grid cards dengan margin tambahan di kiri dan kanan -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mx-4">
+        <div class="max-w-7xl mx-auto space-y-8">
+            <!-- Asset Summary Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- Card Golongan Tanah -->
                 <div
-                    class="bg-white p-6 rounded-lg shadow-md border-l-4 border-green-500 transition-all duration-300 ease-in-out transform hover:-translate-y-2 hover:shadow-lg">
+                    class="bg-white p-6 rounded-xl shadow-md border-l-4 border-green-500 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
                     <div class="flex justify-between items-start">
                         <div>
-                            <h3 class="text-gray-500 text-sm font-medium">Golongan Tanah</h3>
-                            <p class="text-2xl font-bold mt-2">{{ $tanahCount ?? 0 }}</p>
+                            <h3 class="text-gray-500 text-sm font-medium uppercase tracking-wider">Golongan Tanah</h3>
+                            <p class="text-3xl font-bold mt-2 text-gray-800">{{ $tanahCount ?? 0 }}</p>
                         </div>
-                        <div class="bg-green-100 p-3 rounded-full transition-all duration-300 hover:rotate-12">
+                        <div
+                            class="bg-green-100 p-3 rounded-full shadow-inner transition-all duration-300 hover:rotate-12">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-600" fill="none"
                                 viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -37,13 +39,15 @@
 
                 <!-- Card Peralatan dan Mesin -->
                 <div
-                    class="bg-white p-6 rounded-lg shadow-md border-l-4 border-blue-500 transition-all duration-300 ease-in-out transform hover:-translate-y-2 hover:shadow-lg">
+                    class="bg-white p-6 rounded-xl shadow-md border-l-4 border-blue-500 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
                     <div class="flex justify-between items-start">
                         <div>
-                            <h3 class="text-gray-500 text-sm font-medium">Peralatan dan Mesin</h3>
-                            <p class="text-2xl font-bold mt-2">{{ $peralatanDanMesinCount ?? 0 }}</p>
+                            <h3 class="text-gray-500 text-sm font-medium uppercase tracking-wider">Peralatan dan Mesin
+                            </h3>
+                            <p class="text-3xl font-bold mt-2 text-gray-800">{{ $peralatanDanMesinCount ?? 0 }}</p>
                         </div>
-                        <div class="bg-blue-100 p-3 rounded-full transition-all duration-300 hover:rotate-12">
+                        <div
+                            class="bg-blue-100 p-3 rounded-full shadow-inner transition-all duration-300 hover:rotate-12">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" fill="none"
                                 viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -58,13 +62,15 @@
 
                 <!-- Card Gedung dan Bangunan -->
                 <div
-                    class="bg-white p-6 rounded-lg shadow-md border-l-4 border-purple-500 transition-all duration-300 ease-in-out transform hover:-translate-y-2 hover:shadow-lg">
+                    class="bg-white p-6 rounded-xl shadow-md border-l-4 border-purple-500 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
                     <div class="flex justify-between items-start">
                         <div>
-                            <h3 class="text-gray-500 text-sm font-medium">Gedung dan Bangunan</h3>
-                            <p class="text-2xl font-bold mt-2">{{ $gedungDanBangunanCount ?? 0 }}</p>
+                            <h3 class="text-gray-500 text-sm font-medium uppercase tracking-wider">Gedung dan Bangunan
+                            </h3>
+                            <p class="text-3xl font-bold mt-2 text-gray-800">{{ $gedungDanBangunanCount ?? 0 }}</p>
                         </div>
-                        <div class="bg-purple-100 p-3 rounded-full transition-all duration-300 hover:rotate-12">
+                        <div
+                            class="bg-purple-100 p-3 rounded-full shadow-inner transition-all duration-300 hover:rotate-12">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-purple-600" fill="none"
                                 viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -77,13 +83,16 @@
 
                 <!-- Card Jalan, Irigasi dan Jaringan -->
                 <div
-                    class="bg-white p-6 rounded-lg shadow-md border-l-4 border-yellow-500 transition-all duration-300 ease-in-out transform hover:-translate-y-2 hover:shadow-lg">
+                    class="bg-white p-6 rounded-xl shadow-md border-l-4 border-yellow-500 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
                     <div class="flex justify-between items-start">
                         <div>
-                            <h3 class="text-gray-500 text-sm font-medium">Jalan, Irigasi & Jaringan</h3>
-                            <p class="text-2xl font-bold mt-2">{{ $jalanIrigasiDanJaringanCount ?? 0 }}</p>
+                            <h3 class="text-gray-500 text-sm font-medium uppercase tracking-wider">Jalan, Irigasi &
+                                Jaringan</h3>
+                            <p class="text-3xl font-bold mt-2 text-gray-800">{{ $jalanIrigasiDanJaringanCount ?? 0 }}
+                            </p>
                         </div>
-                        <div class="bg-yellow-100 p-3 rounded-full transition-all duration-300 hover:rotate-12">
+                        <div
+                            class="bg-yellow-100 p-3 rounded-full shadow-inner transition-all duration-300 hover:rotate-12">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-600" fill="none"
                                 viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -98,13 +107,15 @@
 
                 <!-- Card Aset Tetap Lainnya -->
                 <div
-                    class="bg-white p-6 rounded-lg shadow-md border-l-4 border-red-500 transition-all duration-300 ease-in-out transform hover:-translate-y-2 hover:shadow-lg">
+                    class="bg-white p-6 rounded-xl shadow-md border-l-4 border-red-500 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
                     <div class="flex justify-between items-start">
                         <div>
-                            <h3 class="text-gray-500 text-sm font-medium">Aset Tetap Lainnya</h3>
-                            <p class="text-2xl font-bold mt-2">{{ $asetTetapLainnyaCount ?? 0 }}</p>
+                            <h3 class="text-gray-500 text-sm font-medium uppercase tracking-wider">Aset Tetap Lainnya
+                            </h3>
+                            <p class="text-3xl font-bold mt-2 text-gray-800">{{ $asetTetapLainnyaCount ?? 0 }}</p>
                         </div>
-                        <div class="bg-red-100 p-3 rounded-full transition-all duration-300 hover:rotate-12">
+                        <div
+                            class="bg-red-100 p-3 rounded-full shadow-inner transition-all duration-300 hover:rotate-12">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-600" fill="none"
                                 viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -117,13 +128,16 @@
 
                 <!-- Card Konstruksi Dalam Pengerjaan -->
                 <div
-                    class="bg-white p-6 rounded-lg shadow-md border-l-4 border-indigo-500 transition-all duration-300 ease-in-out transform hover:-translate-y-2 hover:shadow-lg">
+                    class="bg-white p-6 rounded-xl shadow-md border-l-4 border-indigo-500 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
                     <div class="flex justify-between items-start">
                         <div>
-                            <h3 class="text-gray-500 text-sm font-medium">Konstruksi Dalam Pengerjaan</h3>
-                            <p class="text-2xl font-bold mt-2">{{ $kontruksiDalamPengerjaanCount ?? 0 }}</p>
+                            <h3 class="text-gray-500 text-sm font-medium uppercase tracking-wider">Konstruksi Dalam
+                                Pengerjaan</h3>
+                            <p class="text-3xl font-bold mt-2 text-gray-800">{{ $kontruksiDalamPengerjaanCount ?? 0 }}
+                            </p>
                         </div>
-                        <div class="bg-indigo-100 p-3 rounded-full transition-all duration-300 hover:rotate-12">
+                        <div
+                            class="bg-indigo-100 p-3 rounded-full shadow-inner transition-all duration-300 hover:rotate-12">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-indigo-600" fill="none"
                                 viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -133,6 +147,192 @@
                     </div>
                     <p class="text-sm text-gray-500 mt-4">Proyek konstruksi yang sedang berjalan</p>
                 </div>
-
             </div>
+
+            <!-- Procurement Charts Section -->
+            <div class="space-y-8">
+                <h3 class="text-xl font-bold text-gray-800 border-b pb-2">Statistik Pengadaan Aset</h3>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- Monthly Procurement Chart -->
+                    <div class="bg-white p-6 rounded-xl shadow-lg">
+                        <div class="flex justify-between items-center mb-4">
+                            <h4 class="text-lg font-semibold text-gray-800">Pengadaan Bulanan</h4>
+                            <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">12 Bulan Terakhir</span>
+                        </div>
+                        <div class="h-72">
+                            <canvas id="pengadaanChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Procurement by Category Chart -->
+                    <div class="bg-white p-6 rounded-xl shadow-lg">
+                        <div class="flex justify-between items-center mb-4">
+                            <h4 class="text-lg font-semibold text-gray-800">Distribusi Pengadaan</h4>
+                            <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">Tahun Ini</span>
+                        </div>
+                        <div class="h-72">
+                            <canvas id="pengadaanKategoriChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @push('scripts')
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Data for procurement charts
+                const pengadaanData = {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Ags', 'Sep', 'Okt', 'Nov', 'Des'],
+                    total: [3, 5, 7, 2, 8, 4, 6, 9, 5, 7, 4, 6],
+                    anggaran: [25, 40, 35, 20, 45, 30, 50, 60, 40, 55, 30, 45] // in millions
+                };
+
+                // Monthly Procurement Chart (Bar + Line)
+                const pengadaanCtx = document.getElementById('pengadaanChart').getContext('2d');
+                new Chart(pengadaanCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: pengadaanData.labels,
+                        datasets: [{
+                                label: 'Jumlah Pengadaan',
+                                data: pengadaanData.total,
+                                backgroundColor: 'rgba(79, 70, 229, 0.8)',
+                                borderColor: 'rgba(79, 70, 229, 1)',
+                                borderWidth: 1,
+                                borderRadius: 4,
+                                yAxisID: 'y'
+                            },
+                            {
+                                label: 'Anggaran (juta Rp)',
+                                data: pengadaanData.anggaran,
+                                backgroundColor: 'rgba(236, 72, 153, 0.1)',
+                                borderColor: 'rgba(236, 72, 153, 1)',
+                                borderWidth: 2,
+                                type: 'line',
+                                tension: 0.3,
+                                yAxisID: 'y1'
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                                labels: {
+                                    boxWidth: 12,
+                                    padding: 20,
+                                    usePointStyle: true
+                                }
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        if (context.datasetIndex === 0) {
+                                            return ` ${context.dataset.label}: ${context.parsed.y} aset`;
+                                        } else {
+                                            return ` ${context.dataset.label}: Rp ${context.parsed.y} juta`;
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                type: 'linear',
+                                display: true,
+                                position: 'left',
+                                title: {
+                                    display: true,
+                                    text: 'Jumlah Pengadaan',
+                                    color: '#4f46e5'
+                                },
+                                grid: {
+                                    drawOnChartArea: true,
+                                    color: 'rgba(0, 0, 0, 0.05)'
+                                },
+                                ticks: {
+                                    color: '#4f46e5'
+                                }
+                            },
+                            y1: {
+                                type: 'linear',
+                                display: true,
+                                position: 'right',
+                                title: {
+                                    display: true,
+                                    text: 'Anggaran (juta Rp)',
+                                    color: '#ec4899'
+                                },
+                                grid: {
+                                    drawOnChartArea: false
+                                },
+                                ticks: {
+                                    color: '#ec4899'
+                                }
+                            },
+                            x: {
+                                grid: {
+                                    display: false
+                                }
+                            }
+                        }
+                    }
+                });
+
+                // Procurement by Category Chart (Doughnut)
+                const pengadaanKategoriCtx = document.getElementById('pengadaanKategoriChart').getContext('2d');
+                new Chart(pengadaanKategoriCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Tanah', 'Peralatan', 'Gedung', 'Jalan/Irigasi', 'Lainnya'],
+                        datasets: [{
+                            data: [12, 19, 8, 15, 7],
+                            backgroundColor: [
+                                'rgba(16, 185, 129, 0.8)',
+                                'rgba(59, 130, 246, 0.8)',
+                                'rgba(168, 85, 247, 0.8)',
+                                'rgba(234, 179, 8, 0.8)',
+                                'rgba(239, 68, 68, 0.8)'
+                            ],
+                            borderColor: 'rgba(255, 255, 255, 0.8)',
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        cutout: '70%',
+                        plugins: {
+                            legend: {
+                                position: 'right',
+                                labels: {
+                                    boxWidth: 12,
+                                    padding: 20,
+                                    font: {
+                                        size: 12
+                                    },
+                                    usePointStyle: true
+                                }
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                        const percentage = Math.round((context.raw / total) * 100);
+                                        return ` ${context.label}: ${context.raw} (${percentage}%)`;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            });
+        </script>
+    @endpush
 </x-app-layout>
