@@ -1,223 +1,376 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('TAMBAH ASET GEDUNG DAN BANGUNAN') }}
-        </h2>
+        <div class="flex items-center justify-between">
+            <h2 class="text-2xl font-bold text-gray-800 leading-tight flex items-center">
+                <i class="fas fa-building mr-3 text-blue-600"></i> {{ __('TAMBAH ASET GEDUNG DAN BANGUNAN') }}
+            </h2>
+        </div>
     </x-slot>
 
-    <div class="py-12">
+    <div class="py-8">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    <form class="w-full  mx-auto" method="POST" action="{{ route('gedung_dan_bangunan.store') }}">
+            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                <div class="p-8 bg-white border-b border-gray-200">
+                    <!-- Form Header -->
+                    <div class="mb-8 bg-blue-50 p-4 rounded-lg border border-blue-100">
+                        <h3 class="text-lg font-semibold text-blue-800 flex items-center">
+                            <i class="fas fa-info-circle mr-2"></i> Formulir Pendaftaran Aset Gedung dan Bangunan
+                        </h3>
+                        <p class="text-sm text-blue-600 mt-1">
+                            Silakan lengkapi semua informasi yang diperlukan untuk mendaftarkan aset baru.
+                        </p>
+                    </div>
+
+                    <form class="w-full mx-auto" method="POST" action="{{ route('gedung_dan_bangunan.store') }}">
                         @csrf
-                        <div class="mb-5">
-                            <label for="id_barang"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Id Barang
-                                (Auto)</label>
-                            <input type="text" id="id_barang" name="id_barang"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                required />
+
+                        <!-- Grid Layout -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Column 1 -->
+                            <div class="space-y-4">
+                                <!-- ID Barang -->
+                                <div class="form-group">
+                                    <label for="id_barang" class="block text-sm font-medium text-gray-700 mb-1">
+                                        <span class="text-red-500">*</span> ID Barang (Auto)
+                                    </label>
+                                    <div class="relative">
+                                        <input type="text" id="id_barang" name="id_barang" 
+                                            class="block w-full px-4 py-2 text-gray-700 bg-gray-100 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                                            required />
+                                        <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                            <i class="fas fa-lock text-gray-400"></i>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Nomor Register -->
+                                <div class="form-group">
+                                    <label for="no_reg" class="block text-sm font-medium text-gray-700 mb-1">
+                                        <span class="text-red-500">*</span> Nomor Register
+                                    </label>
+                                    <input type="text" id="no_reg" name="no_reg"
+                                        class="block w-full px-4 py-2 text-gray-700 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                                        required />
+                                </div>
+
+                                <!-- Rekening -->
+                                <div class="form-group">
+                                    <label for="id_rekening" class="block text-sm font-medium text-gray-700 mb-1">
+                                        <span class="text-red-500">*</span> Rekening
+                                    </label>
+                                    <select id="id_rekening" name="id_rekening"
+                                        class="block w-full px-4 py-2 text-gray-700 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                                        required>
+                                        <option value="">Pilih Rekening...</option>
+                                        @foreach ($rekening as $s)
+                                            <option value="{{ $s->id }}">{{ $s->kode }} - {{ $s->nama_rekening }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <!-- Nama Label -->
+                                <div class="form-group">
+                                    <label for="nama_label" class="block text-sm font-medium text-gray-700 mb-1">
+                                        <span class="text-red-500">*</span> Nama Label
+                                    </label>
+                                    <input type="text" id="nama_label" name="nama_label"
+                                        class="block w-full px-4 py-2 text-gray-700 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                                        required />
+                                </div>
+
+                                <!-- Kode Pemilik -->
+                                <div class="form-group">
+                                    <label for="kode_pemilik" class="block text-sm font-medium text-gray-700 mb-1">
+                                        <span class="text-red-500">*</span> Kode Pemilik
+                                    </label>
+                                    <select id="kode_pemilik" name="kode_pemilik"
+                                        class="block w-full px-4 py-2 text-gray-700 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                                        required>
+                                        <option value="">Pilih Kode Pemilik...</option>
+                                        <option value="Pemerintah Desa">Pemerintah Desa</option>
+                                    </select>
+                                </div>
+
+                                <!-- Kode Belanja Bidang -->
+                                <div class="form-group">
+                                    <label for="kode_belanja_bidang" class="block text-sm font-medium text-gray-700 mb-1">
+                                        <span class="text-red-500">*</span> Kode Belanja Bidang
+                                    </label>
+                                    <select id="kode_belanja_bidang" name="kode_belanja_bidang"
+                                        class="block w-full px-4 py-2 text-gray-700 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                                        required>
+                                        <option value="">Pilih Belanja Bidang...</option>
+                                        <option value="Penyelengaraan Pemerintah Desa">Penyelengaraan Pemerintah Desa</option>
+                                        <option value="Pelaksanaan Pembangunan Desa">Pelaksanaan Pembangunan Desa</option>
+                                        <option value="Pembinaan Kemasyarakatan">Pembinaan Kemasyarakatan</option>
+                                        <option value="Pemberdayaan Masyarakat Desa">Pemberdayaan Masyarakat</option>
+                                        <option value="Penanggulangan Bencana, Darurat Dan Mendesak Desa">Penanggulangan Bencana, Darurat Dan Mendesak Desa</option>
+                                    </select>
+                                </div>
+
+                                <!-- Tanggal Perolehan -->
+                                <div class="form-group">
+                                    <label for="tanggal_perolehan" class="block text-sm font-medium text-gray-700 mb-1">
+                                        <span class="text-red-500">*</span> Tanggal Perolehan
+                                    </label>
+                                    <div class="relative">
+                                        <input type="date" id="tanggal_perolehan" name="tanggal_perolehan"
+                                            class="block w-full px-4 py-2 text-gray-700 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                                            required />
+                                        <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                            <i class="far fa-calendar-alt text-gray-400"></i>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Luas Lantai -->
+                                <div class="form-group">
+                                    <label for="luas_lantai" class="block text-sm font-medium text-gray-700 mb-1">
+                                        <span class="text-red-500">*</span> Luas Lantai
+                                    </label>
+                                    <div class="relative">
+                                        <input type="text" id="luas_lantai" name="luas_lantai"
+                                            class="block w-full px-4 py-2 text-gray-700 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                                            required />
+                                        <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                            <span class="text-gray-500 text-sm">m²</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Column 2 -->
+                            <div class="space-y-4">
+                                <!-- Bertingkat -->
+                                <div class="form-group">
+                                    <label for="bertingkat" class="block text-sm font-medium text-gray-700 mb-1">
+                                        <span class="text-red-500">*</span> Bertingkat
+                                    </label>
+                                    <select id="bertingkat" name="bertingkat"
+                                        class="block w-full px-4 py-2 text-gray-700 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                                        required>
+                                        <option value="Bertingkat">Bertingkat</option>
+                                        <option value="Tidak Bertingkat">Tidak Bertingkat</option>
+                                    </select>
+                                </div>
+
+                                <!-- Beton -->
+                                <div class="form-group">
+                                    <label for="beton" class="block text-sm font-medium text-gray-700 mb-1">
+                                        <span class="text-red-500">*</span> Beton
+                                    </label>
+                                    <select id="beton" name="beton"
+                                        class="block w-full px-4 py-2 text-gray-700 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                                        required>
+                                        <option value="Beton">Beton</option>
+                                        <option value="Tidak Beton">Tidak Beton</option>
+                                    </select>
+                                </div>
+
+                                <!-- No Dokumen -->
+                                <div class="form-group">
+                                    <label for="no_dokumen" class="block text-sm font-medium text-gray-700 mb-1">
+                                        <span class="text-red-500">*</span> No Dokumen
+                                    </label>
+                                    <input type="text" id="no_dokumen" name="no_dokumen"
+                                        class="block w-full px-4 py-2 text-gray-700 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                                        required />
+                                </div>
+
+                                <!-- Tanggal Dokumen -->
+                                <div class="form-group">
+                                    <label for="tanggal_dokumen" class="block text-sm font-medium text-gray-700 mb-1">
+                                        <span class="text-red-500">*</span> Tanggal Dokumen
+                                    </label>
+                                    <div class="relative">
+                                        <input type="date" id="tanggal_dokumen" name="tanggal_dokumen"
+                                            class="block w-full px-4 py-2 text-gray-700 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                                            required />
+                                        <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                            <i class="far fa-calendar-alt text-gray-400"></i>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Kode Tanah -->
+                                <div class="form-group">
+                                    <label for="id_tanah" class="block text-sm font-medium text-gray-700 mb-1">
+                                        Kode Tanah
+                                    </label>
+                                    <select id="id_tanah" name="id_tanah"
+                                        class="block w-full px-4 py-2 text-gray-700 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500">
+                                        <option value="">Pilih Tanah...</option>
+                                        @foreach ($tanah as $t)
+                                            <option value="{{ $t->id }}">{{ $t->aset->rekening->kode }} - {{ $t->aset->rekening->nama_rekening }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <!-- Asal -->
+                                <div class="form-group">
+                                    <label for="asal" class="block text-sm font-medium text-gray-700 mb-1">
+                                        <span class="text-red-500">*</span> Asal
+                                    </label>
+                                    <select id="asal" name="asal"
+                                        class="block w-full px-4 py-2 text-gray-700 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                                        required>
+                                        <option value="Kekayaan Asli Desa">Kekayaan Asli Desa</option>
+                                        <option value="APBDesa">APBDesa</option>
+                                        <option value="Perolehan Lain Yang Sah">Perolehan Lain Yang Sah</option>
+                                    </select>
+                                </div>
+
+                                <!-- Sumber Dana -->
+                                <div class="form-group">
+                                    <label for="sumber_dana" class="block text-sm font-medium text-gray-700 mb-1">
+                                        <span class="text-red-500">*</span> Sumber Dana
+                                    </label>
+                                    <select id="sumber_dana" name="sumber_dana"
+                                        class="block w-full px-4 py-2 text-gray-700 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                                        required>
+                                        <option value="Pendapatan Asli Desa">Pendapatan Asli Desa</option>
+                                        <option value="Dana Desa">Dana Desa(Dropping APBN)</option>
+                                        <option value="Alokasi Dana Desa">Alokasi Dana Desa</option>
+                                        <option value="Penerimaan Bagi Hasil Pajak Retribusi Daerah">Penerimaan Bagi Hasil Pajak Retribusi Daerah</option>
+                                        <option value="Penerimaan Bantuan Keuangan Kab/Kota">Penerimaan Bantuan Keuangan Kab/Kota</option>
+                                        <option value="Penerimaan Bantuan Keuangan Provinsi">Penerimaan Bantuan Keuangan Provinsi</option>
+                                        <option value="Swadaya Masyarakat">Swadaya Masyarakat</option>
+                                        <option value="Pendapatan Lain Lain">Pendapatan Lain Lain</option>
+                                    </select>
+                                </div>
+
+                                <!-- Nilai Perolehan -->
+                                <div class="form-group">
+                                    <label for="nilai_perolehan" class="block text-sm font-medium text-gray-700 mb-1">
+                                        <span class="text-red-500">*</span> Nilai Perolehan (Rp)
+                                    </label>
+                                    <div class="relative">
+                                        <input type="number" id="nilai_perolehan" name="nilai_perolehan"
+                                            class="block w-full px-4 py-2 text-gray-700 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                                            required />
+                                        <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                            <span class="text-gray-500 text-sm">Rp</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="mb-5">
-                            <label for="no_reg"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nomor
-                                Register</label>
-                            <input type="text" id="no_reg" name="no_reg"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                required />
+
+                        <!-- Kondisi dan Pembukuan Section -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                            <!-- Column 1 -->
+                            <div class="space-y-4">
+                                <!-- Kondisi -->
+                                <div class="form-group">
+                                    <label for="kondisi" class="block text-sm font-medium text-gray-700 mb-1">
+                                        <span class="text-red-500">*</span> Kondisi
+                                    </label>
+                                    <select id="kondisi" name="kondisi"
+                                        class="block w-full px-4 py-2 text-gray-700 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                                        required>
+                                        <option value="Baik">Baik</option>
+                                        <option value="Kurang Baik">Kurang Baik</option>
+                                        <option value="Rusak Ringan">Rusak Ringan</option>
+                                        <option value="Rusak Berat">Rusak Berat</option>
+                                    </select>
+                                </div>
+
+                                <!-- Tanggal Pembukuan -->
+                                <div class="form-group">
+                                    <label for="tanggal_pembukuan" class="block text-sm font-medium text-gray-700 mb-1">
+                                        <span class="text-red-500">*</span> Tanggal Pembukuan
+                                    </label>
+                                    <div class="relative">
+                                        <input type="date" id="tanggal_pembukuan" name="tanggal_pembukuan"
+                                            class="block w-full px-4 py-2 text-gray-700 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                                            required />
+                                        <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                            <i class="far fa-calendar-alt text-gray-400"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Column 2 -->
+                            <div class="space-y-4">
+                                <!-- Perolehan -->
+                                <div class="form-group">
+                                    <label for="perolehan" class="block text-sm font-medium text-gray-700 mb-1">
+                                        <span class="text-red-500">*</span> Perolehan
+                                    </label>
+                                    <select id="perolehan" name="perolehan"
+                                        class="block w-full px-4 py-2 text-gray-700 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                                        required>
+                                        <option value="Inventarisasi">Inventarisasi</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
-                        <div class="mb-5">
-                            <label for="id_rekening"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">rekening</label>
-                            <select class="js-example-placeholder-single js-states form-control w-full m-6"
-                                id="id_rekening" name="id_rekening" data-placeholder="Pilih aset">
-                                <option value="">Pilih...</option>
-                                @foreach ($rekening as $s)
-                                    <option value="{{ $s->id }}">{{ $s->kode }} - {{ $s->nama_rekening }}
-                                    </option>
-                                @endforeach
-                            </select>
+
+                        <!-- Alamat dan Keterangan Section -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                            <!-- Alamat -->
+                            <div class="form-group">
+                                <label for="alamat" class="block text-sm font-medium text-gray-700 mb-1">
+                                    Alamat
+                                </label>
+                                <textarea id="alamat" name="alamat" rows="3"
+                                    class="block w-full px-4 py-2 text-gray-700 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"></textarea>
+                            </div>
+
+                            <!-- Keterangan -->
+                            <div class="form-group">
+                                <label for="keterangan" class="block text-sm font-medium text-gray-700 mb-1">
+                                    Keterangan
+                                </label>
+                                <textarea id="keterangan" name="keterangan" rows="3"
+                                    class="block w-full px-4 py-2 text-gray-700 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"></textarea>
+                            </div>
                         </div>
-                        <div class="mb-5">
-                            <label for="nama_label"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama Label</label>
-                            <input type="text" id="nama_label" name="nama_label"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                required />
-                        </div>
-                        <div class="mb-5">
-                            <label for="kode_pemilik"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kode
-                                Pemilik</label>
-                            <select class="js-example-placeholder-single js-states form-control w-full m-6"
-                                id="kode_pemilik" name="kode_pemilik" data-placeholder="Pilih Kode Pemilik">
-                                <option value="">Pilih...</option>
-                                <option value="Pemerintah Desa">Pemerintah Desa</option>
-                            </select>
-                        </div>
-                        <div class="mb-5">
-                            <label for="kode_belanja_bidang"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kode Belanja
-                                Bidang</label>
-                            <select class="js-example-placeholder-single js-states form-control w-full m-6"
-                                id="kode_belanja_bidang" name="kode_belanja_bidang"
-                                data-placeholder="Pilih Belanja Bidang">
-                                <option value="">Pilih...</option>
-                                <option value="Penyelengaraan Pemerintah Desa">Penyelengaraan Pemerintah Desa</option>
-                                <option value="Pelaksanaan Pembangunan Desa">Pelaksanaan Pembangunan Desa</option>
-                                <option value="Pembinaan Kemasyarakatan">Pembinaan Kemasyarakatan</option>
-                                <option value="Pemberdayaan Masyarakat Desa">Pemberdayaan Masyarakat</option>
-                                <option value="Penanggulangan Bencana, Darurat Dan Mendesak Desa">Penanggulangan
-                                    Bencana, Darurat Dan Mendesak Desa</option>
-                            </select>
-                        </div>
-                        <div class="mb-5">
-                            <label for="tanggal_perolehan"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tanggal
-                                Perolehan</label>
-                            <input type="date" id="tanggal_perolehan" name="tanggal_perolehan"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                required />
-                        </div>
-                        <div class="mb-5">
-                            <label for="luas_lantai"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Luas Lantai
-                            </label>
-                            <input type="text" id="luas_lantai" name="luas_lantai"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                required />
-                        </div>
-                        <div class="mb-5">
-                            <label for="bertingkat"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Bertingkat</label>
-                            <select id="bertingkat" name="bertingkat"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                <option value="Bertingkat">Bertingkat</option>
-                                <option value="Tidak Bertingkat">Tidak Bertingkat</option>
-                            </select>
-                        </div>
-                        <div class="mb-5">
-                            <label for="beton"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Beton</label>
-                            <select id="beton" name="beton"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                <option value="Beton">Beton</option>
-                                <option value="Tidak Beton">Tidak Beton</option>
-                            </select>
-                        </div>
-                        <div class="mb-5">
-                            <label for="no_dokumen"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">No Dokumen</label>
-                            <input type="text" id="no_dokumen" name="no_dokumen"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                required />
-                        </div>
-                        <div class="mb-5">
-                            <label for="tanggal_dokumen"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tanggal
-                                Dokumen</label>
-                            <input type="date" id="tanggal_dokumen" name="tanggal_dokumen"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                required />
-                        </div>
-                        <div class="mb-5">
-                            <label for="id_tanah"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kode Tanah</label>
-                            <select class="js-example-placeholder-single js-states form-control w-full m-6"
-                                id="id_tanah" name="id_tanah" data-placeholder="Pilih aset">
-                                <option value="">Pilih...</option>
-                                @foreach ($tanah as $t)
-                                    <option value="{{ $t->id }}">{{ $t->aset->rekening->kode }} -
-                                        {{ $t->aset->rekening->nama_rekening }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="mb-5">
-                            <label for="asal"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Asal</label>
-                            <select id="asal" name="asal"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                <option value="Kekayaan Asli Desa">Kekayaan Asli Desa</option>
-                                <option value="APBDesa">APBDesa</option>
-                                <option value="Perolehan Lain Yang Sah">Perolehan Lain Yang Sah</option>
-                            </select>
-                        </div>
-                        <div class="mb-5">
-                            <label for="sumber_dana"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Sumber
-                                Dana</label>
-                            <select id="sumber_dana" name="sumber_dana"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                <option value="Pendapatan Asli Desa">Pendapatan Asli Desa</option>
-                                <option value="Dana Desa">Dana Desa(Dropping APBN)</option>
-                                <option value="Alokasi Dana Desa">Alokasi Dana Desa</option>
-                                <option value="Penerimaan Bagi Hasil Pajak Retribusi Daerah">Penerimaan Bagi Hasil
-                                    Pajak Retribusi Daerah</option>
-                                <option value="Penerimaan Bantuan Keuangan Kab/Kota">Penerimaan Bantuan Keuangan
-                                    Kab/Kota</option>
-                                <option value="Penerimaan Bantuan Keuangan Provinsi">Penerimaan Bantuan Keuangan
-                                    Provinsi</option>
-                                <option value="Swadaya Masyarakat">Swadaya Masyarakat</option>
-                                <option value="Pendapatan Lain Lain">Pendapatan Lain Lain</option>
-                            </select>
-                        </div>
-                        <div class="mb-5">
-                            <label for="nilai_perolehan"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nilai
-                                Perolehan</label>
-                            <input type="number" id="nilai_perolehan" name="nilai_perolehan"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                required />
-                        </div>
-                        <div class="mb-5">
-                            <label for="kondisi"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kondisi</label>
-                            <select id="kondisi" name="kondisi"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                <option value="Baik">Baik</option>
-                                <option value="Kurang Baik">Kurang Baik</option>
-                                <option value="Rusak Ringan">Rusak Ringan</option>
-                                <option value="Rusak Berat">Rusak Berat</option>
-                            </select>
-                        </div>
-                        <div class="mb-5">
-                            <label for="tanggal_pembukuan"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tanggal
-                                Pembukuan</label>
-                            <input type="date" id="tanggal_pembukuan" name="tanggal_pembukuan"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                required />
-                        </div>
-                        <div class="mb-5">
-                            <label for="perolehan"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Perolehan</label>
-                            <select id="perolehan" name="perolehan"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                <option value="Inventarisasi">Inventarisasi</option>
-                            </select>
-                        </div>
-                        <div class="mb-5">
-                            <label for="alamat"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Alamat</label>
-                            <textarea id="alamat" name="alamat"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></textarea>
-                        </div>
-                        <div class="mb-5">
-                            <label for="keterangan"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Keterangan</label>
-                            <textarea id="keterangan" name="keterangan"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></textarea>
-                        </div>
+
+                        <!-- Hidden Field -->
                         <input type="hidden" name="id_pengadaan" value="{{ $id }}">
-                         <a href="{{ url()->previous() }}"
-                                class="text-gray-700 bg-gray-200 hover:bg-gray-300 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800">Batal</a>
-                        <button type="submit"
-                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+
+                        <!-- Form Actions -->
+                        <div class="mt-8 flex justify-end space-x-4">
+                            <a href="{{ url()->previous() }}"
+                                class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200">
+                                <i class="fas fa-arrow-left mr-1"></i> Batal
+                            </a>
+                            <button type="submit"
+                                class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+                                </svg> 
+                                Simpan Data
+                            </button>
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+
+    @push('styles')
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <style>
+            .form-group {
+                margin-bottom: 1.25rem;
+            }
+
+            select {
+                appearance: none;
+                background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+                background-position: right 0.75rem center;
+                background-repeat: no-repeat;
+                background-size: 1.5em 1.5em;
+                padding-right: 2.5rem;
+            }
+
+            .required-field::after {
+                content: " *";
+                color: #ef4444;
+            }
+        </style>
+    @endpush
 </x-app-layout>
