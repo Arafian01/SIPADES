@@ -10,30 +10,25 @@
                     </a>
                 </div>
 
-                <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                <!-- Navigation Links - Desktop -->
+                <div class="hidden sm:flex sm:items-center sm:space-x-8 sm:ms-10">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    
                     <x-nav-link :href="route('rekening.index')" :active="request()->routeIs('rekening.index')">
                         {{ __('Kode Rekening Aset') }}
                     </x-nav-link>
-                </div>
-                <div class="hidden sm:flex sm:items-center sm:ms-6">
-                    <li class="relative list-none">
+                    
+                    <!-- Data Entri Dropdown -->
+                    <div class="relative list-none">
                         <x-dropdown>
                             <x-slot name="trigger">
-                                <button
-                                    class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
+                                <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
                                     <div>Data Entri</div>
-
                                     <div class="ms-1">
-                                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
-                                            viewBox="0 0 20 20"> <path fill-rule="evenodd"
-                                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                                clip-rule="evenodd" />
+                                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                                         </svg>
                                     </div>
                                 </button>
@@ -43,27 +38,22 @@
                                 <x-dropdown-link :href="route('pengguna.index')" :active="request()->routeIs('pengguna.index')">
                                     {{ __('Data Umum Desa') }}
                                 </x-dropdown-link>
-
                                 <x-dropdown-link :href="route('ruangan.index')" :active="request()->routeIs('ruangan.index')">
                                     {{ __('Data Ruangan') }}
                                 </x-dropdown-link>
                             </x-slot>
                         </x-dropdown>
-                    </li>
-                </div>
-                <div class="hidden sm:flex sm:items-center sm:ms-6">
-                    <li class="relative list-none">
+                    </div>
+                    
+                    <!-- Data Transaksi Dropdown -->
+                    <div class="relative list-none">
                         <x-dropdown>
                             <x-slot name="trigger">
-                                <button
-                                    class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
+                                <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
                                     <div>Data Transaksi</div>
-
                                     <div class="ms-1">
-                                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
-                                            viewBox="0 0 20 20"> <path fill-rule="evenodd"
-                                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                                clip-rule="evenodd" />
+                                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                                         </svg>
                                     </div>
                                 </button>
@@ -73,81 +63,76 @@
                                 <x-dropdown-link :href="route('pengadaan.index')" :active="request()->routeIs('pengadaan.index')">
                                     {{ __('Pengadaan Aset') }}
                                 </x-dropdown-link>
-                                <x-dropdown-link :href="route('tanah.index')" :active="request()->routeIs('pengadaan.index')">
+                                <x-dropdown-link :href="route('tanah.index')" :active="request()->routeIs('tanah.index')">
                                     {{ __('Golongan Tanah') }}
                                 </x-dropdown-link>
-                                <x-dropdown-link :href="route('peralatan_dan_mesin.index')" :active="request()->routeIs('pengadaan.index')">
+                                <x-dropdown-link :href="route('peralatan_dan_mesin.index')" :active="request()->routeIs('peralatan_dan_mesin.index')">
                                     {{ __('Golongan Peralatan dan Mesin') }}
                                 </x-dropdown-link>
-                                <x-dropdown-link :href="route('gedung_dan_bangunan.index')" :active="request()->routeIs('pengadaan.index')">
+                                <x-dropdown-link :href="route('gedung_dan_bangunan.index')" :active="request()->routeIs('gedung_dan_bangunan.index')">
                                     {{ __('Golongan Gedung dan Bangunan') }}
                                 </x-dropdown-link>
-                                <x-dropdown-link :href="route('jalan_irigasi_dan_jaringan.index')" :active="request()->routeIs('pengadaan.index')">
+                                <x-dropdown-link :href="route('jalan_irigasi_dan_jaringan.index')" :active="request()->routeIs('jalan_irigasi_dan_jaringan.index')">
                                     {{ __('Golongan Jalan, Irigasi dan Jaringan') }}
                                 </x-dropdown-link>
-                                <x-dropdown-link :href="route('aset_tetap_lainnya.index')" :active="request()->routeIs('pengadaan.index')">
+                                <x-dropdown-link :href="route('aset_tetap_lainnya.index')" :active="request()->routeIs('aset_tetap_lainnya.index')">
                                     {{ __('Golongan Aset Tetap Lainnya') }}
                                 </x-dropdown-link>
-                                <x-dropdown-link :href="route('kontruksi_dalam_pengerjaan.index')" :active="request()->routeIs('pengadaan.index')">
+                                <x-dropdown-link :href="route('kontruksi_dalam_pengerjaan.index')" :active="request()->routeIs('kontruksi_dalam_pengerjaan.index')">
                                     {{ __('Golongan Kontruksi Dalam Pengerjaan') }}
                                 </x-dropdown-link>
                             </x-slot>
                         </x-dropdown>
-                    </li>
-                </div>
-                <div class="hidden sm:flex sm:items-center sm:ms-6">
-                    <li class="relative list-none">
+                    </div>
+                    
+                    <!-- Laporan Dropdown -->
+                    <div class="relative list-none">
                         <x-dropdown>
                             <x-slot name="trigger">
-                                <button
-                                    class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
+                                <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
                                     <div>Laporan</div>
-
                                     <div class="ms-1">
-                                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
-                                            viewBox="0 0 20 20"> <path fill-rule="evenodd"
-                                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                                clip-rule="evenodd" />
+                                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                                         </svg>
                                     </div>
                                 </button>
                             </x-slot>
 
                             <x-slot name="content">
-                                <x-dropdown-link :href="route('buku.index')" :active="request()->routeIs('pengadaan.index')">
+                                <x-dropdown-link :href="route('buku.index')" :active="request()->routeIs('buku.index')">
                                     {{ __('Buku') }}
                                 </x-dropdown-link>
-                                <x-dropdown-link :href="route('tanah.index')" :active="request()->routeIs('pengadaan.index')">
+                                <x-dropdown-link :href="route('tanah.index')" :active="request()->routeIs('tanah.index')">
                                     {{ __('Kartu Golongan Tanah') }}
                                 </x-dropdown-link>
-                                <x-dropdown-link :href="route('peralatan_dan_mesin.index')" :active="request()->routeIs('pengadaan.index')">
+                                <x-dropdown-link :href="route('peralatan_dan_mesin.index')" :active="request()->routeIs('peralatan_dan_mesin.index')">
                                     {{ __('Kartu Golongan Peralatan dan Mesin') }}
                                 </x-dropdown-link>
-                                <x-dropdown-link :href="route('gedung_dan_bangunan.index')" :active="request()->routeIs('pengadaan.index')">
+                                <x-dropdown-link :href="route('gedung_dan_bangunan.index')" :active="request()->routeIs('gedung_dan_bangunan.index')">
                                     {{ __('Kartu Golongan Gedung dan Bangunan') }}
                                 </x-dropdown-link>
-                                <x-dropdown-link :href="route('jalan_irigasi_dan_jaringan.index')" :active="request()->routeIs('pengadaan.index')">
+                                <x-dropdown-link :href="route('jalan_irigasi_dan_jaringan.index')" :active="request()->routeIs('jalan_irigasi_dan_jaringan.index')">
                                     {{ __('Kartu Golongan Jalan, Irigasi dan Jaringan') }}
                                 </x-dropdown-link>
-                                <x-dropdown-link :href="route('aset_tetap_lainnya.index')" :active="request()->routeIs('pengadaan.index')">
+                                <x-dropdown-link :href="route('aset_tetap_lainnya.index')" :active="request()->routeIs('aset_tetap_lainnya.index')">
                                     {{ __('Kartu Golongan Aset Tetap Lainnya') }}
                                 </x-dropdown-link>
-                                <x-dropdown-link :href="route('kontruksi_dalam_pengerjaan.index')" :active="request()->routeIs('pengadaan.index')">
+                                <x-dropdown-link :href="route('kontruksi_dalam_pengerjaan.index')" :active="request()->routeIs('kontruksi_dalam_pengerjaan.index')">
                                     {{ __('Kartu Golongan Kontruksi Dalam Pengerjaan') }}
                                 </x-dropdown-link>
                             </x-slot>
                         </x-dropdown>
-                    </li>
+                    </div>
                 </div>
             </div>
 
-            <!-- Settings Dropdown -->
+            <!-- Settings Dropdown - Desktop -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
                             <div>{{ Auth::user()->name }}</div>
-
                             <div class="ms-1">
                                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
@@ -160,14 +145,9 @@
                         <x-dropdown-link :href="route('profile.edit')">
                             {{ __('Profile') }}
                         </x-dropdown-link>
-
-                        <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
-
-                            <x-dropdown-link :href="route('logout')"
-                                    onclick="event.preventDefault();
-                                                this.closest('form').submit();">
+                            <x-dropdown-link :href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();">
                                 {{ __('Log Out') }}
                             </x-dropdown-link>
                         </form>
@@ -193,6 +173,79 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+            
+            <x-responsive-nav-link :href="route('rekening.index')" :active="request()->routeIs('rekening.index')">
+                {{ __('Kode Rekening Aset') }}
+            </x-responsive-nav-link>
+            
+            <!-- Data Entri Mobile -->
+            <div class="px-4 pt-2">
+                <div class="font-medium text-base text-gray-500">Data Entri</div>
+                <div class="mt-1 space-y-1">
+                    <x-responsive-nav-link :href="route('pengguna.index')" :active="request()->routeIs('pengguna.index')">
+                        {{ __('Data Umum Desa') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('ruangan.index')" :active="request()->routeIs('ruangan.index')">
+                        {{ __('Data Ruangan') }}
+                    </x-responsive-nav-link>
+                </div>
+            </div>
+            
+            <!-- Data Transaksi Mobile -->
+            <div class="px-4 pt-2">
+                <div class="font-medium text-base text-gray-500">Data Transaksi</div>
+                <div class="mt-1 space-y-1">
+                    <x-responsive-nav-link :href="route('pengadaan.index')" :active="request()->routeIs('pengadaan.index')">
+                        {{ __('Pengadaan Aset') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('tanah.index')" :active="request()->routeIs('tanah.index')">
+                        {{ __('Golongan Tanah') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('peralatan_dan_mesin.index')" :active="request()->routeIs('peralatan_dan_mesin.index')">
+                        {{ __('Golongan Peralatan dan Mesin') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('gedung_dan_bangunan.index')" :active="request()->routeIs('gedung_dan_bangunan.index')">
+                        {{ __('Golongan Gedung dan Bangunan') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('jalan_irigasi_dan_jaringan.index')" :active="request()->routeIs('jalan_irigasi_dan_jaringan.index')">
+                        {{ __('Golongan Jalan, Irigasi dan Jaringan') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('aset_tetap_lainnya.index')" :active="request()->routeIs('aset_tetap_lainnya.index')">
+                        {{ __('Golongan Aset Tetap Lainnya') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('kontruksi_dalam_pengerjaan.index')" :active="request()->routeIs('kontruksi_dalam_pengerjaan.index')">
+                        {{ __('Golongan Kontruksi Dalam Pengerjaan') }}
+                    </x-responsive-nav-link>
+                </div>
+            </div>
+            
+            <!-- Laporan Mobile -->
+            <div class="px-4 pt-2">
+                <div class="font-medium text-base text-gray-500">Laporan</div>
+                <div class="mt-1 space-y-1">
+                    <x-responsive-nav-link :href="route('buku.index')" :active="request()->routeIs('buku.index')">
+                        {{ __('Buku') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('tanah.index')" :active="request()->routeIs('tanah.index')">
+                        {{ __('Kartu Golongan Tanah') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('peralatan_dan_mesin.index')" :active="request()->routeIs('peralatan_dan_mesin.index')">
+                        {{ __('Kartu Golongan Peralatan dan Mesin') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('gedung_dan_bangunan.index')" :active="request()->routeIs('gedung_dan_bangunan.index')">
+                        {{ __('Kartu Golongan Gedung dan Bangunan') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('jalan_irigasi_dan_jaringan.index')" :active="request()->routeIs('jalan_irigasi_dan_jaringan.index')">
+                        {{ __('Kartu Golongan Jalan, Irigasi dan Jaringan') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('aset_tetap_lainnya.index')" :active="request()->routeIs('aset_tetap_lainnya.index')">
+                        {{ __('Kartu Golongan Aset Tetap Lainnya') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('kontruksi_dalam_pengerjaan.index')" :active="request()->routeIs('kontruksi_dalam_pengerjaan.index')">
+                        {{ __('Kartu Golongan Kontruksi Dalam Pengerjaan') }}
+                    </x-responsive-nav-link>
+                </div>
+            </div>
         </div>
 
         <!-- Responsive Settings Options -->
@@ -210,10 +263,7 @@
                 <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
-
-                    <x-responsive-nav-link :href="route('logout')"
-                            onclick="event.preventDefault();
-                                        this.closest('form').submit();">
+                    <x-responsive-nav-link :href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();">
                         {{ __('Log Out') }}
                     </x-responsive-nav-link>
                 </form>
