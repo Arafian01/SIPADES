@@ -15,7 +15,7 @@ class gtanahController extends Controller
      */
     public function index()
     {
-        $tanah = tanah::all();
+        $tanah = tanah::paginate(5);
         $aset = aset::all();
         $rekening = rekening::all();
         return view('page.golongan.tanah.index')->with([

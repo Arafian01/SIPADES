@@ -13,7 +13,7 @@ class RuanganController extends Controller
      */
     public function index()
     {
-        $ruangan = ruangan::all();
+        $ruangan = ruangan::paginate(5);
         $pengguna = pengguna::all();
         return view('page.ruangan.index')->with([
             'ruangan' => $ruangan,
@@ -40,7 +40,7 @@ class RuanganController extends Controller
             'id_pengguna' => $request->input('id_pengguna'),
         ];
         ruangan::create($data);
-        return back()->with('message_delete', 'Data Ruangan Berhasil Ditambahkan');
+        return back()->with('success_message', 'Data Ruangan Berhasil Ditambahkan');
     }
 
     /**
@@ -70,7 +70,7 @@ class RuanganController extends Controller
             'id_pengguna' => $request->input('id_pengguna'),
         ];
         ruangan::where('id', $id)->update($data);
-        return back()->with('message_update', 'Data Ruangan Berhasil Diupdate');
+        return back()->with('success_message', 'Data Ruangan Berhasil Diupdate');
     }
 
     /**
@@ -81,7 +81,7 @@ class RuanganController extends Controller
         $ruangan = ruangan::find($id);
         if ($ruangan) {
             $ruangan->delete();
-            return back()->with('message_delete', 'Data Ruangan Berhasil Dihapus');
+            return back()->with('success_message', 'Data Ruangan Berhasil Dihapus');
         }
         return back()->with('message_error', 'Data Ruangan Tidak Ditemukan');
     }

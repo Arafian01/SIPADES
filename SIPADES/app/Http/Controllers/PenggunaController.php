@@ -12,7 +12,7 @@ class PenggunaController extends Controller
      */
     public function index()
     {
-        $pengguna = pengguna::all();
+        $pengguna = pengguna::paginate(5);
         return view('page.pengguna.index')->with([
             'pengguna' => $pengguna
         ]);
@@ -38,7 +38,7 @@ class PenggunaController extends Controller
             'jabatan_tim_inventarisasi' => $request->input('jabatan_tim_inventarisasi'),
         ];
         pengguna::create($data);
-        return back()->with('message_delete', 'Data Pengguna Berhasil Ditambahkan');
+        return back()->with('success_message', 'Data Pengguna Berhasil Ditambahkan');
     }
 
     /**
@@ -72,7 +72,7 @@ class PenggunaController extends Controller
         $pengguna = pengguna::findOrFail($id);
         $pengguna->update($data);
 
-        return back()->with('message_delete', 'Data Pengguna Berhasil Diupdate');
+        return back()->with('success_message', 'Data Pengguna Berhasil Diupdate');
     }
 
     

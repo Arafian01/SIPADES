@@ -37,7 +37,7 @@ class RekeningController extends Controller
     {
 
         rekening::create([
-            'kode' => $request->kode,
+            'kode' => implode('.', $request->kode),
             'nama_rekening' => $request->nama_rekening,
             'id_golongan' => $request->golongan_id,
         ]);
@@ -69,7 +69,7 @@ class RekeningController extends Controller
    
     $rekening = rekening::findOrFail($id);
     $rekening->update([
-        'kode' => $request->kode,
+        'kode' => implode('.', $request->kode),
         'nama_rekening' => $request->nama_rekening,
         'id_golongan' => $request->golongan_id,
     ]);
