@@ -294,12 +294,13 @@
                                 <td class="border border-1 border-black text-left pl-2">{{ $d->aset->kondisi }}</td>
                                 <td class="border border-1 border-black text-left pl-2">{{ $d->bertingkat }}</td>
                                 <td class="border border-1 border-black text-left pl-2">{{ $d->beton }}</td>
-                                <td class="border border-1 border-black pl-2">{{ $d->nomor_pabrik }}</td>
-                                <td class="border border-1 border-black pl-2">{{ $d->nomor_rangka }}</td>
-                                <td class="border border-1 border-black pl-2">{{ $d->nomor_mesin }}</td>
-                                <td class="border border-1 border-black pl-2">{{ $d->nomor_polisi }}</td>
-                                <td class="border border-1 border-black pl-2">{{ $d->nomor_bpkb }}</td>
-                                <td class="border border-1 border-black pl-2">{{ $d->perolehan }}</td>
+                                <td class="border border-1 border-black pl-2">{{ $d->luas_lantai }}</td>
+                                <td class="border border-1 border-black pl-2">{{ $d->alamat }}</td>
+                                <td class="border border-1 border-black pl-2">{{ $d->no_dokumen }}</td>
+                                <td class="border border-1 border-black pl-2">{{ $d->tanah->luas }}</td>
+                                <td class="border border-1 border-black pl-2">{{ $d->aset->kondisi }}</td>
+                                <td class="border border-1 border-black pl-2">{{ $d->tanah->aset->rekening->kode }}</td>
+                                <td class="border border-1 border-black pl-2">{{ $d->aset->asal }}</td>
                                 <td class="border border-1 border-black pl-2">{{ $d->aset->nilai_perolehan }}</td>
                                 <td class="border border-1 border-black pl-2">{{ $d->keterangan }}</td>
                             </tr>
