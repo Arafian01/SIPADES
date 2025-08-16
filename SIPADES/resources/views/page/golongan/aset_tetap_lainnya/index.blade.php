@@ -1,108 +1,229 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('GOLONGAN ASET TETAP LAINNYA') }}
+        <h2 class="font-semibold text-lg sm:text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            {{ __('Golongan Aset Tetap Lainnya') }}
         </h2>
     </x-slot>
 
-    <div class="py-12">
-        <div class=" mx-auto sm:px-6 lg:px-8">
+    <div class="py-6">
+        <div class="mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-4 flex items-center justify-between">
-                    <div>DATA GOLONGAN ASET TETAP LAINNYA</div>
-                    <div>
-                        <a href="{{ route('aset_tetap_lainnya.create', '0') }}" 
-                            class="bg-sky-600 p-2 hover:bg-sky-400 text-white rounded-xl">Add</a>
+                <!-- Success/Error Messages -->
+                @if (session('success'))
+                    <div class="p-4 sm:p-6">
+                        <div id="successMessage" class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg relative mb-4" role="alert">
+                            <span class="block sm:inline text-sm">{{ session('success') }}</span>
+                            <span class="absolute top-0 bottom-0 right-0 px-4 py-3 cursor-pointer" onclick="this.parentElement.remove()">
+                                <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                            </span>
+                        </div>
+                    </div>
+                @endif
+                @if ($errors->any())
+                    <div class="p-4 sm:p-6">
+                        <div id="errorMessage" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg relative mb-4" role="alert">
+                            <strong class="font-bold text-sm">Error!</strong>
+                            <ul class="mt-1 list-disc list-inside text-sm">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                            <span class="absolute top-0 bottom-0 right-0 px-4 py-3 cursor-pointer" onclick="this.parentElement.remove()">
+                                <svg class="w-4 h-4 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                            </span>
+                        </div>
+                    </div>
+                @endif
+
+                <div class="p-4 sm:p-6 border-b border-gray-200 dark:border-gray-700">
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                        <div class="text-lg sm:text-xl font-semibold text-gray-900 dark:text-gray-100">
+                            Daftar Aset Tetap Lainnya
+                        </div>
+                        <div class="flex flex-col sm:flex-row sm:items-center gap-2">
+                            <!-- Search Input -->
+                            <div class="relative w-full sm:w-64">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                    </svg>
+                                </div>
+                                <input type="text" id="searchInput" placeholder="Cari data..."
+                                    class="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                                    oninput="searchTable()" autocomplete="off">
+                            </div>
+                            <!-- Add Button -->
+                            <a href="{{ route('aset_tetap_lainnya.create', '0') }}"
+                                class="bg-blue-500 hover:bg-blue-700 text-white text-sm font-medium px-4 py-2 rounded-lg flex items-center justify-center w-full sm:w-auto">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                </svg>
+                                Tambah Aset
+                            </a>
+                        </div>
                     </div>
                 </div>
-                <div class="p-6 text-gray-900 dark:text-gray-100">
+
+                <div class="p-4 sm:p-6 text-gray-900 dark:text-gray-100">
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-                        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                            <thead
-                                class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <table id="asetTable" class="w-full text-sm text-left rtl:text-right">
+                            <thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-300 sticky top-0">
                                 <tr>
-                                    <th scope="col" class="px-6 py-3">
-                                        NO
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        ID ASET 
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        NO REG
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        KODE REKENING
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        NAMA REKENING
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        NILAI PEROLEHAN
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        ACTION
-                                    </th>
+                                    <th scope="col" class="px-4 py-3 w-12">No</th>
+                                    <th scope="col" class="px-4 py-3">ID Aset</th>
+                                    <th scope="col" class="px-4 py-3">No Reg</th>
+                                    <th scope="col" class="px-4 py-3">Kode Rekening</th>
+                                    <th scope="col" class="px-4 py-3 min-w-[150px]">Nama Rekening</th>
+                                    <th scope="col" class="px-4 py-3">Nilai (Rp)</th>
+                                    <th scope="col" class="px-4 py-3 text-center">Aksi</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                @php
-                                    $no = 1;
-                                @endphp
+                            <tbody id="asetTableBody">
+                                @php $no = 1; @endphp
                                 @foreach ($aset_tetap_lainnya as $a)
-                                    <tr
-                                        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                        <th scope="row"
-                                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                            {{ $no++ }}
-                                        </th>
-                                        <td class="px-6 py-4">
-                                            {{ $a->aset->id_barang }}
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            {{ $a->aset->nomor_register }}
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            {{ $a->aset->rekening->kode }}
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            {{ $a->aset->rekening->nama_rekening }}
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            {{ $a->aset->nilai_perolehan }}
-                                        </td>
-                                        <td class="px-6 py-4">
+                                    <tr class="aset-row bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                        <td class="px-4 py-3 font-medium text-gray-900 dark:text-white">{{ $no++ }}</td>
+                                        <td class="px-4 py-3 font-mono text-blue-600 dark:text-blue-400">{{ $a->aset->id_barang }}</td>
+                                        <td class="px-4 py-3 font-mono">{{ $a->aset->nomor_register }}</td>
+                                        <td class="px-4 py-3 font-mono">{{ $a->aset->rekening->kode }}</td>
+                                        <td class="px-4 py-3">{{ $a->aset->rekening->nama_rekening }}</td>
+                                        <td class="px-4 py-3 font-mono">Rp {{ number_format($a->aset->nilai_perolehan, 2, ',', '.') }}</td>
+                                        <td class="px-4 py-3 flex flex-wrap justify-center gap-2">
                                             <a href="{{ route('aset_tetap_lainnya.edit', [$a->id, '0']) }}"
-                                                class="bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-md text-xs text-white">Edit</a>
-                                            <button onclick="return peralatanDelete('{{ $a->id }}','{{ $a->aset->rekening->nama_rekening }}')" class="bg-red-500 hover:bg-bg-red-300 px-3 py-1 rounded-md text-xs text-white">Delete</button>
+                                                class="bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-md text-xs text-white flex items-center">
+                                                <svg class="w-3 h-3 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                                                </svg>
+                                                Edit
+                                            </a>
+                                            <button onclick="asetTetapDelete('{{ $a->id }}','{{ addslashes($a->aset->rekening->nama_rekening) }}')"
+                                                class="bg-red-500 hover:bg-red-600 px-3 py-1 rounded-md text-xs text-white flex items-center">
+                                                <svg class="w-3 h-3 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                                </svg>
+                                                Hapus
+                                            </button>
                                         </td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
                     </div>
+                    <div class="mt-4 flex justify-center">
+                        {{ $aset_tetap_lainnya->links() }}
+                    </div>
+                    <!-- Empty State -->
+                    <div id="emptyState" class="hidden text-center py-10">
+                        <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <h3 class="mt-2 text-sm font-medium text-gray-900 dark:text-white">Tidak ada data ditemukan</h3>
+                        <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Coba kata kunci lain atau tambahkan data baru.</p>
+                        <div class="mt-6">
+                            <a href="{{ route('aset_tetap_lainnya.create', '0') }}"
+                                class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-500 hover:bg-blue-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                </svg>
+                                Tambah Aset
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <script>
 
-        const peralatanDelete = async (id, peralatan) => {
-            let tanya = confirm(`Apakah anda yakin untuk menghapus ${peralatan} ?`);
-            if (tanya) {
-                await axios.post(`/aset_tetap_lainnya/${id}`, {
+    <script>
+        @if (session('success_message'))
+            Swal.fire({
+                title: 'Berhasil!',
+                text: "{{ session('success_message') }}",
+                icon: 'success',
+                timer: 2000,
+                showConfirmButton: false
+            });
+        @endif
+
+        @if ($errors->any())
+            Swal.fire({
+                title: 'Gagal!',
+                text: "{{ $errors->first() }}",
+                icon: 'error',
+                timer: 2000,
+                showConfirmButton: false
+            });
+        @endif
+
+        function searchTable() {
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const rows = document.getElementsByClassName('aset-row');
+            const emptyState = document.getElementById('emptyState');
+            let hasResults = false;
+
+            for (let row of rows) {
+                const cells = row.querySelectorAll('td');
+                let found = false;
+                for (let cell of cells) {
+                    if (cell.textContent.toLowerCase().includes(input)) {
+                        found = true;
+                        break;
+                    }
+                }
+                row.style.display = found ? '' : 'none';
+                if (found) hasResults = true;
+            }
+
+            emptyState.style.display = hasResults || input === '' ? 'none' : 'block';
+        }
+
+        async function asetTetapDelete(id, nama) {
+            const result = await Swal.fire({
+                title: `Hapus ${nama}?`,
+                text: "Data yang dihapus tidak dapat dikembalikan!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, Hapus!',
+                cancelButtonText: 'Batal'
+            });
+
+            if (result.isConfirmed) {
+                try {
+                    await axios.post(`/aset_tetap_lainnya/${id}`, {
                         '_method': 'DELETE',
-                        '_token': $('meta[name="csrf-token"]').attr('content')
-                    })
-                    .then(function(response) {
-                        // Handle success
-                        location.reload();
-                    })
-                    .catch(function(error) {
-                        // Handle error
-                        alert('Error deleting record');
-                        console.log(error);
+                        '_token': '{{ csrf_token() }}'
                     });
+                    Swal.fire({
+                        title: 'Terhapus!',
+                        text: 'Data aset telah dihapus.',
+                        icon: 'success',
+                        timer: 2000,
+                        showConfirmButton: false
+                    }).then(() => location.reload());
+                } catch (error) {
+                    Swal.fire({
+                        title: 'Gagal!',
+                        text: 'Terjadi kesalahan saat menghapus data.',
+                        icon: 'error',
+                        timer: 2000,
+                        showConfirmButton: false
+                    });
+                }
             }
         }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const tbody = document.getElementById('asetTableBody');
+            const emptyState = document.getElementById('emptyState');
+            if (tbody.children.length === 0) {
+                emptyState.classList.remove('hidden');
+            }
+        });
     </script>
 </x-app-layout>
