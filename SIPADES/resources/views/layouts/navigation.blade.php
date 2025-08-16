@@ -100,7 +100,7 @@
                             </x-slot>
 
                             <x-slot name="content">
-                                <x-dropdown-link :href="route('buku.index')" :active="request()->routeIs('buku.index')">
+                                <x-dropdown-link :href="route('laporan.index')" :active="request()->routeIs('laporan.index')">
                                     {{ __('Buku') }}
                                 </x-dropdown-link>
                                 <x-dropdown-link :href="route('tanah.index')" :active="request()->routeIs('tanah.index')">
