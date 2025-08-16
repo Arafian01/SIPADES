@@ -21,7 +21,7 @@ class PengadaanController extends Controller
      */
     public function index()
     {
-        $pengadaan = Pengadaan::all();
+        $pengadaan = Pengadaan::paginate(5);
         $pengguna = pengguna::all();
         return view('page.pengadaan.index')->with([
             'pengadaan' => $pengadaan,
@@ -115,10 +115,15 @@ public function create(String $id, String $id_golongan, String $id_aset)
     public function update(Request $request, string $id)
     {
         $data = [
-            'nama_pengadaan' => $request->input('nama_pengadaan'),
+            'id_pengguna' => $request->input('id_pengguna'),
+            'no_pengadaan' => $request->input('no_pengadaan'),
             'tanggal_pengadaan' => $request->input('tanggal_pengadaan'),
-            'jumlah' => $request->input('jumlah'),
-            'keterangan' => $request->input('keterangan'),
+            'no_kuitansi' => $request->input('no_kuitansi'),
+            'tanggal_spp' => $request->input('tanggal_spp'),
+            'no_bast' => $request->input('no_bast'),
+            'tanggal_bast' => $request->input('tanggal_bast'),
+            'nama_rekanan' => $request->input('nama_rekanan'),
+            'uraian' => $request->input('uraian'),
         ];
         pengadaan::where('id', $id)->update($data);
         return back()->with('message_delete', 'Data Pengadaan Berhasil Diupdate');
