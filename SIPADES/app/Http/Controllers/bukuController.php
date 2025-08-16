@@ -3,7 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\aset;
+use App\Models\aset_tetap_lainnya;
+use App\Models\gedung_dan_bangunan;
+use App\Models\jalan_irigasi_dan_jaringan;
+use App\Models\kontruksi_dalam_pengerjaan;
+use App\Models\peralatan_dan_mesin;
 use App\Models\rekening;
+use App\Models\tanah;
 use Illuminate\Http\Request;
 
 class bukuController extends Controller
@@ -36,14 +42,16 @@ class bukuController extends Controller
         $sampai = ($sampai === 'all') ? null : $sampai;
 
         $rekening = rekening::all();
-
+        $aset = aset::all();
+        $tanah = tanah::all();
+        
         if($dari === null){
-            $data = aset::all();
+            $data = kontruksi_dalam_pengerjaan::all();
         }else{
-            $data = aset::whereBetween('tanggal', [$dari, $sampai])->get();
+            $data = kontruksi_dalam_pengerjaan::whereBetween('tanggal', [$dari, $sampai])->get();
         }
         
-        return view('page.report.buku.printLaporan')->with(['data' => $data], ['rekening' => $rekening]);
+        return view('page.report.golongan.printLaporanKontruksi_dalam_Pengerjaan')->with(['data' => $data], ['rekening' => $rekening], ['aset' => $aset], ['tanah' => $tanah]);
     }
 
     /**
