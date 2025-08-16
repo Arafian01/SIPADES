@@ -19,7 +19,7 @@ class gjalan_irigasi_dan_jaringanController extends Controller
         // Fetch all necessary models
         $aset = aset::all();
         $rekening = rekening::all();
-        $jalan_irigasi_dan_jaringan = jalan_irigasi_dan_jaringan::all();
+        $jalan_irigasi_dan_jaringan = jalan_irigasi_dan_jaringan::paginate(5);
 
         // Return the view with the fetched data
         return view('page.golongan.jalan_irigasi_dan_jaringan.index', compact('aset', 'rekening', 'jalan_irigasi_dan_jaringan'));

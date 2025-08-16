@@ -18,7 +18,7 @@ class gperalatan_dan_mesinController extends Controller
     {
         $aset = aset::all();
         $rekening = rekening::all();
-        $peralatan_dan_mesin = peralatan_dan_mesin::all();
+        $peralatan_dan_mesin = peralatan_dan_mesin::paginate(5);
         return view('page.golongan.peralatan_dan_mesin.index', compact('aset', 'rekening', 'peralatan_dan_mesin'));
     }
 

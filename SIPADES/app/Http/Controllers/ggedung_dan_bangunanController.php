@@ -16,7 +16,7 @@ class ggedung_dan_bangunanController extends Controller
      */
     public function index()
     {
-        $gedung_dan_bangunan = gedung_dan_bangunan::all();
+        $gedung_dan_bangunan = gedung_dan_bangunan::paginate(5);
         $aset = aset::all();
         $rekening = rekening::all();
         return view('page.golongan.gedung_dan_bangunan.index', compact('gedung_dan_bangunan', 'aset', 'rekening'));

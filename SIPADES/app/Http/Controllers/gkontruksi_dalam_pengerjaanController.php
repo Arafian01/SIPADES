@@ -16,7 +16,7 @@ class gkontruksi_dalam_pengerjaanController extends Controller
     public function index()
     {
         // Fetch all necessary models
-        $kontruksi_dalam_pengerjaan = kontruksi_dalam_pengerjaan::all();
+        $kontruksi_dalam_pengerjaan = kontruksi_dalam_pengerjaan::paginate(5);
         $aset = aset::all();
         $rekening = rekening::all();
 

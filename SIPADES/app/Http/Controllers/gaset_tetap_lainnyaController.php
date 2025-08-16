@@ -18,7 +18,7 @@ class gaset_tetap_lainnyaController extends Controller
         // Fetch all necessary models
         $aset = aset::all();
         $rekening = rekening::all();
-        $aset_tetap_lainnya = aset_tetap_lainnya::all();
+        $aset_tetap_lainnya = aset_tetap_lainnya::paginate(5);
 
         // Return the view with the fetched data
         return view('page.golongan.aset_tetap_lainnya.index', compact('aset', 'rekening', 'aset_tetap_lainnya'));
