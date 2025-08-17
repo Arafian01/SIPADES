@@ -7,6 +7,7 @@ use App\Http\Controllers\gjalan_irigasi_dan_jaringanController;
 use App\Http\Controllers\gkontruksi_dalam_pengerjaanController;
 use App\Http\Controllers\gperalatan_dan_mesinController;
 use App\Http\Controllers\gtanahController;
+use App\Http\Controllers\laporanController;
 use App\Http\Controllers\PengadaanController;
 use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\ProfileController;
@@ -53,10 +54,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/jalan_irigasi_dan_jaringan/edit/{id}/{id_pengadaan}', [gjalan_irigasi_dan_jaringanController::class, 'edit'])->name('jalan_irigasi_dan_jaringan.edit');
     Route::get('/aset_tetap_lainnya/edit/{id}/{id_pengadaan}', [gaset_tetap_lainnyaController::class, 'edit'])->name('aset_tetap_lainnya.edit');
     Route::get('/kontruksi_dalam_pengerjaan/edit/{id}/{id_pengadaan}', [gkontruksi_dalam_pengerjaanController::class, 'edit'])->name('kontruksi_dalam_pengerjaan.edit');
-    
+
     Route::delete('/pengadaan/{id}/{id_detail}', [PengadaanController::class, 'destroy'])->name('pengadaan.destroy');
 
     Route::resource('buku', bukuController::class)->middleware('auth');
+    Route::resource('laporan', laporanController::class)->middleware('auth');
+
+    // web.php
+    Route::get('/laporan/cetak_semua', [laporanController::class, 'cetakSemua'])->name('laporan.cetakSemua');
 });
 
 require __DIR__ . '/auth.php';
