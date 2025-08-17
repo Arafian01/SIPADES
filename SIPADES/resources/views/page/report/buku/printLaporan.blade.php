@@ -1,311 +1,83 @@
-<!DOCTYPE html>
-<html lang="en">
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            {{ __('Cetak Laporan Inventaris Aset Desa') }}
+        </h2>
+    </x-slot>
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buku inventaris aset Desa</title>
-    <style>
-        body {
-            width: 100%;
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            background-color: #FAFAFA;
-            font: 10pt "Tahoma";
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center center;
-        }
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900 dark:text-gray-100">
+                    
+                    <form method="POST" action="{{ route('laporan.store') }}">
+                        @csrf
+                        <div class="grid grid-cols-2 gap-6">
 
-        * {
-            box-sizing: border-box;
-            -moz-box-sizing: border-box;
-        }
+                            {{-- Buku Inventaris --}}
+                            <div>
+                                <div class="p-4 bg-gray-100 mb-2 rounded-xl font-bold">
+                                    Buku Inventaris Aset Desa
+                                </div>
+                                <div class="flex gap-5 my-5">
+                                    <div class="mb-5 w-full">
+                                        <label for="buku_dari" class="block mb-2 text-sm font-medium">Dari</label>
+                                        <input type="date" id="buku_dari" name="buku_dari" class="border rounded-lg w-full p-2.5" />
+                                    </div>
+                                    <div class="mb-5 w-full">
+                                        <label for="buku_sampai" class="block mb-2 text-sm font-medium">Sampai</label>
+                                        <input type="date" id="buku_sampai" name="buku_sampai" class="border rounded-lg w-full p-2.5" />
+                                    </div>
+                                </div>
+                            </div>
 
-        .subpage {
-            padding: 1cm;
-            border: 5px red solid;
-            height: 257mm;
-            outline: 2cm #FFEAEA solid;
-        }
+                            {{-- Kartu Inventaris --}}
+                            <div>
+                                <div class="p-4 bg-gray-100 mb-2 rounded-xl font-bold">
+                                    Kartu Inventaris Aset Desa
+                                </div>
+                                <div class="space-y-2">
+                                    @foreach ([
+                                        'tanah' => 'Tanah',
+                                        'mesin' => 'Peralatan dan Mesin',
+                                        'kontruksi' => 'Kontruksi dalam Pengerjaan',
+                                        'jalan' => 'Jalan, Irigasi dan Jaringan',
+                                        'gedung' => 'Gedung dan Bangunan',
+                                        'aset_lain' => 'Aset Tetap Lainnya'
+                                    ] as $value => $label)
+                                        <label class="flex items-center">
+                                            <input type="checkbox" name="laporan[]" value="{{ $value }}" class="mr-2">
+                                            {{ $label }}
+                                        </label>
+                                    @endforeach
+                                </div>
 
-        td {
-            padding-top: 5px;
-        }
+                                <div class="flex gap-5 my-5">
+                                    <div class="mb-5 w-full">
+                                        <label for="kib_dari" class="block mb-2 text-sm font-medium">Dari</label>
+                                        <input type="date" id="kib_dari" name="kib_dari" class="border rounded-lg w-full p-2.5" />
+                                    </div>
+                                    <div class="mb-5 w-full">
+                                        <label for="kib_sampai" class="block mb-2 text-sm font-medium">Sampai</label>
+                                        <input type="date" id="kib_sampai" name="kib_sampai" class="border rounded-lg w-full p-2.5" />
+                                    </div>
+                                </div>
+                            </div>
 
-        .kp {
-            text-align: center;
-        }
+                        </div>
 
-        .left {
-            text-align: left;
-        }
+                        <div class="flex gap-3 mt-6">
+                            <button type="submit" class="bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg px-12 py-2.5">
+                                Print
+                            </button>
+                            <button type="reset" class="bg-red-500 hover:bg-red-600 text-white rounded-lg px-12 py-2.5">
+                                Batal
+                            </button>
+                        </div>
+                    </form>
 
-        .logo {
-            text-align: center;
-            font-size: small;
-        }
-
-        .text {
-            text-align: center;
-            margin-top: 15px;
-        }
-
-        .cntr {
-            font-size: small;
-            text-align: left;
-            margin-left: 40px;
-            margin-right: 40px;
-        }
-
-        .translation {
-            display: block;
-            font-size: small;
-            margin-top: -9px;
-            font-style: italic;
-        }
-
-        table {
-            border-collapse: collapse;
-            margin-left: 40px;
-            margin-right: 40px;
-            margin-top: 40px;
-            width: 100%;
-            /* Ensure table takes full width */
-        }
-
-        .ini {
-            border: 1px solid black;
-            padding: 8px;
-            text-align: left;
-            font-size: small;
-            padding: 0;
-        }
-
-        .ttd {
-            text-align: left;
-            font-size: small;
-            padding: 0px;
-            margin-top: -10px;
-            font-style: italic;
-        }
-
-        .ttd1 {
-            text-align: left;
-            font-size: small;
-            padding: 0px;
-        }
-
-        .left {
-            padding-left: 10px;
-        }
-
-        .footer {
-            background: #204b8c;
-            color: #fff;
-            text-align: center;
-            font-size: small;
-            padding-top: 10px;
-            padding-bottom: 10px;
-        }
-
-        .ket {
-            margin-left: 290px;
-        }
-
-        body {
-            font-family: 'Tahoma';
-        }
-
-        .tengah {
-            text-align: center;
-        }
-
-        .judul {
-            text-align: center;
-            font: bolder;
-            margin-top: 80px;
-        }
-
-        .page {
-            width: 297mm;
-            /* Adjusted for A4 landscape width */
-            min-height: 210mm;
-            /* Adjusted for A4 landscape height */
-            padding: 0mm;
-            margin: 0mm auto;
-            border: 1px #D3D3D3 solid;
-            border-radius: 5px;
-            background: white;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-            position: relative;
-        }
-
-        .page::before {
-            content: "";
-            top: 0;
-            left: 0;
-            width: 189px;
-            height: 189px;
-            background-size: cover;
-            background-repeat: no-repeat;
-        }
-
-        .page::after {
-            content: "";
-            bottom: 0;
-            right: 0;
-            width: 794px;
-            height: 49px;
-            background-size: cover;
-            background-repeat: no-repeat;
-        }
-
-        @page {
-            size: A4 landscape;
-            /* Change to landscape */
-            margin: 0;
-        }
-
-        @media print {
-
-            html,
-            body {
-                width: 297mm;
-                /* Adjusted for A4 landscape width */
-                height: 210mm;
-                /* Adjusted for A4 landscape height */
-            }
-
-            .page {
-                padding: 0mm;
-                margin: 0mm auto;
-                border: 1 px #D3D3D3 solid;
-                border-radius: 5px;
-                background: white;
-                box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-                position: relative;
-            }
-
-            .page::before {
-                content: "";
-                top: 0;
-                left: 0;
-                width: 189px;
-                height: 189px;
-                background-size: cover;
-                background-repeat: no-repeat;
-            }
-
-            .page::after {
-                content: "";
-                bottom: 0;
-                right: 0;
-                width: 794px;
-                height: 49px;
-                background-size: cover;
-                background-repeat: no-repeat;
-            }
-
-            @media print {
-                .title {
-                    font-weight: bold;
-                }
-            }
-
-        }
-    </style>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-
-<body>
-
-    <div class="book">
-        <div class="page" id="result">
-            <div class="ml-[6px] mr-[90px]">
-                <h2 class="judul">BUKU INVENTARIS ASET DESA<br>PEMERINTAH DESA SIRNAGALIH<br>2025</h2>
-                <h6>Kode Lokasi Desa : 32.06.27.2.2014</h6>
-                <table class="border border-1 border-black w-full">
-                    <thead>
-                        <tr>
-                            <th class="border border-1 border-black">NO</th>
-                            <th class="border border-1 border-black">Jenis Barang</th>
-                            <th class="border border-1 border-black">Kode Barang</th>
-                            <th class="border border-1 border-black">Identitas Barang</th>
-                            <th class="border border-1 border-black" colspan="3">Asal Usul Barang</th>
-                            <th class="border border-1 border-black">Tanggal<br>Perolehan/<br>Pembelian</th>
-                            <th class="border border-1 border-black">Ket.</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="kp">
-                            <td class="border border-1 border-black"></td>
-                            <td class="border border-1 border-black"></td>
-                            <td class="border border-1 border-black"></td>
-                            <td class="border border-1 border-black"></td>
-                            <td class="border border-1 border-black">APD Desa</td>
-                            <td class="border border-1 border-black">Perolehan <br>Lain Yg Sah</td>
-                            <td class="border border-1 border-black">Aset/Kekayaan <br>Asli Desa</td>
-                            <td class="border border-1 border-black"></td>
-                            <td class="border border-1 border-black"></td>
-                        </tr>
-                        <tr class="kp">
-                            <td class="border border-1 border-black">1</td>
-                            <td class="border border-1 border-black">2</td>
-                            <td class="border border-1 border-black">3</td>
-                            <td class="border border-1 border-black">4</td>
-                            <td class="border border-1 border-black">5</td>
-                            <td class="border border-1 border-black">6</td>
-                            <td class="border border-1 border-black">7</td>
-                            <td class="border border-1 border-black">8</td>
-                            <td class="border border-1 border-black">9</td>
-                        </tr>
-                        @php
-                            $no = 1;
-                        @endphp
-                        @foreach ($data as $d)
-                            <tr>
-                                <td class="border border-1 border-black tengah">{{ $no++ }}.</td>
-                                <td class="border border-1 border-black text-left pl-2">
-                                    {{ $d->rekening->nama_rekening }}</td>
-                                <td class="border border-1 border-black pl-2 tengah">{{ $d->rekening->kode }}</td>
-                                <td class="border border-1 border-black text-left pl-2">{{ $d->nama_label }}</td>
-                                {{-- buatkan if jika isi datanya apddesa maka isi dengan ceklis --}}
-                                <td class="border border-1 border-black pl-2 kp ">
-                                    @if ($d->asal == 'APBDesa')
-                                        ✓
-                                    @else
-                                        -
-                                    @endif
-                                </td>
-                                <td class="border border-1 border-black pl-2 kp">
-                                    @if ($d->asal == 'Perolehan Lain Yang Sah')
-                                        ✓
-                                    @else
-                                        -
-                                    @endif
-                                </td>
-                                <td class="border border-1 border-black pl-2 kp">
-                                    @if ($d->asal == 'Kekayaan Asli Desa')
-                                        ✓
-                                    @else
-                                        -
-                                    @endif
-                                </td>
-                                <td class="border border-1 border-black pl-2">{{ $d->tanggal_perolehan }}</td>
-                                <td class="border border-1 border-black pl-2">{{ $d->keterangan }}</td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                </div>
             </div>
         </div>
     </div>
-</body>
-
-</html>
-<script>
-    // window.print();
-</script>
+</x-app-layout>
