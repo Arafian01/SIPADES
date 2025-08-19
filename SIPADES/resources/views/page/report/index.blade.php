@@ -1,94 +1,97 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Cetak Laporan Inventaris Aset Desa') }}
+            {{ __('Cetak Buku Inventaris Aset Desa') }}
         </h2>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+    <div class="py-8">
+        <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white dark:bg-gray-800 shadow-md rounded-2xl overflow-hidden">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
+                    
+                    <!-- Title -->
+                    <div class="p-4 bg-gradient-to-r from-blue-100 to-blue-200 dark:from-blue-800 dark:to-blue-600 mb-6 rounded-xl font-bold text-gray-800 dark:text-white text-lg">
+                        Buku Inventaris Aset Desa
+                    </div>
 
-                    <form method="POST" action="{{ route('laporan.store') }}">
+                    <!-- Form -->
+                    <form id="printForm" method="POST" action="{{ route('laporan.store') }}" class="space-y-6">
                         @csrf
-                        <div class="grid grid-cols-2 gap-6">
 
-                            {{-- Buku Inventaris --}}
+                        <!-- Inputs -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <!-- Dari -->
                             <div>
-                                <div class="p-4 bg-gray-100 mb-2 rounded-xl font-bold">
-                                    Buku Inventaris Aset Desa
-                                </div>
-                                <div class="flex gap-5 my-5">
-                                    <div class="mb-5 w-full">
-                                        <label for="buku_dari" class="block mb-2 text-sm font-medium">Dari</label>
-                                        <input type="date" id="buku_dari" name="buku_dari"
-                                            class="border rounded-lg w-full p-2.5" />
-                                    </div>
-                                    <div class="mb-5 w-full">
-                                        <label for="buku_sampai" class="block mb-2 text-sm font-medium">Sampai</label>
-                                        <input type="date" id="buku_sampai" name="buku_sampai"
-                                            class="border rounded-lg w-full p-2.5" />
-                                    </div>
-                                </div>
+                                <label for="dari" class="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-200">Dari</label>
+                                <input type="date" id="dari" name="dari"
+                                    class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                    required>
                             </div>
 
-                            {{-- Kartu Inventaris --}}
+                            <!-- Sampai -->
                             <div>
-                                <div class="p-4 bg-gray-100 mb-2 rounded-xl font-bold">
-                                    Kartu Inventaris Aset Desa
-                                </div>
-                                <div class="space-y-2">
-                                    @foreach ([
-        'tanah' => 'Tanah',
-        'mesin' => 'Peralatan dan Mesin',
-        'kontruksi' => 'Kontruksi dalam Pengerjaan',
-        'jalan' => 'Jalan, Irigasi dan Jaringan',
-        'gedung' => 'Gedung dan Bangunan',
-        'aset_lain' => 'Aset Tetap Lainnya',
-    ] as $value => $label)
-                                        <label class="flex items-center">
-                                            <input type="checkbox" name="laporan[]" value="{{ $value }}"
-                                                class="mr-2">
-                                            {{ $label }}
-                                        </label>
-                                    @endforeach
-                                </div>
-
-                                <div class="flex gap-5 my-5">
-                                    <div class="mb-5 w-full">
-                                        <label for="kib_dari" class="block mb-2 text-sm font-medium">Dari</label>
-                                        <input type="date" id="kib_dari" name="kib_dari"
-                                            class="border rounded-lg w-full p-2.5" />
-                                    </div>
-                                    <div class="mb-5 w-full">
-                                        <label for="kib_sampai" class="block mb-2 text-sm font-medium">Sampai</label>
-                                        <input type="date" id="kib_sampai" name="kib_sampai"
-                                            class="border rounded-lg w-full p-2.5" />
-                                    </div>
-                                </div>
+                                <label for="sampai" class="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-200">Sampai</label>
+                                <input type="date" id="sampai" name="sampai"
+                                    class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                    required>
                             </div>
 
+                            <!-- Aset -->
+                            <div>
+                                <label for="aset" class="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-200">Pilih Aset</label>
+                                <select id="aset" name="aset"
+                                    class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                    required>
+                                    <option value="">Pilih Aset</option>
+                                    <option value="tanah">Tanah</option>
+                                    <option value="Peralatan Dan Mesin">Peralatan dan Mesin</option>
+                                    <option value="Gedung dan Bangunan">Gedung dan Bangunan</option>
+                                    <option value="Jalan Irigasi dan Jaringan">Jalan Irigasi dan Jaringan</option>
+                                    <option value="Aset Tetap Lainnya">Aset Tetap Lainnya</option>
+                                    <option value="Kontruksi Dalam Pengerjaan">Kontruksi Dalam Pengerjaan</option>
+                                </select>
+                            </div>
                         </div>
 
-                        <div class="flex gap-3 mt-6">
-                            <button type="submit"
-                                class="bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg px-12 py-2.5">
+                        <!-- Buttons -->
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <a type="button" onclick="openAssetModal()"
+                                class="w-full sm:w-auto px-6 py-2.5 rounded-lg bg-green-500 hover:bg-green-600 text-white font-medium text-sm shadow-md transition">
                                 Print
-                            </button>
-                            <button type="reset"
-                                class="bg-red-500 hover:bg-red-600 text-white rounded-lg px-12 py-2.5">
-                                Batal
-                            </button>
-                            <a href="{{ route('laporan.store') }}"
-                                class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
-                                📄 Cetak Semua
                             </a>
+                            <button type="reset"
+                                class="w-full sm:w-auto px-6 py-2.5 rounded-lg bg-red-500 hover:bg-red-600 text-white font-medium text-sm shadow-md transition">
+                                Reset
+                            </button>
                         </div>
                     </form>
-
                 </div>
             </div>
         </div>
     </div>
+
+    {{-- <script>
+        function openAssetModal() {
+            const dari = document.getElementById('dari').value;
+            const sampai = document.getElementById('sampai').value;
+
+            document.getElementById('modalDari').value = dari;
+            document.getElementById('modalSampai').value = sampai;
+
+            // Populate assets dynamically (example)
+            const assetsSelect = document.getElementById('assets');
+            assetsSelect.innerHTML = `
+                <option value="asset1">Aset 1</option>
+                <option value="asset2">Aset 2</option>
+                <option value="asset3">Aset 3</option>
+            `;
+
+            document.getElementById('assetModal').classList.remove('hidden');
+        }
+
+        function closeAssetModal() {
+            document.getElementById('assetModal').classList.add('hidden');
+        }
+    </script> --}}
 </x-app-layout>
