@@ -27,7 +27,25 @@ class laporanController extends Controller
      */
     public function create()
     {
-        //
+        $rekening = rekening::all();
+        $aset = aset::all();
+        $tanah = tanah::all();
+        $gedung_dan_bangunan = gedung_dan_bangunan::all();
+        $aset_tetap_lainnya = aset_tetap_lainnya::all();
+        $jalan_irigasi_dan_jaringan = jalan_irigasi_dan_jaringan::all();
+        $peralatan_dan_mesin = peralatan_dan_mesin::all();
+        $kontruksi_dalam_Pengerjaan = kontruksi_dalam_pengerjaan::all();
+        return view('page.report.cetak_semua')->with([
+            'rekening' => $rekening,
+            'aset' => $aset,
+            'tanah' => $tanah,
+            'gedung_dan_bangunan' => $gedung_dan_bangunan,
+            'aset_tetap_lainnya' => $aset_tetap_lainnya,
+            'jalan_irigasi_dan_jaringan' => $jalan_irigasi_dan_jaringan,
+            'peralatan_dan_mesin' => $peralatan_dan_mesin,
+            'kontruksi_dalam_pengerjaan' => $kontruksi_dalam_Pengerjaan
+        ]);
+        
     }
 
     /**
@@ -35,7 +53,23 @@ class laporanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $dari = request('dari', 'all');
+        $sampai = request('sampai', 'all');
+
+        $dari = ($dari === 'all') ? null : $dari;
+        $sampai = ($sampai === 'all') ? null : $sampai;
+
+        $rekening = rekening::all();
+        $aset = aset::all();
+        $tanah = tanah::all();
+        
+        if($dari === null){
+            $data = kontruksi_dalam_pengerjaan::all();
+        }else{
+            $data = kontruksi_dalam_pengerjaan::whereBetween('tanggal', [$dari, $sampai])->get();
+        }
+        
+        return view('page.report.golongan.printLaporanKontruksi_dalam_Pengerjaan')->with(['data' => $data], ['rekening' => $rekening], ['aset' => $aset], ['tanah' => $tanah]);
     }
 
     /**
@@ -83,7 +117,7 @@ class laporanController extends Controller
         $aset_tetap_lainnya = aset_tetap_lainnya::all();
 
         // Kirim semua data ke 1 view
-        return view('page.report.index', compact(
+        return view('page.golongan.tanah.index', compact(
             'aset',
             'tanah',
             'rekening',
