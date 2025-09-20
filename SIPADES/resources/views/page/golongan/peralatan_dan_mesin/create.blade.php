@@ -44,7 +44,7 @@
                                 </div>
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <!-- ID Barang -->
-                                    <div>
+                                    {{-- <div>
                                         <label for="id_barang"
                                             class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">ID
                                             Barang (Auto) <span class="text-red-500">*</span></label>
@@ -78,7 +78,7 @@
                                         @error('no_reg')
                                             <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                                         @enderror
-                                    </div>
+                                    </div> --}}
 
                                     <!-- Rekening -->
                                     <div>

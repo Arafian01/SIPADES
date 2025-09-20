@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Cetak Buku Inventaris Aset Desa') }}
+            {{ __('Cetak Laporan') }}
         </h2>
     </x-slot>
 
@@ -12,7 +12,7 @@
                     
                     <!-- Title -->
                     <div class="p-4 bg-gradient-to-r from-blue-100 to-blue-200 dark:from-blue-800 dark:to-blue-600 mb-6 rounded-xl font-bold text-gray-800 dark:text-white text-lg">
-                        Buku Inventaris Aset Desa
+                        Print Salah Satu Laporan
                     </div>
 
                     <!-- Form -->
@@ -45,21 +45,21 @@
                                     required>
                                     <option value="">Pilih Aset</option>
                                     <option value="tanah">Tanah</option>
-                                    <option value="Peralatan Dan Mesin">Peralatan dan Mesin</option>
-                                    <option value="Gedung dan Bangunan">Gedung dan Bangunan</option>
-                                    <option value="Jalan Irigasi dan Jaringan">Jalan Irigasi dan Jaringan</option>
-                                    <option value="Aset Tetap Lainnya">Aset Tetap Lainnya</option>
-                                    <option value="Kontruksi Dalam Pengerjaan">Kontruksi Dalam Pengerjaan</option>
+                                    <option value="peralatan_dan_mesin">Peralatan dan Mesin</option>
+                                    <option value="gedung_dan_bangunan">Gedung dan Bangunan</option>
+                                    <option value="jalan_irigasi_dan_jaringan">Jalan Irigasi dan Jaringan</option>
+                                    <option value="aset_tetap_lainnya">Aset Tetap Lainnya</option>
+                                    <option value="kontruksi_dalam_pengerjaan">Kontruksi Dalam Pengerjaan</option>
                                 </select>
                             </div>
                         </div>
 
                         <!-- Buttons -->
                         <div class="flex flex-col sm:flex-row gap-4">
-                            <a type="button" onclick="openAssetModal()"
+                            <button type="submit"
                                 class="w-full sm:w-auto px-6 py-2.5 rounded-lg bg-green-500 hover:bg-green-600 text-white font-medium text-sm shadow-md transition">
                                 Print
-                            </a>
+                            </button>
                             <button type="reset"
                                 class="w-full sm:w-auto px-6 py-2.5 rounded-lg bg-red-500 hover:bg-red-600 text-white font-medium text-sm shadow-md transition">
                                 Reset

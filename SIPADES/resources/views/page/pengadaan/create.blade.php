@@ -241,7 +241,7 @@
 
             if (result.isConfirmed) {
                 try {
-                    await axios.post(`/pengadaan/${idPengadaan}/${idDetail}`, {
+                    await axios.post(`/detail/${idPengadaan}/${idDetail}`, {
                         '_method': 'DELETE',
                         '_token': '{{ csrf_token() }}'
                     });

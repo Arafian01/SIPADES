@@ -82,15 +82,15 @@
     </header>
 
     <!-- Hero Section -->
-    <main class="flex-1 flex flex-col md:flex-row items-center justify-center md:justify-between px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8 gap-4 sm:gap-6 md:gap-8">
+    <main class="flex-1 flex flex-col md:flex-row items-center justify-center  px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8 gap-4 sm:gap-6 md:gap-8 ">
         <!-- Image with transparent shadow - Now on the left -->
-        <div class="w-full md:w-1/2 xl:w-2/5 flex justify-start md:pl-7 order-1 md:order-1">
+        {{-- <div class="w-full md:w-1/2 xl:w-2/5 flex justify-start md:pl-7 order-1 md:order-1">
             <img src="/images/mumin.png" alt="Desa Illustration" 
                  class="drop-shadow-transparent h-auto max-h-48 xs:max-h-56 sm:max-h-64 md:max-h-72 lg:max-h-80 xl:max-h-96 rounded-lg transition-all duration-300 hover:scale-[1.02] ml-0 md:-ml-4 lg:-ml-8">
-        </div>
+        </div> --}}
         
         <!-- Welcome Card - Now on the right -->
-        <div class="w-full md:w-1/2 xl:w-2/5 card-glass rounded-xl p-4 sm:p-6 md:p-8 shadow-xl transform transition-all duration-300 hover:scale-[1.01] order-2 md:order-2">
+        <div class="w-full md:w-1/2 xl:w-2/5 card-glass rounded-xl p-4 sm:p-6 md:p-8 shadow-xl transform transition-all duration-300 hover:scale-[1.01] ">
             <h2 class="text-2xl sm:text-3xl md:text-4xl xl:text-5xl font-extrabold text-amber-700 mb-3 sm:mb-4 leading-snug">
                 Selamat Datang di<br>
                 <span class="text-amber-800">SIPADES</span>
@@ -112,7 +112,7 @@
     <!-- Footer -->
     <footer class="text-black text-center">
         <div class="container mx-auto px-4">
-            <p class="text-xs sm:text-sm mb-3">&copy; {{ date('Y') }} SIPADES - Sistem Pengelolaan Aset Desa. All Rights Reserved.</p>
+            <p class="text-xs sm:text-sm mb-3 text-white">&copy; Mahasiswa KKN Politeknik LP3I Tahun 2025 - SIPADES (Sistem Pengelolaan Aset Desa). All Rights Reserved.</p>
         </div>
     </footer>
 

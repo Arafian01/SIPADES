@@ -57,8 +57,8 @@
                                     <!-- Nomor Register -->
                                     <div>
                                         <label for="no_reg" class="block text-sm font-medium text-gray-700 mb-1">Nomor Register <span class="text-red-500">*</span></label>
-                                        <input type="text" id="no_reg" name="no_reg"
-                                            class="w-full border border-gray-300 rounded-md py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                        <input type="text" id="no_reg" name="no_reg" readonly
+                                            class="w-full bg-gray-100 border border-gray-300 rounded-md py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent cursor-not-allowed"
                                             value="{{ old('no_reg', $tanah->aset->nomor_register) }}" required />
                                         @error('no_reg')
                                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>

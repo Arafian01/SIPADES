@@ -32,36 +32,36 @@ class PengadaanController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-public function create(String $id, String $id_golongan, String $id_aset)
-{
-    $pengadaan = pengadaan::findOrFail($id);
-    $golongan  = golongan::findOrFail($id_golongan);
+    public function create(String $id, String $id_golongan, String $id_aset)
+    {
+        $pengadaan = pengadaan::findOrFail($id);
+        $golongan  = golongan::findOrFail($id_golongan);
 
-    // Mapping ID Golongan ke Model
-    $modelMap = [
-        1 => tanah::class,
-        2 => peralatan_dan_mesin::class,
-        3 => gedung_dan_bangunan::class,
-        4 => jalan_irigasi_dan_jaringan::class,
-        5 => aset_tetap_lainnya::class,
-        6 => kontruksi_dalam_pengerjaan::class,
-    ];
+        // Mapping ID Golongan ke Model
+        $modelMap = [
+            1 => tanah::class,
+            2 => peralatan_dan_mesin::class,
+            3 => gedung_dan_bangunan::class,
+            4 => jalan_irigasi_dan_jaringan::class,
+            5 => aset_tetap_lainnya::class,
+            6 => kontruksi_dalam_pengerjaan::class,
+        ];
 
-    if (!isset($modelMap[$golongan->id])) {
-        abort(404, 'Golongan tidak dikenal');
+        if (!isset($modelMap[$golongan->id])) {
+            abort(404, 'Golongan tidak dikenal');
+        }
+
+        $modelClass = $modelMap[$golongan->id];
+
+        // Cari data berdasarkan id_aset
+        $idgolongan = $modelClass::where('id_aset', $id_aset)->firstOrFail();
+
+        return redirect()->route($golongan->nama_golongan . '.edit', [$idgolongan->id, $pengadaan->id])
+            ->with([
+                'pengadaan' => $pengadaan,
+                'golongan'  => $golongan,
+            ]);
     }
-
-    $modelClass = $modelMap[$golongan->id];
-
-    // Cari data berdasarkan id_aset
-    $idgolongan = $modelClass::where('id_aset', $id_aset)->firstOrFail();
-
-    return redirect()->route($golongan->nama_golongan . '.edit', [$idgolongan->id, $pengadaan->id])
-        ->with([
-            'pengadaan' => $pengadaan,
-            'golongan'  => $golongan,
-        ]);
-}
 
 
 
@@ -70,9 +70,25 @@ public function create(String $id, String $id_golongan, String $id_aset)
      */
     public function store(Request $request)
     {
+        // Hitung jumlah pengadaan yang sudah ada
+        $count = Pengadaan::count() + 1;
+
+        // Ambil tanggal sekarang
+        $now = now();
+        $year = $now->format('Y');
+        $month = $now->format('m');
+        $day = $now->format('d');
+
+        // Buat nomor urut dengan padding 5 digit
+        $noUrut = str_pad($count, 5, '0', STR_PAD_LEFT);
+
+        // Format no_pengadaan sesuai pola
+        $no_pengadaan = "{$year}.PENG.32.12.9.2008.1.{$noUrut}";
+
+        // Simpan ke database
         $data = [
             'id_pengguna' => $request->input('id_pengguna'),
-            'no_pengadaan' => $request->input('no_pengadaan'),
+            'no_pengadaan' => $no_pengadaan, // pakai auto generate
             'tanggal_pengadaan' => $request->input('tanggal_pengadaan'),
             'no_kuitansi' => $request->input('no_kuitansi'),
             'tanggal_spp' => $request->input('tanggal_spp'),
@@ -81,7 +97,9 @@ public function create(String $id, String $id_golongan, String $id_aset)
             'nama_rekanan' => $request->input('nama_rekanan'),
             'uraian' => $request->input('uraian'),
         ];
-        pengadaan::create($data);
+
+        Pengadaan::create($data);
+
         return back()->with('message_delete', 'Data Pengadaan Berhasil Ditambahkan');
     }
 
@@ -132,33 +150,24 @@ public function create(String $id, String $id_golongan, String $id_aset)
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $idPengadaan, string $idDetail)
+    public function destroy(string $id)
     {
-        $pengadaan = pengadaan::findOrFail($idPengadaan);
-        $detail = $pengadaan->detailPengadaan()->findOrFail($idDetail);
-        $aset = $detail->aset;
-
-        if ($detail == null) {
-            return back()->with('message_delete', 'Detail Pengadaan atau Aset tidak ditemukan');
-        } else if ($aset) {
-            // Hapus detail pengadaan
-            $detail->delete();
-
-            // Hapus aset terkait jika tidak ada detail lain yang menggunakannya
-            if ($aset->detailPengadaan()->count() == 0) {
-                $aset->delete();
-            }
-        } else {
-            return back()->with('message_delete', 'Aset tidak ditemukan');
-
-        }
-
+        $pengadaan = pengadaan::findOrFail($id);
+        $pengadaan->delete();
 
         return back()->with('message_delete', 'Detail Pengadaan Berhasil Dihapus');
     }
-    
-        // $pengadaan = pengadaan::findOrFail($id);
-        // $pengadaan->delete();
-        // return back()->with('message_delete', 'Data Pengadaan Berhasil Dihapus');
-    
+
+
+    // public function count()
+    // {
+    //     try {
+    //     $count = Pengadaan::count();
+    //     return response()->json(['count' => $count], 200);
+    // } catch (\Exception $e) {
+    //     return response()->json([
+    //         'error' => 'Failed to retrieve count: ' . $e->getMessage()
+    //     ], 500);
+    // }
+    // }
 }

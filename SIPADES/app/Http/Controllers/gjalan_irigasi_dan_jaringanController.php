@@ -43,10 +43,24 @@ class gjalan_irigasi_dan_jaringanController extends Controller
      */
     public function store(Request $request)
     {
+        $count = Aset::where('id_rekening', $request->input('id_rekening'))->count();
+        $register = $count + 1;
+        $rekening = Rekening::find($request->input('id_rekening'));
+
+        if (!$rekening) {
+            return back()->withErrors(['id_rekening' => 'Rekening tidak ditemukan']);
+        }
+
+        $no_rekening = $rekening->kode;
+        $now = now();
+        $year = $now->format('Y');
+
+        $id_barang = "32.12.9.2008.{$no_rekening}.{$year}";
+
         $idPengadaan = $request->input('id_pengadaan');
         $dataAset = [
-            'id_barang' => $request->input('id_barang'),
-            'nomor_register' => $request->input('no_reg'),
+            'id_barang' => $id_barang,
+            'nomor_register' => $register,
             'id_rekening' => $request->input('id_rekening'),
             'nama_label' => $request->input('nama_label'),
             'kode_belanja_bidang' => $request->input('kode_belanja_bidang'),
@@ -116,13 +130,27 @@ class gjalan_irigasi_dan_jaringanController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $count = Aset::where('id_rekening', $request->input('id_rekening'))->count();
+        $register = $count + 1;
+        $rekening = Rekening::find($request->input('id_rekening'));
+
+        if (!$rekening) {
+            return back()->withErrors(['id_rekening' => 'Rekening tidak ditemukan']);
+        }
+
+        $no_rekening = $rekening->kode;
+        $now = now();
+        $year = $now->format('Y');
+
+        $id_barang = "32.12.9.2008.{$no_rekening}.{$year}";
+
         $idPengadaan = $request->input('id_pengadaan');
         $jalan_irigasi_dan_jaringan = jalan_irigasi_dan_jaringan::findOrFail($id);
         $aset = aset::findOrFail($jalan_irigasi_dan_jaringan->id_aset);
 
         $dataAset = [
-            'id_barang' => $request->input('id_barang'),
-            'nomor_register' => $request->input('no_reg'),
+            'id_barang' => $id_barang,
+            'nomor_register' => $register,
             'id_rekening' => $request->input('id_rekening'),
             'nama_label' => $request->input('nama_label'),
             'kode_belanja_bidang' => $request->input('kode_belanja_bidang'),

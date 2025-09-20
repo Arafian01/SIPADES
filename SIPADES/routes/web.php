@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\bukuController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\detailController;
 use App\Http\Controllers\gaset_tetap_lainnyaController;
 use App\Http\Controllers\ggedung_dan_bangunanController;
 use App\Http\Controllers\gjalan_irigasi_dan_jaringanController;
@@ -13,15 +15,16 @@ use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RekeningController;
 use App\Http\Controllers\RuanganController;
+use App\Http\Controllers\semuaLaporanController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -37,6 +40,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('jalan_irigasi_dan_jaringan', gjalan_irigasi_dan_jaringanController::class)->middleware('auth');
     Route::resource('aset_tetap_lainnya', gaset_tetap_lainnyaController::class)->middleware('auth');
     Route::resource('kontruksi_dalam_pengerjaan', gkontruksi_dalam_pengerjaanController::class)->middleware('auth');
+    Route::resource('detail', detailController::class)->middleware('auth');
+    Route::resource('semuaLaporan', semuaLaporanController::class)->middleware('auth');
     // Route::get('/tanah/create/{status}', [gtanahController::class, 'create'])->name('tanah.create');
     // Route::get('/tanah/create/{status?}', [gtanahController::class, 'create'])->name('tanah.create');
     Route::get('/tanah/create/{id}', [gtanahController::class, 'create'])->name('tanah.create');
@@ -55,9 +60,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/aset_tetap_lainnya/edit/{id}/{id_pengadaan}', [gaset_tetap_lainnyaController::class, 'edit'])->name('aset_tetap_lainnya.edit');
     Route::get('/kontruksi_dalam_pengerjaan/edit/{id}/{id_pengadaan}', [gkontruksi_dalam_pengerjaanController::class, 'edit'])->name('kontruksi_dalam_pengerjaan.edit');
 
-    Route::delete('/pengadaan/{id}/{id_detail}', [PengadaanController::class, 'destroy'])->name('pengadaan.destroy');
+    Route::delete('/detail/{id}/{id_detail}', [detailController::class, 'destroy'])->name('detail.destroy');
 
-    Route::resource('buku', bukuController::class)->middleware('auth');
+    // Route::get('/pengadaan/count', [PengadaanController::class, 'count'])->name('pengadaan.count');
+
+    // Route::resource('buku', bukuController::class)->middleware('auth');
     Route::resource('laporan', laporanController::class)->middleware('auth');
 
     // web.php

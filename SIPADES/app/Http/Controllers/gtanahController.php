@@ -44,10 +44,24 @@ class gtanahController extends Controller
      */
     public function store(Request $request)
     {
+        $count = Aset::where('id_rekening', $request->input('id_rekening'))->count();
+        $register = $count + 1;
+        $rekening = Rekening::find($request->input('id_rekening'));
+
+        if (!$rekening) {
+            return back()->withErrors(['id_rekening' => 'Rekening tidak ditemukan']);
+        }
+
+        $no_rekening = $rekening->kode;
+        $now = now();
+        $year = $now->format('Y');
+
+        $id_barang = "32.12.9.2008.{$no_rekening}.{$year}";
+
         $idPengadaan = $request->input('id_pengadaan');
         $dataAset = [
-            'id_barang' => $request->input('id_barang'),
-            'nomor_register' => $request->input('no_reg'),
+            'id_barang' => $id_barang,
+            'nomor_register' => $register,
             'id_rekening' => $request->input('id_rekening'),
             'nama_label' => $request->input('nama_label'),
             'kode_belanja_bidang' => $request->input('kode_belanja_bidang'),
@@ -121,13 +135,27 @@ class gtanahController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $count = Aset::where('id_rekening', $request->input('id_rekening'))->count();
+        $register = $count + 1;
+        $rekening = Rekening::find($request->input('id_rekening'));
+
+        if (!$rekening) {
+            return back()->withErrors(['id_rekening' => 'Rekening tidak ditemukan']);
+        }
+
+        $no_rekening = $rekening->kode;
+        $now = now();
+        $year = $now->format('Y');
+
+        $id_barang = "32.12.9.2008.{$no_rekening}.{$year}";
+
         $idPengadaan = $request->input('id_pengadaan');
         $tanah = tanah::findOrFail($id);
         $aset = aset::findOrFail($tanah->id_aset);
 
         $dataAset = [
-            'id_barang' => $request->input('id_barang'),
-            'nomor_register' => $request->input('no_reg'),
+            'id_barang' => $id_barang,
+            'nomor_register' => $register,
             'id_rekening' => $request->input('id_rekening'),
             'nama_label' => $request->input('nama_label'),
             'kode_belanja_bidang' => $request->input('kode_belanja_bidang'),

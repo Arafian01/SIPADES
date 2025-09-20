@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\aset;
 use App\Models\aset_tetap_lainnya;
 use App\Models\gedung_dan_bangunan;
+use App\Models\golongan;
 use App\Models\jalan_irigasi_dan_jaringan;
 use App\Models\kontruksi_dalam_pengerjaan;
 use App\Models\peralatan_dan_mesin;
@@ -45,32 +46,38 @@ class laporanController extends Controller
             'peralatan_dan_mesin' => $peralatan_dan_mesin,
             'kontruksi_dalam_pengerjaan' => $kontruksi_dalam_Pengerjaan
         ]);
-        
     }
 
     /**
      * Store a newly created resource in storage.
      */
+
     public function store(Request $request)
     {
-        $dari = request('dari', 'all');
-        $sampai = request('sampai', 'all');
+        $dari = $request->input('dari');   // format: Y-m-d
+        $sampai = $request->input('sampai');
+        $golonganModel = $request->input('aset'); // misal: "Tanah" atau "Gedung"
 
-        $dari = ($dari === 'all') ? null : $dari;
-        $sampai = ($sampai === 'all') ? null : $sampai;
+        // pastikan namespace model benar
+        $modelClass = "\\App\\Models\\" . $golonganModel;
 
-        $rekening = rekening::all();
-        $aset = aset::all();
-        $tanah = tanah::all();
-        
-        if($dari === null){
-            $data = kontruksi_dalam_pengerjaan::all();
-        }else{
-            $data = kontruksi_dalam_pengerjaan::whereBetween('tanggal', [$dari, $sampai])->get();
+        if (!class_exists($modelClass)) {
+            return back()->with('error', "Model {$golonganModel} tidak ditemukan");
         }
-        
-        return view('page.report.golongan.printLaporanKontruksi_dalam_Pengerjaan')->with(['data' => $data], ['rekening' => $rekening], ['aset' => $aset], ['tanah' => $tanah]);
+
+        // ambil data golongan, filter hanya yg punya aset dalam rentang tanggal_perolehan
+        $data = $modelClass::whereHas('aset', function ($query) use ($dari, $sampai) {
+            $query->whereBetween('tanggal_perolehan', [$dari, $sampai]);
+        })
+            ->with(['aset' => function ($query) use ($dari, $sampai) {
+                $query->whereBetween('tanggal_perolehan', [$dari, $sampai]);
+            }])
+            ->get();
+
+        return view("page.report.golongan.printLaporan{$golonganModel}", compact('data', 'dari', 'sampai'));
     }
+
+
 
     /**
      * Display the specified resource.
@@ -102,30 +109,5 @@ class laporanController extends Controller
     public function destroy(string $id)
     {
         //
-    }
-
-    public function cetakSemua(Request $request)
-    {
-        // Ambil semua data yang dibutuhkan untuk masing-masing laporan
-        $aset = aset::all();
-        $tanah = tanah::all();
-        $rekening = rekening::all();
-        $peralatan_dan_mesin = peralatan_dan_mesin::all();
-        $kontruksi_dalam_Pengerjaan = kontruksi_dalam_pengerjaan::all();
-        $jalan_irigasi_dan_jaringan = jalan_irigasi_dan_jaringan::all();
-        $gedung_dan_bangunan = gedung_dan_bangunan::all();
-        $aset_tetap_lainnya = aset_tetap_lainnya::all();
-
-        // Kirim semua data ke 1 view
-        return view('page.golongan.tanah.index', compact(
-            'aset',
-            'tanah',
-            'rekening',
-            'peralatan_dan_mesin',
-            'kontruksi_dalam_pengerjaan',
-            'jalan_irigasi_dan_jaringan',
-            'gedung_dan_bangunan',
-            'aset_tetap_lainnya'
-        ));
     }
 }

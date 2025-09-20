@@ -127,6 +127,7 @@
             text-align: center;
             font: bolder;
             margin-top: 10px;
+            font-weight: bold;
         }
 
         .page {

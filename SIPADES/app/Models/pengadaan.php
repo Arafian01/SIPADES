@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class pengadaan extends Model
 {
     protected $table = 'pengadaan';
+    protected $primaryKey = 'id'; // Ensure this matches your primary key
+    public $timestamps = true;
 
     protected $fillable = [
         'id_pengguna',
@@ -34,10 +36,12 @@ class pengadaan extends Model
     {
         return $this->hasMany('App\Models\aset', 'id_pengadaan');
     }
+
     public function kontruksiDalamPengerjaan()
     {
         return $this->hasMany('App\Models\kontruksi_dalam_pengerjaan', 'id_pengadaan');
     }
+    
     public function gtanah()
     {
         return $this->hasMany('App\Models\gtanah', 'id_pengadaan');

@@ -101,25 +101,10 @@
 
                             <x-slot name="content">
                                 <x-dropdown-link :href="route('laporan.index')" :active="request()->routeIs('laporan.index')">
-                                    {{ __('Buku') }}
+                                    {{ __('Cetak Salah Satu') }}
                                 </x-dropdown-link>
-                                <x-dropdown-link :href="route('tanah.index')" :active="request()->routeIs('tanah.index')">
-                                    {{ __('Kartu Golongan Tanah') }}
-                                </x-dropdown-link>
-                                <x-dropdown-link :href="route('peralatan_dan_mesin.index')" :active="request()->routeIs('peralatan_dan_mesin.index')">
-                                    {{ __('Kartu Golongan Peralatan dan Mesin') }}
-                                </x-dropdown-link>
-                                <x-dropdown-link :href="route('gedung_dan_bangunan.index')" :active="request()->routeIs('gedung_dan_bangunan.index')">
-                                    {{ __('Kartu Golongan Gedung dan Bangunan') }}
-                                </x-dropdown-link>
-                                <x-dropdown-link :href="route('jalan_irigasi_dan_jaringan.index')" :active="request()->routeIs('jalan_irigasi_dan_jaringan.index')">
-                                    {{ __('Kartu Golongan Jalan, Irigasi dan Jaringan') }}
-                                </x-dropdown-link>
-                                <x-dropdown-link :href="route('aset_tetap_lainnya.index')" :active="request()->routeIs('aset_tetap_lainnya.index')">
-                                    {{ __('Kartu Golongan Aset Tetap Lainnya') }}
-                                </x-dropdown-link>
-                                <x-dropdown-link :href="route('kontruksi_dalam_pengerjaan.index')" :active="request()->routeIs('kontruksi_dalam_pengerjaan.index')">
-                                    {{ __('Kartu Golongan Kontruksi Dalam Pengerjaan') }}
+                                <x-dropdown-link :href="route('semuaLaporan.index')" :active="request()->routeIs('semuaLaporan.index')">
+                                    {{ __('Cetak Semua') }}
                                 </x-dropdown-link>
                             </x-slot>
                         </x-dropdown>
@@ -223,26 +208,11 @@
             <div class="px-4 pt-2">
                 <div class="font-medium text-base text-gray-500">Laporan</div>
                 <div class="mt-1 space-y-1">
-                    <x-responsive-nav-link :href="route('buku.index')" :active="request()->routeIs('buku.index')">
-                        {{ __('Buku') }}
+                    <x-responsive-nav-link :href="route('laporan.index')" :active="request()->routeIs('laporan.index')">
+                        {{ __('Cetak Salah Satu') }}
                     </x-responsive-nav-link>
-                    <x-responsive-nav-link :href="route('tanah.index')" :active="request()->routeIs('tanah.index')">
-                        {{ __('Kartu Golongan Tanah') }}
-                    </x-responsive-nav-link>
-                    <x-responsive-nav-link :href="route('peralatan_dan_mesin.index')" :active="request()->routeIs('peralatan_dan_mesin.index')">
-                        {{ __('Kartu Golongan Peralatan dan Mesin') }}
-                    </x-responsive-nav-link>
-                    <x-responsive-nav-link :href="route('gedung_dan_bangunan.index')" :active="request()->routeIs('gedung_dan_bangunan.index')">
-                        {{ __('Kartu Golongan Gedung dan Bangunan') }}
-                    </x-responsive-nav-link>
-                    <x-responsive-nav-link :href="route('jalan_irigasi_dan_jaringan.index')" :active="request()->routeIs('jalan_irigasi_dan_jaringan.index')">
-                        {{ __('Kartu Golongan Jalan, Irigasi dan Jaringan') }}
-                    </x-responsive-nav-link>
-                    <x-responsive-nav-link :href="route('aset_tetap_lainnya.index')" :active="request()->routeIs('aset_tetap_lainnya.index')">
-                        {{ __('Kartu Golongan Aset Tetap Lainnya') }}
-                    </x-responsive-nav-link>
-                    <x-responsive-nav-link :href="route('kontruksi_dalam_pengerjaan.index')" :active="request()->routeIs('kontruksi_dalam_pengerjaan.index')">
-                        {{ __('Kartu Golongan Kontruksi Dalam Pengerjaan') }}
+                    <x-responsive-nav-link :href="route('semuaLaporan.index')" :active="request()->routeIs('semuaLaporan.index')">
+                        {{ __('Cetak Semua') }}
                     </x-responsive-nav-link>
                 </div>
             </div>

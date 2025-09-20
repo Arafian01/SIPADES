@@ -23,7 +23,7 @@
                     <div class="flex justify-between items-start">
                         <div>
                             <h3 class="text-gray-500 text-sm font-medium uppercase tracking-wider">Golongan Tanah</h3>
-                            <p class="text-3xl font-bold mt-2 text-gray-800">{{ $tanahCount ?? 0 }}</p>
+                            <p class="text-3xl font-bold mt-2 text-gray-800">{{ $totalTanah ?? 0 }}</p>
                         </div>
                         <div
                             class="bg-green-100 p-3 rounded-full shadow-inner transition-all duration-300 hover:rotate-12">
@@ -44,7 +44,7 @@
                         <div>
                             <h3 class="text-gray-500 text-sm font-medium uppercase tracking-wider">Peralatan dan Mesin
                             </h3>
-                            <p class="text-3xl font-bold mt-2 text-gray-800">{{ $peralatanDanMesinCount ?? 0 }}</p>
+                            <p class="text-3xl font-bold mt-2 text-gray-800">{{ $totalPeralatan ?? 0 }}</p>
                         </div>
                         <div
                             class="bg-blue-100 p-3 rounded-full shadow-inner transition-all duration-300 hover:rotate-12">
@@ -67,7 +67,7 @@
                         <div>
                             <h3 class="text-gray-500 text-sm font-medium uppercase tracking-wider">Gedung dan Bangunan
                             </h3>
-                            <p class="text-3xl font-bold mt-2 text-gray-800">{{ $gedungDanBangunanCount ?? 0 }}</p>
+                            <p class="text-3xl font-bold mt-2 text-gray-800">{{ $totalGedung ?? 0 }}</p>
                         </div>
                         <div
                             class="bg-purple-100 p-3 rounded-full shadow-inner transition-all duration-300 hover:rotate-12">
@@ -88,8 +88,7 @@
                         <div>
                             <h3 class="text-gray-500 text-sm font-medium uppercase tracking-wider">Jalan, Irigasi &
                                 Jaringan</h3>
-                            <p class="text-3xl font-bold mt-2 text-gray-800">{{ $jalanIrigasiDanJaringanCount ?? 0 }}
-                            </p>
+                            <p class="text-3xl font-bold mt-2 text-gray-800">{{ $totalJalan ?? 0 }}</p>
                         </div>
                         <div
                             class="bg-yellow-100 p-3 rounded-full shadow-inner transition-all duration-300 hover:rotate-12">
@@ -112,7 +111,7 @@
                         <div>
                             <h3 class="text-gray-500 text-sm font-medium uppercase tracking-wider">Aset Tetap Lainnya
                             </h3>
-                            <p class="text-3xl font-bold mt-2 text-gray-800">{{ $asetTetapLainnyaCount ?? 0 }}</p>
+                            <p class="text-3xl font-bold mt-2 text-gray-800">{{ $totalAsetL ?? 0 }}</p>
                         </div>
                         <div
                             class="bg-red-100 p-3 rounded-full shadow-inner transition-all duration-300 hover:rotate-12">
@@ -133,8 +132,7 @@
                         <div>
                             <h3 class="text-gray-500 text-sm font-medium uppercase tracking-wider">Konstruksi Dalam
                                 Pengerjaan</h3>
-                            <p class="text-3xl font-bold mt-2 text-gray-800">{{ $kontruksiDalamPengerjaanCount ?? 0 }}
-                            </p>
+                            <p class="text-3xl font-bold mt-2 text-gray-800">{{ $totalKontruksi ?? 0 }}</p>
                         </div>
                         <div
                             class="bg-indigo-100 p-3 rounded-full shadow-inner transition-all duration-300 hover:rotate-12">
@@ -184,22 +182,20 @@
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script>
             document.addEventListener('DOMContentLoaded', function() {
-                // Data for procurement charts
-                const pengadaanData = {
-                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Ags', 'Sep', 'Okt', 'Nov', 'Des'],
-                    total: [3, 5, 7, 2, 8, 4, 6, 9, 5, 7, 4, 6],
-                    anggaran: [25, 40, 35, 20, 45, 30, 50, 60, 40, 55, 30, 45] // in millions
-                };
+                // Data from Laravel controller
+                const labels = @json($labels);
+                const totalAnggaran = @json($totalAnggaran);
+                const totalJumlah = @json($totalJumlah);
 
                 // Monthly Procurement Chart (Bar + Line)
                 const pengadaanCtx = document.getElementById('pengadaanChart').getContext('2d');
                 new Chart(pengadaanCtx, {
                     type: 'bar',
                     data: {
-                        labels: pengadaanData.labels,
+                        labels: labels,
                         datasets: [{
                                 label: 'Jumlah Pengadaan',
-                                data: pengadaanData.total,
+                                data: totalJumlah,
                                 backgroundColor: 'rgba(79, 70, 229, 0.8)',
                                 borderColor: 'rgba(79, 70, 229, 1)',
                                 borderWidth: 1,
@@ -208,7 +204,7 @@
                             },
                             {
                                 label: 'Anggaran (juta Rp)',
-                                data: pengadaanData.anggaran,
+                                data: totalAnggaran.map(val => val / 1000000), // Convert to millions
                                 backgroundColor: 'rgba(236, 72, 153, 0.1)',
                                 borderColor: 'rgba(236, 72, 153, 1)',
                                 borderWidth: 2,
@@ -236,7 +232,7 @@
                                         if (context.datasetIndex === 0) {
                                             return ` ${context.dataset.label}: ${context.parsed.y} aset`;
                                         } else {
-                                            return ` ${context.dataset.label}: Rp ${context.parsed.y} juta`;
+                                            return ` ${context.dataset.label}: Rp ${context.parsed.y.toFixed(2)} juta`;
                                         }
                                     }
                                 }
@@ -257,7 +253,8 @@
                                     color: 'rgba(0, 0, 0, 0.05)'
                                 },
                                 ticks: {
-                                    color: '#4f46e5'
+                                    color: '#4f46e5',
+                                    precision: 0
                                 }
                             },
                             y1: {
@@ -290,15 +287,23 @@
                 new Chart(pengadaanKategoriCtx, {
                     type: 'doughnut',
                     data: {
-                        labels: ['Tanah', 'Peralatan', 'Gedung', 'Jalan/Irigasi', 'Lainnya'],
+                        labels: ['Tanah', 'Peralatan', 'Gedung', 'Jalan/Irigasi', 'Lainnya', 'Konstruksi'],
                         datasets: [{
-                            data: [12, 19, 8, 15, 7],
+                            data: [
+                                {{ $totalTanah ?? 0 }},
+                                {{ $totalPeralatan ?? 0 }},
+                                {{ $totalGedung ?? 0 }},
+                                {{ $totalJalan ?? 0 }},
+                                {{ $totalAsetL ?? 0 }},
+                                {{ $totalKontruksi ?? 0 }}
+                            ],
                             backgroundColor: [
                                 'rgba(16, 185, 129, 0.8)',
                                 'rgba(59, 130, 246, 0.8)',
                                 'rgba(168, 85, 247, 0.8)',
                                 'rgba(234, 179, 8, 0.8)',
-                                'rgba(239, 68, 68, 0.8)'
+                                'rgba(239, 68, 68, 0.8)',
+                                'rgba(99, 102, 241, 0.8)'
                             ],
                             borderColor: 'rgba(255, 255, 255, 0.8)',
                             borderWidth: 2
